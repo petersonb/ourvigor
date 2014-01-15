@@ -1,0 +1,85 @@
+<?php
+
+
+/*
+  User Model
+
+  This is the model used represent users.
+ */
+
+class User extends DataMapper {
+
+	// Require the password to be encrypted
+	var $validation = array (
+		array(
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => array('encrypt'),
+			'type'  => 'password'
+			)
+		);
+
+	var $has_one = array();
+	var $has_many = array();
+
+	//--------------------------------------------------
+	
+	function __construct($id = NULL)
+	{
+		parent::__construct($id);
+	}
+
+	/*
+	  Login
+
+	  Returns true if a login is allowed given the correct
+	  email and password.
+	 */
+	function login()
+	{
+		$a = new User();
+
+		// Find user by email
+		$email = $this->email;
+		$a->where('email',$email)->get();
+
+		
+		$pass = $a->password;
+		$passFrag = explode(':',$pass);
+
+		
+		$this->salt = $passFrag[0];
+		$this->validate()->get();
+		
+		if ($this->exists())
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	/*
+	  Encrypt
+
+	  Password encryption function. Salts password with
+	  uniqid() and encrypts the rest. Passwords will be
+	  compared with hash.
+	 */
+	function _encrypt($field)
+	{
+		if (!empty($this->{$field}))
+		{
+			if (empty($this->salt))
+			{
+				$this->salt = uniqid();
+			}
+			$this->{$field} = $this->salt . ':' . hash('sha256', $this->salt . $this->{$field});
+		}
+	}
+}
+
+/* End of file user.php */
+/* Location: ./application/models/user.php */
