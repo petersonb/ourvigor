@@ -2,8 +2,20 @@
 
 class Register extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
+	/*
+	   Index
+	   --------------------------------------------------
+	   
+	   This method handles the creation of user accounts.
+	   User accounts must be created abiding by these
+	   fields and rules...
+
+	   firstname - required | unique | valid
+	   firstname - required | len 2-64 | alpha_dash
+	   lastname  - same as first
+	   password  - required | len 8+
+	   confirm   - same as password
+	   --------------------------------------------------
 	 */
 	public function index()
 	{
