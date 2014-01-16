@@ -27,7 +27,7 @@ $menu_items = array(
 );
 ?>
 
-<div style="float:left; height:100pc; width:200px; margin-right:10px; border-right:solid black 2px;">
+<div style="float:left; width:200px; margin-right:10px; border-right:solid black 2px;">
     <h4> Development Menu </h4>
     <ul style="float:left; list-style: none;">
 	<?php foreach ($menu_items as $item): ?>
@@ -39,5 +39,6 @@ $menu_items = array(
 	    </li>
 	    <?php $previous = $current; ?>
 	<?php endforeach; ?>
+	<hr />
     </ul>
 </div>
