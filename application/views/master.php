@@ -4,6 +4,9 @@
     </head>
     <body>
 	<?php
+	// Load Menu
+	$this->load->view('menus/development');
+	
 	// Load each content
 	if (isset($content))
 	{
