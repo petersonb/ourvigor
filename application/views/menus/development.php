@@ -1,26 +1,26 @@
 <?php
 $menu_items = array(
 	array (
-		'link' => base_url('main'),
+		'link' => 'main',
 		'label' => "Main Home"
 	),
 	array (
-		'link' => base_url('users'),
+		'link' => 'users',
 		'label' => "User Home"
 	),
 
 	array (
-		'link' => base_url('users/login'),
+		'link' => 'users/login',
 		'label' => "User Login"
 	),
 
 	array (
-		'link' => base_url('users/register'),
+		'link' => 'users/register',
 		'label' => "User Register"
 	),
 
 	array (
-		'link' => base_url('users/logout'),
+		'link' => 'users/logout',
 		'label' => 'User Logout'
 	),
 		
@@ -31,9 +31,13 @@ $menu_items = array(
     <h4> Development Menu </h4>
     <ul style="float:left; list-style: none;">
 	<?php foreach ($menu_items as $item): ?>
+	    <?php $current = explode('/',$item['link'])[0]; ?>
+
+	    <?php if (isset($previous) && $previous != $current) echo "<hr />"; ?>
 	    <li>
-		<a href="<?php echo $item['link']; ?>"><?php echo $item['label']; ?></a>
+		<a href="<?php echo base_url($item['link']); ?>"><?php echo $item['label']; ?></a>
 	    </li>
+	    <?php $previous = $current; ?>
 	<?php endforeach; ?>
     </ul>
 </div>
