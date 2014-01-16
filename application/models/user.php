@@ -47,8 +47,9 @@ class User extends DataMapper {
 		$pass = $a->password;
 		$passFrag = explode(':',$pass);
 
+		$passFrag = substr($pass,0,13);
 		
-		$this->salt = $passFrag[0];
+		$this->salt = $passFrag;
 		$this->validate()->get();
 		
 		if ($this->exists())
@@ -76,7 +77,7 @@ class User extends DataMapper {
 			{
 				$this->salt = uniqid();
 			}
-			$this->{$field} = $this->salt . ':' . hash('sha256', $this->salt . $this->{$field});
+			$this->{$field} = $this->salt . hash('sha256', $this->salt . $this->{$field});
 		}
 	}
 }
