@@ -45,7 +45,6 @@ class User extends DataMapper {
 
 		
 		$pass = $a->password;
-		$passFrag = explode(':',$pass);
 
 		$passFrag = substr($pass,0,13);
 		
