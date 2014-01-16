@@ -8,8 +8,25 @@
 */
 
 $config = array (
+
+	//////////////////////////////////////////////////
+	// Users                                        //
+	//////////////////////////////////////////////////
 	
-	'register_main' => array (
+	'users_login' => array (
+		array (
+			'field' => 'email',
+			'label' => 'Email',
+			'rules' => 'required'
+			),
+		array (
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => 'required'
+			)
+		),
+		
+	'users_register' => array (
 		array (
 			'field' => 'email',
 			'label' => 'Email',

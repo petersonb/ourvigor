@@ -1,3 +1,4 @@
+<?php echo validation_errors(); ?>
 <?php echo form_open('users/register'); ?>
 <table>
     <tr>
