@@ -1,4 +1,4 @@
-<?php echo form_open('register/index'); ?>
+<?php echo form_open('users/register'); ?>
 <table>
     <tr>
 	<td>Email*</td>

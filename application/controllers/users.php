@@ -1,9 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Register extends CI_Controller {
+class Users extends CI_Controller {
 
 	/*
-	   Index
+	   Register
 	   --------------------------------------------------
 	   
 	   This method handles the creation of user accounts.
@@ -17,7 +17,7 @@ class Register extends CI_Controller {
 	   confirm   - same as password
 	   --------------------------------------------------
 	 */
-	public function index()
+	public function register()
 	{
 		$this->load->library('form_validation');
 
@@ -27,7 +27,7 @@ class Register extends CI_Controller {
 		if ($this->form_validation->run('register_main') == FALSE)
 		{
 			$data['title'] = 'Register';
-			$data['content'] = 'register/main';
+			$data['content'] = 'users/register';
 			$this->load->view('master',$data);
 		}
 		else
@@ -44,5 +44,5 @@ class Register extends CI_Controller {
 	}
 }
 
-/* End of file register.php */
-/* Location: ./application/controllers/register.php */
+/* End of file users.php */
+/* Location: ./application/controllers/users.php */
