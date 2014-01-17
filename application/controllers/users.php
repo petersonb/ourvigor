@@ -74,6 +74,7 @@ class Users extends CI_Controller {
 				$user->get();
 				// TODO : Send confirmation email
 				$this->session->set_userdata('user_id',$user->id);
+				redirect('users/index');
 			}
 			
 		}
