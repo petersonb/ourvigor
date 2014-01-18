@@ -39,7 +39,8 @@ $menu_items = array(
     <h4> Development Menu </h4>
     <ul style="float:left; list-style: none;">
 	<?php foreach ($menu_items as $item): ?>
-	    <?php $current = explode('/',$item['link'])[0]; ?>
+	    <?php $fragged = explode('/',$item['link']);?>
+	    <?php $current = $fragged[0]; ?>
 
 	    <?php if (isset($previous) && $previous != $current) echo "<hr />"; ?>
 	    <li>
