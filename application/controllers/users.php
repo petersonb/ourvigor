@@ -61,22 +61,35 @@ class Users extends CI_Controller {
 		}
 
 		else
-		{
+		{			
+
+			// Grab post data
+			$firstname = $this->input->post('firstname');
+			$lastname  = $this->input->post('lastname');
+			$email     = $this->input->post('email');
+			$password  = $this->input->post('password');
+
+			// Build new user
 			$user = new User();
-			$user->firstname = $this->input->post('firstname');
-			$user->lastname  = $this->input->post('lastname');
-			$user->email     = $this->input->post('email');
-			$user->password  = $this->input->post('password');
+			$user->firstname = $firstname;
+			$user->lastname = $lastname;
+			$user->email = $email;
+			$user->password = $password;
 			$user->save();
-			
-			if ($this->valid_login($user->email, $user->password))
+
+			// Log New User In
+			if ($this->valid_login($email, $password))
 			{
-				$user->get();
+				
 				// TODO : Send confirmation email
 				$this->session->set_userdata('user_id',$user->id);
 				redirect('users/index');
 			}
-			
+			else
+			{
+				// TODO : Handle failed account creation better
+				redirect('users/login');
+			}
 		}
 	}
 
@@ -94,22 +107,31 @@ class Users extends CI_Controller {
 
 		if ($this->form_validation->run('users_login') == FALSE)
 		{
+			// Load Login Form
 			$data['title'] = 'Log In';
 			$data['content'] = 'users/login';
 			$this->load->view('master',$data);
 		}
 		else
 		{
+			// Grab Login Info on Submit
 			$email = $this->input->post('email');
 			$password = $this->input->post('password');
-			echo $email;
+			
 			if ($this->valid_login($email,$password))
 			{
+				// Log valid user in and redirect
 				$user = new User();
 				$user->where('email',$email)->get();
-				
+
 				$this->session->set_userdata('user_id',$user->id);
+
 				redirect('users');
+			}
+			else
+			{
+				// Bring failed login to login page
+				redirect('users/login');
 			}
 		}
 
@@ -147,8 +169,7 @@ class Users extends CI_Controller {
 		$user = new User();
 		$user->email    = $email;
 		$user->password = $password;
-		$user->get();
-
+		
 		return $user->login();
 	}
 
