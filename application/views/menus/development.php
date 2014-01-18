@@ -9,6 +9,10 @@ $menu_items = array(
 		'label' => 'Groups Create'
 	),
 	array (
+		'link' => 'groups/view_all',
+		'label' => 'Groups View All'
+	),
+	array (
 		'link' => 'users',
 		'label' => "User Home"
 	),

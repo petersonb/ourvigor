@@ -114,14 +114,53 @@ class Groups extends CI_Controller {
 			$group->name = $name;
 			$group->description = $description;
 			$group->visibility = $visibility;
-			$group->category = intval($mask);
+			$group->categories = intval($mask);
 
 			$user = new User($this->user_id);
 
 			$group->save($user);
 
-			redirect("groups/view_group/{$group->id}");
+			redirect("groups/view/{$group->id}");
 		}
+	}
+
+	/*
+	  View All
+	  --------------------------------------------------
+
+	  View all groups in a table. You can select one to
+	  view or edit if you are and admin.
+	  --------------------------------------------------
+	*/
+	public function view_all()
+	{
+		if (!$this->user_id)
+		{
+			redirect('main');
+		}
+
+		$this->load->library('table');
+
+		// Grab current user's groups
+		$user = new User($this->user_id);
+		$groups = $user->group->get();
+
+		// Load groups into data
+		foreach ($groups as $group)
+		{
+			$data['groups'][$group->id] = array(
+				'id' => $group->id,
+				'name' => $group->name,
+				'description' => $group->description,
+				'visibility' => $group->visibility,
+				'categories' => $group->categories
+			);
+		}
+		
+		$data['title'] = 'Groups';
+		$data['content'] = 'groups/view_all';
+		
+		$this->load->view('master',$data);
 	}
 
 	/*
@@ -131,7 +170,7 @@ class Groups extends CI_Controller {
 	  View a single group.
 	  --------------------------------------------------
 	*/
-	public function view_group($group_id = null)
+	public function view($group_id = null)
 	{
 		if (!$group_id)
 		{
@@ -159,7 +198,7 @@ class Groups extends CI_Controller {
 			'name'=>$group->name,
 			'description' => $group->description,
 			'visibility'  => $group->visibility,
-			'categories'  => $group->category
+			'categories'  => $group->categories
 		);
 		
 		$data['tile'] = 'View Group | ';
