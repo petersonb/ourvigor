@@ -10,6 +10,33 @@
 $config = array (
 
 	//////////////////////////////////////////////////
+	// Groups                                       //
+	//////////////////////////////////////////////////
+
+	'groups_create' => array(
+		array (
+			'field' => 'name',
+			'label' => 'Group Name',
+			'rules' => 'required|min_length[3]|max_length[64]',
+		),
+		array (
+			'field' => 'description',
+			'label' => 'Description',
+			'rules' => 'required|max_length[1000]',
+		),
+		array (
+			'field' => 'visibility',
+			'label' => 'Visibility',
+			'rules' => 'required'
+		),
+		array (
+			'field' => 'category',
+			'label' => 'Category',
+			'rules' => ''
+		)
+	),
+
+	//////////////////////////////////////////////////
 	// Users                                        //
 	//////////////////////////////////////////////////
 	
@@ -18,35 +45,35 @@ $config = array (
 			'field' => 'email',
 			'label' => 'Email',
 			'rules' => 'required'
-			),
+		),
 		array (
 			'field' => 'password',
 			'label' => 'Password',
 			'rules' => 'required'
-			)
-		),
-		
+		)
+	),
+	
 	'users_register' => array (
 		array (
 			'field' => 'email',
 			'label' => 'Email',
 			'rules' => 'valid_email|required|is_unique[users.email]'
-			),
+		),
 		array (
 			'field' => 'firstname',
 			'label' => 'First Name',
 			'rules' => 'required|min_length[2]|max_length[64]|alpha_dash'
-			),
+		),
 		array (
 			'field' => 'lastname',
 			'label' => 'Last Name',
 			'rules' => 'required|min_length[2]|max_length[64]|alpha_dash'
-			),
+		),
 		array (
 			'field' => 'password',
 			'label' => 'Password',
 			'rules' => 'required|min_length[8]'
-			),
+		),
 		array (
 			'field' => 'confirm',
 			'label' => 'Confirm',

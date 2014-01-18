@@ -20,7 +20,9 @@ class User extends DataMapper {
 		);
 
 	var $has_one = array();
-	var $has_many = array();
+	var $has_many = array(
+		'group'=>array('join_table'=>'users_groups')
+	);
 
 	//--------------------------------------------------
 	

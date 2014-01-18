@@ -5,15 +5,19 @@ $menu_items = array(
 		'label' => "Main Home"
 	),
 	array (
+		'link' => 'groups/create',
+		'label' => 'Groups Create'
+	),
+	array (
 		'link' => 'users',
 		'label' => "User Home"
 	),
-
+	
 	array (
 		'link' => 'users/login',
 		'label' => "User Login"
 	),
-
+	
 	array (
 		'link' => 'users/register',
 		'label' => "User Register"
