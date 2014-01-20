@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2014 at 05:16 AM
+-- Generation Time: Jan 20, 2014 at 04:57 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.7-pl0-gentoo
 
@@ -19,6 +19,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `fitness`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buddies_users`
+--
+
+DROP TABLE IF EXISTS `buddies_users`;
+CREATE TABLE IF NOT EXISTS `buddies_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `buddy_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
