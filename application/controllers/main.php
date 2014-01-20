@@ -9,12 +9,12 @@ class Main extends CI_Controller {
 	}
 	
 	/*
-	  Index
-	  --------------------------------------------------
+	Index
+	--------------------------------------------------
 
-	  The Main page of the site.
-	  --------------------------------------------------
-	*/
+	The Main page of the site.
+	--------------------------------------------------
+	 */
 	public function index()
 	{
 		$this->load->library('form_validation');
@@ -22,6 +22,25 @@ class Main extends CI_Controller {
 		$test['hi'] = 5;
 
 		$data['content'] = array('main/home');
+		$this->load->view('master',$data);
+	}
+
+	/*
+	Log
+	--------------------------------------------------
+
+	Development log for those following along at home.
+	--------------------------------------------------
+	 */
+	public function log()
+	{
+
+
+		$log = shell_exec('git log');
+		$data['log'] = explode('commit',$log);
+
+		$data['title'] = 'Git Log';
+		$data['content'] = 'main/log';
 		$this->load->view('master',$data);
 	}
 }

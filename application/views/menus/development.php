@@ -31,11 +31,15 @@ $menu_items = array(
 		'link' => 'users/logout',
 		'label' => 'User Logout'
 	),
+	array (
+		'link' => 'main/log',
+		'label' => 'Development Log'
+	),
 		
 );
 ?>
 
-<div style="float:left; width:200px; margin-right:10px; border-right:solid black 2px;">
+<div style="float:left; height:100%; width:200px; margin-right:10px; border-right:solid black 2px;">
     <h4> Development Menu </h4>
     <ul style="float:left; list-style: none;">
 	<?php foreach ($menu_items as $item): ?>

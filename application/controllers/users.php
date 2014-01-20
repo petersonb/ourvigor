@@ -10,23 +10,30 @@ class Users extends CI_Controller {
 
 
 	/*
-	  Index
-	  --------------------------------------------------
+	Index
+	--------------------------------------------------
 
-	  The main page for users.
-	  --------------------------------------------------
-	*/
+	The main page for users.
+	--------------------------------------------------
+	 */
 	public function index()
 	{
+		// Redirect if not logged in to login page.
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
 		$user = new User($this->user_id);
 
+		// Grab some userdata for shitz
 		$data['user'] = array(
 			'id'        => $user->id,
 			'firstname' => $user->firstname,
 			'lastname'  => $user->lastname,
 			'email'     => $user->email
-			);
-		
+		);
+
+		// Generate page
 		$data['title'] = 'Users';
 		$data['content'] = 'users/main';
 		
@@ -34,19 +41,19 @@ class Users extends CI_Controller {
 	}
 	
 	/*
-	   Register
-	   --------------------------------------------------
-	   
-	   This method handles the creation of user accounts.
-	   User accounts must be created abiding by these
-	   fields and rules...
+	Register
+	--------------------------------------------------
+	
+	This method handles the creation of user accounts.
+	User accounts must be created abiding by these
+	fields and rules...
 
-	   firstname - required | unique | valid
-	   firstname - required | len 2-64 | alpha_dash
-	   lastname  - same as first
-	   password  - required | len 8+
-	   confirm   - same as password
-	   --------------------------------------------------
+	firstname - required | unique | valid
+	firstname - required | len 2-64 | alpha_dash
+	lastname  - same as first
+	password  - required | len 8+
+	confirm   - same as password
+	--------------------------------------------------
 	 */
 	public function register()
 	{
@@ -63,44 +70,44 @@ class Users extends CI_Controller {
 		else
 		{			
 
-			// Grab post data
-			$firstname = $this->input->post('firstname');
-			$lastname  = $this->input->post('lastname');
-			$email     = $this->input->post('email');
-			$password  = $this->input->post('password');
+		 // Grab post data
+		 $firstname = $this->input->post('firstname');
+		 $lastname  = $this->input->post('lastname');
+		 $email     = $this->input->post('email');
+		 $password  = $this->input->post('password');
 
-			// Build new user
-			$user = new User();
-			$user->firstname = $firstname;
-			$user->lastname = $lastname;
-			$user->email = $email;
-			$user->password = $password;
-			$user->save();
+		 // Build new user
+		 $user = new User();
+		 $user->firstname = $firstname;
+		 $user->lastname = $lastname;
+		 $user->email = $email;
+		 $user->password = $password;
+		 $user->save();
 
-			// Log New User In
-			if ($this->valid_login($email, $password))
-			{
+		 // Log New User In
+		 if ($this->valid_login($email, $password))
+		 {
 				
 				// TODO : Send confirmation email
 				$this->session->set_userdata('user_id',$user->id);
 				redirect('users/index');
 			}
-			else
-			{
+		 else
+		 {
 				// TODO : Handle failed account creation better
 				redirect('users/login');
 			}
-		}
+		 }
 	}
 
 	/*
-	  Login
-	  --------------------------------------------------
+	Login
+	--------------------------------------------------
 
-	  A login page, or where you can post data to log in
-	  from other parts of the site.
-	  --------------------------------------------------
-	*/
+	A login page, or where you can post data to log in
+	from other parts of the site.
+	--------------------------------------------------
+	 */
 	public function login()
 	{
 		$this->load->library('form_validation');
@@ -135,17 +142,17 @@ class Users extends CI_Controller {
 			}
 		}
 
-			     
+		
 	}
 	
 	/*
-	  Logout
-	  --------------------------------------------------
+	Logout
+	--------------------------------------------------
 
-	  This method logs out the current user by unsetting
-	  the current userdata 'user_id'.
-	  --------------------------------------------------
-	*/
+	This method logs out the current user by unsetting
+	the current userdata 'user_id'.
+	--------------------------------------------------
+	 */
 	public function logout()
 	{
 		$this->session->unset_userdata('user_id');
@@ -155,15 +162,15 @@ class Users extends CI_Controller {
 
 
 	/*
-	  Login
-	  ------------------------------------------------
-	  
-	  This method takes the email and password of the
-	  potential user, then confirms if the login
-	  information provided is valid.
+	Login
+	------------------------------------------------
+	
+	This method takes the email and password of the
+	potential user, then confirms if the login
+	information provided is valid.
 
-	  returns True if user is allowed to log in
-	*/
+	returns True if user is allowed to log in
+	 */
 	private function valid_login($email, $password)
 	{
 		$user = new User();
