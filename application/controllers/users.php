@@ -39,6 +39,48 @@ class Users extends CI_Controller {
 		
 		$this->load->view('master',$data);
 	}
+
+	/*
+	Find
+	--------------------------------------------------
+
+	Find other users to connect with by searching.
+	--------------------------------------------------
+	 */
+
+	public function find()
+	{
+		$this->load->helper('form');
+		$this->load->library('table');
+		if ($this->input->post())
+		{
+			$search = $this->input->post('search');
+
+			echo $search;
+			
+			$users = new User();
+//			$users->where('firstname',$search);
+//			$users->where('lastname',$search);
+			$users->where('email',$search);
+			$users->get();
+
+			foreach ($users as $user)
+			{
+				$data['users'][$user->id] = array (
+					'id' => $user->id,
+					'firstname' => $user->firstname,
+					'lastname' => $user->lastname,
+					'email' => $user->email,
+				);
+				
+			}
+			
+		}
+		
+		$data['title'] = 'Find Users';
+		$data['content'] = 'users/find';
+		$this->load->view('master',$data);
+	}
 	
 	/*
 	Register
@@ -66,38 +108,39 @@ class Users extends CI_Controller {
 			$data['content'] = 'users/register';
 			$this->load->view('master',$data);
 		}
-
+		
 		else
 		{			
-
-		 // Grab post data
-		 $firstname = $this->input->post('firstname');
-		 $lastname  = $this->input->post('lastname');
-		 $email     = $this->input->post('email');
-		 $password  = $this->input->post('password');
-
-		 // Build new user
-		 $user = new User();
-		 $user->firstname = $firstname;
-		 $user->lastname = $lastname;
-		 $user->email = $email;
-		 $user->password = $password;
-		 $user->save();
-
-		 // Log New User In
-		 if ($this->valid_login($email, $password))
-		 {
-				
+			
+			// Grab post data
+			$firstname = $this->input->post('firstname');
+			$lastname  = $this->input->post('lastname');
+			$email     = $this->input->post('email');
+			$password  = $this->input->post('password');
+		 
+			// Build new user
+			$user = new User();
+			$user->firstname = $firstname;
+			$user->lastname = $lastname;
+			$user->email = $email;
+			$user->password = $password;
+			$user->save();
+		 
+			// Log New User In
+			if ($this->valid_login($email, $password))
+			{
+			 
 				// TODO : Send confirmation email
+				
 				$this->session->set_userdata('user_id',$user->id);
 				redirect('users/index');
 			}
-		 else
-		 {
+			else
+			{
 				// TODO : Handle failed account creation better
 				redirect('users/login');
 			}
-		 }
+		}
 	}
 
 	/*

@@ -2,9 +2,9 @@
 
 
 /*
-  User Model
+User Model
 
-  This is the model used represent users.
+This is the model used represent users.
  */
 
 class User extends DataMapper {
@@ -21,7 +21,16 @@ class User extends DataMapper {
 
 	var $has_one = array();
 	var $has_many = array(
-		'group'=>array('join_table'=>'users_groups')
+		'group'=>array('join_table'=>'users_groups'),
+		'buddy'=>array(
+			'class'=>'user',
+			'other_field'=>'user',
+			'reciprocal'=> TRUE
+		),
+		'user' => array(
+			'other_field'=>'buddy',
+			'reciprocal'=> TRUE
+		),
 	);
 
 	//--------------------------------------------------
@@ -32,10 +41,10 @@ class User extends DataMapper {
 	}
 
 	/*
-	  Login
-
-	  Returns true if a login is allowed given the correct
-	  email and password.
+	Login
+	
+	Returns true if a login is allowed given the correct
+	email and password.
 	 */
 	function login()
 	{
@@ -64,11 +73,11 @@ class User extends DataMapper {
 	}
 
 	/*
-	  Encrypt
-
-	  Password encryption function. Salts password with
-	  uniqid() and encrypts the rest. Passwords will be
-	  compared with hash.
+	Encrypt
+	
+	Password encryption function. Salts password with
+	uniqid() and encrypts the rest. Passwords will be
+	compared with hash.
 	 */
 	function _encrypt($field)
 	{

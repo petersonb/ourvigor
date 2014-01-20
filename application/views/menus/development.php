@@ -16,6 +16,11 @@ $menu_items = array(
 		'link' => 'users',
 		'label' => "User Home"
 	),
+
+	array (
+		'link' => 'users/find',
+		'label' => 'Users Find'
+	),
 	
 	array (
 		'link' => 'users/login',
