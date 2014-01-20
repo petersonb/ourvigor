@@ -1,9 +1,16 @@
 <h1>View All Groups</h1>
 <?php
 
-foreach ($groups as $group)
+if (isset ($groups))
 {
-	$url = base_url("groups/view/{$group['id']}");
-	$this->table->add_row("<a href=\"{$url}\">" . $group['name']. "</a>");
+	foreach ($groups as $group)
+	{
+		$url = base_url("groups/view/{$group['id']}");
+		$this->table->add_row("<a href=\"{$url}\">" . $group['name']. "</a>");
+	}
+	echo $this->table->generate();
 }
-echo $this->table->generate();
+else
+{
+	echo "<h3>You don't belong to any groups!</h3>";
+}
