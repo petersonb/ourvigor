@@ -80,7 +80,7 @@ class Groups extends CI_Controller {
 	public function create()
 	{
 		if (!$this->user_id)
-			redirect('main');
+			redirect('users/login');
 
 		$this->load->library('form_validation');
 		
@@ -136,7 +136,7 @@ class Groups extends CI_Controller {
 	{
 		if (!$this->user_id)
 		{
-			redirect('main');
+			redirect('users/login');
 		}
 
 		$this->load->library('table');

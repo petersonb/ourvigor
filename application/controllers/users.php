@@ -50,6 +50,10 @@ class Users extends CI_Controller {
 
 	public function find()
 	{
+		// Can't query users unless logged in
+		if (!$this->user_id)
+			redirect('users/login');
+		
 		$this->load->helper('form');
 		$this->load->library('table');
 		if ($this->input->post())
