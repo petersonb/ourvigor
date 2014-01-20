@@ -56,12 +56,10 @@ class Users extends CI_Controller {
 		{
 			$search = $this->input->post('search');
 
-			echo $search;
-			
 			$users = new User();
-//			$users->where('firstname',$search);
-//			$users->where('lastname',$search);
-			$users->where('email',$search);
+			$users->or_like('firstname',$search);
+			$users->or_like('lastname',$search);
+			$users->or_like('email',$search);
 			$users->get();
 
 			foreach ($users as $user)
