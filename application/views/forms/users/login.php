@@ -1,4 +1,13 @@
-<?php echo form_open('users/login'); ?>
+<?php
+if (isset($redirect_url))
+{
+	echo form_open('users/login?redirect_url='.$redirect_url);
+}
+else
+{
+	echo form_open('users/login');
+}
+?>
 <table>
     <tr>
 	<td>Email</td>

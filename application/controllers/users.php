@@ -159,6 +159,8 @@ class Users extends CI_Controller {
 
 		if ($this->form_validation->run('users_login') == FALSE)
 		{
+
+			$data['redirect_url'] = $this->input->get('redirect_url');
 			// Load Login Form
 			$data['title'] = 'Log In';
 			$data['content'] = 'users/login';
@@ -177,6 +179,13 @@ class Users extends CI_Controller {
 				$user->where('email',$email)->get();
 
 				$this->session->set_userdata('user_id',$user->id);
+
+				$redirect = $this->input->get('redirect_url');
+
+				if ($redirect)
+				{
+					redirect(base_url($redirect));
+				}
 
 				redirect('users');
 			}

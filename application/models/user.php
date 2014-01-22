@@ -16,7 +16,7 @@ class User extends DataMapper {
 			'label' => 'Password',
 			'rules' => array('encrypt'),
 			'type'  => 'password'
-			)
+			),
 		);
 
 	var $has_one = array();
@@ -31,6 +31,7 @@ class User extends DataMapper {
 			'other_field'=>'buddy',
 			'reciprocal'=> TRUE
 		),
+		'token'
 	);
 
 	//--------------------------------------------------
