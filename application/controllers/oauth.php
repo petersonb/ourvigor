@@ -96,6 +96,12 @@ class Oauth extends CI_Controller {
 		echo $app->name;
 	}
 
+	// TODO delete this shit
+	public function test_catch()
+	{
+		echo 'I CAUGHT YO SHIT';
+	}
+
 
 	/*
 	Generate Token
