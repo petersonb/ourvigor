@@ -11,7 +11,8 @@ class Group extends DataMapper {
 
 	var $has_one = array();
 	var $has_many = array(
-		'user' => array('join_table'=>'users_groups')
+		'user' => array('join_table'=>'users_groups'),
+		'category' => array('join_table'=>'groups_categories')
 	);
 
 	//--------------------------------------------------

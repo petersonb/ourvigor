@@ -17,4 +17,4 @@ class Token extends DataMapper {
 }
 
 /* End of file token.php */
-/* Location: ./token/models/token.php */
+/* Location: ./application/models/token.php */

@@ -21,49 +21,7 @@ class Groups extends CI_Controller {
 		);
 
 		//////////////////////////////////////////////////
-		// DANGER - Be very careful editing this code.  //
-		//   This will cause bad things to happen in    //
-		//   the database. These values are defined by  //
-		//   a bit mask i.e. if you change their order, //
-		//   or count, everything blows up that already //
-		//   exists. You will have to change the entire //
-		//   table to account for changes if you must   //
-		//   change these.                              //
-		//                                              //
-		// P.S. If you don't know what a bit mask is,   //
-		//      don't even look at this code until you  //
-		//      understand it.                          //
-		//////////////////////////////////////////////////
-		
-		$this->category_options = array(
-			array(
-				'value'=>'1',
-				'name'=>'Cardiovascular',
-			),
-			array(
-				'value'=>'2',
-				'name'=>'Muscular Strength',
-			),
-			array(
-				'value'=>'4',
-				'name'=>'Muscular Endurance',
-			),
-			array(
-				'value'=>'8',
-				'name'=>'Flexibility',
-			),
-			array(
-				'value'=>'16',
-				'name'=>'Diet',
-			),
-			array(
-				'value'=>'32',
-				'name'=>'Other'
-			)
-		);
-
-		//////////////////////////////////////////////////
-		// END DANGER ZONE                              //
+		// END DANGER                                   //
 		//////////////////////////////////////////////////
 		
 
@@ -89,8 +47,7 @@ class Groups extends CI_Controller {
 			$this->load->library('table');
 
 			$data['visibility_options'] = $this->visibility_options;
-			$data['category_options'] = $this->category_options;
-
+			
 			// Load group creation form
 			$data['title'] = "Create Group";
 			$data['content'] = 'groups/create';
@@ -102,19 +59,11 @@ class Groups extends CI_Controller {
 			$name = $this->input->post('name');
 			$description = $this->input->post('description');
 			$visibility = $this->input->post('visibility');
-			$categories = $this->input->post('categories');
-
-			$mask = 0;
-			foreach ($categories as $category)
-			{
-				$mask += $category;
-			}
 
 			$group = new Group();
 			$group->name = $name;
 			$group->description = $description;
 			$group->visibility = $visibility;
-			$group->categories = intval($mask);
 
 			$user = new User($this->user_id);
 
