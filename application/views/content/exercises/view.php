@@ -2,9 +2,16 @@
 
 <?php
 
-foreach ($exercises as $ex)
+if (isset($exercises))
 {
-	$this->table->add_row($ex['name'], $ex['description']);
+	foreach ($exercises as $ex)
+	{
+		$this->table->add_row($ex['name'], $ex['description']);
+	}
+	echo $this->table->generate();
 }
-echo $this->table->generate();
+else
+{
+	echo "<h3>You don't have any exercises!</h3>";
+}
 ?>
