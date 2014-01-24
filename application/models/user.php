@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 User Model
 
@@ -32,7 +31,8 @@ class User extends DataMapper {
 			'reciprocal'=> TRUE
 		),
 		'token',
-		'exercise' => array('join_table' => 'users_exercises')
+		'exercise' => array('join_table' => 'users_exercises'),
+		'workout' => array('join_table' => 'users_workouts')
 	);
 
 	//--------------------------------------------------

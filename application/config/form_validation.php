@@ -96,7 +96,24 @@ $config = array (
 			'field' => 'confirm',
 			'label' => 'Confirm',
 			'rules' => 'matches[password]'
-			)
 		)
-		
-	);
+	),
+
+	//////////////////////////////////////////////////
+	// Workouts                                     //
+	//////////////////////////////////////////////////
+
+	'workouts_create' => array (
+		array (
+			'field' => 'name',
+			'label' => 'Name',
+			'rules' => 'required|max_length[30]'
+		),
+		array (
+			'field' => 'description',
+			'label' => 'Description',
+			'rules' => 'required|max_length[500]'
+		)
+	),
+	
+);
