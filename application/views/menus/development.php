@@ -9,6 +9,10 @@ $menu_items = array(
 		'label' => 'Exercises Create'
 	),
 	array (
+		'link' => 'exercises/view',
+		'label' => 'Exercises View'
+	),
+	array (
 		'link' => 'groups/create',
 		'label' => 'Groups Create'
 	),

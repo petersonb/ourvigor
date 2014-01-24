@@ -24,6 +24,19 @@ class Development extends CI_Controller {
 
 		$g0 = $this->create_group('Super Strength Group','Group support for super strength',2);
 
+
+		$cat = $this->create_category('Cardio');
+		$cat1 = $this->create_category('Muscular Endurance');
+
+		$ex0 = $this->create_exercise('Push-up', 'Make the ground move away from you');
+		$ex1 = $this->create_exercise('Pull-up', 'Pull the sky towards you');
+
+		$u0->save(array($ex0,$ex1));
+
+		$g0->save(array($cat,$cat1));
+
+		$g0->save(array($u1,$u2));
+
 		echo 'Done :D';
 	}
 
@@ -41,7 +54,7 @@ class Development extends CI_Controller {
 
 
 	private function create_application($name)
-		{
+	{
 
 		$app = new Application();
 		$app->name = $name;
@@ -51,6 +64,25 @@ class Development extends CI_Controller {
 		$app->save();
 
 		return $app;
+	}
+
+	private function create_category($name)
+	{
+		$cat = new Category();
+		$cat->name = $name;
+		$cat->save();
+
+		return $cat;
+	}
+
+	private function create_exercise($name, $description)
+	{
+		$ex = new Exercise();
+		$ex->name = $name;
+		$ex->description = $description;
+		$ex->save();
+
+		return $ex;
 	}
 
 	private function create_group($name, $description, $visibility)

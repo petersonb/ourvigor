@@ -85,10 +85,25 @@ class Exercises extends CI_Controller {
 			redirect('users/login');
 		}
 
+		$this->load->library('table');
+
 		$user = new User($this->user_id);
 
 		$exercises = $user->exercise;
 		$exercises->get();
+
+		foreach ($exercises as $ex)
+		{
+			$data['exercises'][$ex->id] = array(
+				'id' => $ex->id,
+				'name' => $ex->name,
+				'description' => $ex->description
+			);
+		}
+
+		$data['title'] = 'View Exercises';
+		$data['content'] = 'exercises/view';
+		$this->load->view('master', $data);
 	}
 }
 
