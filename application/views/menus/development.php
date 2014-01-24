@@ -13,6 +13,10 @@ $menu_items = array(
 		'label' => 'Exercises View'
 	),
 	array (
+		'link' => 'exercises/find',
+		'label' => 'Exercises Find'
+	),
+	array (
 		'link' => 'groups/create',
 		'label' => 'Groups Create'
 	),

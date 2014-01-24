@@ -63,14 +63,38 @@ class Exercises extends CI_Controller {
 	Allow the user to find exercises they have not
 	added to their list of exercises yet.
 	--------------------------------------------------
-	
+	*/
 	public function find()
 	{
+		$this->load->library('table');
+		$this->load->helper('form');
 
+		if ($this->input->post())
+		{
+			$search = $this->input->post('search');
+
+			// TODO do not get the current users's exercises
+			$exercises = new Exercise();
+			$exercises->or_like('name', $search);
+			$exercises->or_like('description', $search);
+			$exercises->get();
+			
+			foreach ($exercises as $ex)
+			{
+				$data['exercises'][$ex->id] = array (
+					'id' => $ex->id,
+					'name' => $ex->name,
+					'description' => $ex->description
+				);
+			}
+		}
+		
+		$data['title'] = 'Find Exercises';
+		$data['content'] = 'exercises/find';
+		$this->load->view('master', $data);
 	}
 
 	/*
-	
 	View
 	--------------------------------------------------
 
