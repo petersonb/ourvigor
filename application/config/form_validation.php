@@ -10,6 +10,24 @@
 $config = array (
 
 	//////////////////////////////////////////////////
+	// Exercises                                    //
+	//////////////////////////////////////////////////
+
+	'exercises_create' => array (
+		array (
+			'field' => 'name',
+			'label' => 'Name',
+			'rules' => 'required|max_length[32]'
+		),
+		array (
+			'field' => 'description',
+			'label' => 'Description',
+			'rules' => 'required|max_length[500]'
+		),
+	),
+			
+
+	//////////////////////////////////////////////////
 	// Groups                                       //
 	//////////////////////////////////////////////////
 

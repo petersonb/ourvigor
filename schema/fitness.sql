@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 23, 2014 at 09:30 AM
+-- Generation Time: Jan 23, 2014 at 07:20 PM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.7-pl0-gentoo
 
@@ -53,6 +53,33 @@ CREATE TABLE IF NOT EXISTS `buddies_users` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exercises`
+--
+
+DROP TABLE IF EXISTS `exercises`;
+CREATE TABLE IF NOT EXISTS `exercises` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `groups`
 --
 
@@ -62,7 +89,20 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `name` varchar(64) NOT NULL,
   `description` varchar(1024) NOT NULL,
   `visibility` tinyint(1) NOT NULL,
-  `categories` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups_categories`
+--
+
+DROP TABLE IF EXISTS `groups_categories`;
+CREATE TABLE IF NOT EXISTS `groups_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -95,6 +135,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastname` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
   `password` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_exercises`
+--
+
+DROP TABLE IF EXISTS `users_exercises`;
+CREATE TABLE IF NOT EXISTS `users_exercises` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `exercise_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

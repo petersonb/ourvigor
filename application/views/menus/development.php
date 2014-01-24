@@ -5,6 +5,10 @@ $menu_items = array(
 		'label' => "Main Home"
 	),
 	array (
+		'link' => 'exercises/create',
+		'label' => 'Exercises Create'
+	),
+	array (
 		'link' => 'groups/create',
 		'label' => 'Groups Create'
 	),
