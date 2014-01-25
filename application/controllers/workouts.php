@@ -8,6 +8,47 @@ class Workouts extends CI_Controller {
 		$this->user_id = $this->session->userdata('user_id');
 	}
 
+	
+	/*
+	Add Exercise
+	--------------------------------------------------
+	Add an exercise to a workout
+	--------------------------------------------------
+	 */
+	public function add_exercise($workout_id, $exercise_id)
+	{
+		// Must be logged in
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+		
+		$user = new User($this->user_id);
+		
+		// User must have rights to workout
+		$workout = $user->workout;
+		$workout->where('id',$workout_id);
+		$workout->get();
+
+		// User must have rights to exercise
+		$exercise = $user->exercise;
+		$exercise->where('id',$exercise_id);
+		$exercise->get();
+		
+		// If the workout and exercise belong to user
+		if ($workout->exists() and $exercise->exists())
+		{
+			$workout->save($exercise);
+			echo 'success';
+		}
+		else
+		{
+			echo 'fail';
+		}
+
+		
+	}
+
 	/*
 	Create
 	--------------------------------------------------
