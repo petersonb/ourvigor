@@ -6,7 +6,8 @@ class Exercise extends DataMapper {
 	var $has_one = array();
 	var $has_many = array(
 		'user' => array('join_table'=>'users_exercises'),
-		'workout' => array('join_table'=>'workouts_exercises')
+		'workout' => array('join_table'=>'workouts_exercises'),
+		'group'=>array('join_table'=>'groups_exercises')
 	);
 	
 	function __construct($id = NULL)

@@ -1,9 +1,16 @@
 <h1>View Workouts</h1>
 
 <?php
-foreach ($workouts as $wo)
+if (isset($workouts))
 {
-	$this->table->add_row($wo['name'],$wo['description']);
+	foreach ($workouts as $wo)
+	{
+		$this->table->add_row($wo['name'],$wo['description']);
+	}
+	echo $this->table->generate();
 }
-echo $this->table->generate();
+else
+{
+	echo '<h3> You have not created or added any workouts.</h3>';
+}
 ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2014 at 04:25 PM
+-- Generation Time: Jan 25, 2014 at 01:06 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.7-pl0-gentoo
 
@@ -76,6 +76,19 @@ CREATE TABLE IF NOT EXISTS `exercises` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `exercises_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `exercises_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exercises_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `groups`
 --
 
@@ -84,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `name` varchar(64) NOT NULL,
   `description` varchar(1024) NOT NULL,
   `visibility` tinyint(1) NOT NULL,
+  `categories` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -97,6 +111,32 @@ CREATE TABLE IF NOT EXISTS `groups_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups_exercises`
+--
+
+CREATE TABLE IF NOT EXISTS `groups_exercises` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `exercise_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groups_workouts`
+--
+
+CREATE TABLE IF NOT EXISTS `groups_workouts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `workout_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -159,6 +199,19 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_workouts`
+--
+
+CREATE TABLE IF NOT EXISTS `users_workouts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `workout_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `workouts`
 --
 
@@ -172,6 +225,19 @@ CREATE TABLE IF NOT EXISTS `workouts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `workouts_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `workouts_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `workout_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `workouts_exercises`
 --
 
@@ -179,32 +245,6 @@ CREATE TABLE IF NOT EXISTS `workouts_exercises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workout_id` int(11) NOT NULL,
   `exercise_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `workouts_groups`
---
-
-CREATE TABLE IF NOT EXISTS `workouts_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `workout_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `workouts_users`
---
-
-CREATE TABLE IF NOT EXISTS `workouts_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `workout_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

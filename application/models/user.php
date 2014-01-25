@@ -32,7 +32,8 @@ class User extends DataMapper {
 		),
 		'token',
 		'exercise' => array('join_table' => 'users_exercises'),
-		'workout' => array('join_table' => 'users_workouts')
+		'workout' => array('join_table' => 'users_workouts'),
+		'category' => array('join_table' => 'workouts_categories')
 	);
 
 	//--------------------------------------------------

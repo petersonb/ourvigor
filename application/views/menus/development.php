@@ -49,6 +49,14 @@ $menu_items = array(
 		'label' => 'User Logout'
 	),
 	array (
+		'link' => 'workouts/create',
+		'label' => 'Workouts Create'
+	),
+	array (
+		'link' => 'workouts/view',
+		'label' => 'Workouts View'
+	),
+	array (
 		'link' => 'main/log',
 		'label' => 'Development Log'
 	),
