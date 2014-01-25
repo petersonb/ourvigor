@@ -5,6 +5,16 @@ class Development extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+
+		$user = new User();
+		$user->get();
+
+		if ($user->exists())
+		{
+			echo 'setup already done';
+			die();
+		}
+		
 		$this->user_id = $this->session->userdata('user_id');
 
 		$this->universal_password = "pass";
