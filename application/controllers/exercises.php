@@ -57,7 +57,7 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
-	TODO Find
+	Find
 	--------------------------------------------------
 
 	Allow the user to find exercises they have not
@@ -88,7 +88,8 @@ class Exercises extends CI_Controller {
 				);
 			}
 		}
-		
+
+		// Load Page
 		$data['title'] = 'Find Exercises';
 		$data['content'] = 'exercises/find';
 		$this->load->view('master', $data);

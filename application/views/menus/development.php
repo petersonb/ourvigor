@@ -53,6 +53,10 @@ $menu_items = array(
 		'label' => 'Workouts Create'
 	),
 	array (
+		'link' => 'workouts/find',
+		'label' => 'Workotus Find'
+	),
+	array (
 		'link' => 'workouts/view',
 		'label' => 'Workouts View'
 	),

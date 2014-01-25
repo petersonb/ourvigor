@@ -57,6 +57,46 @@ class Workouts extends CI_Controller {
 	}
 
 	/*
+	Find
+	--------------------------------------------------
+
+	Find workouts to add to user's workouts.
+	--------------------------------------------------
+	 */
+	public function find()
+	{
+		$this->load->library('table');
+		$this->load->helper('form');
+
+		if ($this->input->post())
+		{
+			// Grab search string
+			$search = $this->input->post('search');
+			
+			// Find related
+			$workouts = new Workout();
+			$workouts->or_like('name',$search);
+			$workouts->or_like('description', $search);
+			$workouts->get();
+
+			// Load to data
+			foreach ($workouts as $workout)
+			{
+				$data['workouts'][$workout->id] = array (
+					'id' => $workout->id,
+					'name' => $workout->name,
+					'description' => $workout->description
+				);
+			}
+		}
+
+		// Load Page
+		$data['title'] = 'Find Workouts';
+		$data['content'] = 'workouts/find';
+		$this->load->view('master', $data);
+	}
+
+	/*
 	View
 	--------------------------------------------------
 
