@@ -12,7 +12,7 @@
 		
 		foreach ($javascript as $js)
 		{
-			echo "<script type=\"text/javascript\" src=\"javascript/{$js}\"></script>";
+			echo "<script type=\"text/javascript\" src=\"" . base_url("javascript/{$js}.js") . "\"></script>";
 		}
 	}
 	?>
