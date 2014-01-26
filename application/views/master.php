@@ -1,5 +1,22 @@
 <html>
     <head>
+	<?php
+	// Load javascript
+	if (isset($javascript))
+	{
+		if (!is_array($javascript))
+		{
+			$javascript = array($javascript);
+
+		}
+		
+		foreach ($javascript as $js)
+		{
+			echo "<script type=\"text/javascript\" src=\"{$js}\"></script>";
+		}
+	}
+	?>
+	
 	<title><?php if (isset($title)) echo $title; ?></title>
     </head>
     <body>
