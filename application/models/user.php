@@ -16,20 +16,24 @@ class User extends DataMapper {
 			'rules' => array('encrypt'),
 			'type'  => 'password'
 			),
+		
 		);
 
-	var $has_one = array();
+	var $has_one = array(
+
+	);
 	var $has_many = array(
 		'group'=>array('join_table'=>'users_groups'),
+		'user' => array(
+			'other_field'=>'buddy',
+			'reciprocal'=> TRUE
+		),
 		'buddy'=>array(
 			'class'=>'user',
 			'other_field'=>'user',
 			'reciprocal'=> TRUE
 		),
-		'user' => array(
-			'other_field'=>'buddy',
-			'reciprocal'=> TRUE
-		),
+
 		'token',
 		'exercise' => array('join_table' => 'users_exercises'),
 		'workout' => array('join_table' => 'users_workouts'),

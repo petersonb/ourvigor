@@ -74,6 +74,7 @@ class Workouts extends CI_Controller {
 			// No input, load page and form
 			$data['title'] = 'Create Workout';
 			$data['content'] = 'workouts/create';
+			$data['javascript'] = array('jquery','workouts/create');
 			$this->load->view('master', $data);
 		}
 		else

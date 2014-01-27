@@ -130,6 +130,13 @@ class Exercises extends CI_Controller {
 		$data['content'] = 'exercises/view';
 		$this->load->view('master', $data);
 	}
+
+	public function load_create_form()
+	{
+		$this->load->library(array('table','form_validation'));
+		$this->load->helper('form');
+		$this->load->view('forms/exercises/create');
+	}
 }
 
 /* End of file exercises.php */
