@@ -133,9 +133,7 @@ class Exercises extends CI_Controller {
 
 	public function load_create_form()
 	{
-		$this->load->library(array('table','form_validation'));
-		$this->load->helper('form');
-		$this->load->view('forms/exercises/create');
+		$this->load->view('dynamic/exercises/create');
 	}
 }
 
