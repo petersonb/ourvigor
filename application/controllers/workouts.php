@@ -70,6 +70,7 @@ class Workouts extends CI_Controller {
 		
 		if ($this->form_validation->run('workouts_create') == FALSE)
 		{
+			
 			// No input, load page and form
 			$data['title'] = 'Create Workout';
 			$data['content'] = 'workouts/create';
@@ -82,16 +83,22 @@ class Workouts extends CI_Controller {
 			echo $exercise_count;
 			$br = "<br />";
 			$count = 0;
+			$index = 1;
 			// Grab Exercises
-			while ($count < $exercise_count)
+			while ($exercise_count)
 			{
-				$ex = $this->input->post('exercise_name_'.$count);
+				$ex = $this->input->post('exercise_name_'.$index);
 				if ($ex != null)
 				{
-					echo $ex;
-					$count++;
+					echo $ex.$br;
+					echo $count . ' ' .  $exercise_count . $br;
+					$exercise_count--;
+
 				}
+				$index++;
+				
 			}
+			echo $index. ' ' . $count;
 			
 			// Grab Post Data
 			$name = $this->input->post('name');

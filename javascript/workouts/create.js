@@ -1,6 +1,6 @@
 
 var exercise_count = 0;
-var exercise_index = 0;
+var exercise_index = 1;
 
 function addExercise() {
 	$.ajax({
