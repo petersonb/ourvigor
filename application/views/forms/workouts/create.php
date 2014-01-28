@@ -11,4 +11,6 @@ echo $this->table->generate();
 
 </div>
 <input type="button" value="Add Exercise" onclick="addExercise()" />
+<input type="hidden" value="0" name="exercise_count" id="exerciseCount" />
+<input type="submit" value="Submit" />
 </form>

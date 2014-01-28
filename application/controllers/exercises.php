@@ -131,9 +131,10 @@ class Exercises extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
-	public function load_create_form()
+	public function load_create_form($index)
 	{
-		$this->load->view('dynamic/exercises/create');
+		$data['index'] = $index;
+		$this->load->view('dynamic/exercises/create',$data);
 	}
 }
 

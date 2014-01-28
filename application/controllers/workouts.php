@@ -55,7 +55,6 @@ class Workouts extends CI_Controller {
 
 	Create a new workout routine
 	--------------------------------------------------
-
 	 */
 	public function create()
 	{
@@ -79,6 +78,21 @@ class Workouts extends CI_Controller {
 		}
 		else
 		{
+			$exercise_count = $this->input->post('exercise_count');
+			echo $exercise_count;
+			$br = "<br />";
+			$count = 0;
+			// Grab Exercises
+			while ($count < $exercise_count)
+			{
+				$ex = $this->input->post('exercise_name_'.$count);
+				if ($ex != null)
+				{
+					echo $ex;
+					$count++;
+				}
+			}
+			
 			// Grab Post Data
 			$name = $this->input->post('name');
 			$description = $this->input->post('description');
@@ -94,7 +108,6 @@ class Workouts extends CI_Controller {
 
 			// View all workouts for user
 			// TODO view this workout?
-			redirect('workouts/view');
 		}
 	}
 
