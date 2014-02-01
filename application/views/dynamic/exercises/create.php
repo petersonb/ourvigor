@@ -1,11 +1,12 @@
-<table id="exercise_<?php echo $index ?>">
+<table id="exercise_<?php echo $index; ?>">
+    <input type="hidden" name="exercises[<?php echo $index; ?>]" value="<?php echo $index; ?>" />
     <tr>
 	<td>Name <?php echo $index; ?></td>
-	<td><input type="text" name="exercise_name_<?php echo $index; ?>" /></td>
+	<td><input type="text" name="exercise_names[<?php echo $index; ?>]" value="<?php echo $index; ?>" /></td>
     </tr>
     <tr>
 	<td>Description</td>
-	<td><input type="text" name="description_<?php echo $index; ?>" /></td>
+	<td><input type="text" name="exercise_descriptions[<?php echo $index; ?>]" /></td>
     </tr>
     <tr>
 	<td colspan="2">Measure</td>

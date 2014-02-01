@@ -79,26 +79,9 @@ class Workouts extends CI_Controller {
 		}
 		else
 		{
-			$exercise_count = $this->input->post('exercise_count');
-			echo $exercise_count;
-			$br = "<br />";
-			$count = 0;
-			$index = 1;
-			// Grab Exercises
-			while ($exercise_count)
-			{
-				$ex = $this->input->post('exercise_name_'.$index);
-				if ($ex != null)
-				{
-					echo $ex.$br;
-					echo $count . ' ' .  $exercise_count . $br;
-					$exercise_count--;
-
-				}
-				$index++;
-				
-			}
-			echo $index. ' ' . $count;
+			$exercises = $this->input->post('exercises');
+			$exercise_names = $this->input->post('exercise_names');
+			$exercise_descriptions = $this->input->post('exercise_descriptions');
 			
 			// Grab Post Data
 			$name = $this->input->post('name');
@@ -112,6 +95,15 @@ class Workouts extends CI_Controller {
 			$workout->name = $name;
 			$workout->description = $description;
 			$workout->save($user);
+
+
+			foreach ($exercises as $exercise_id)
+			{
+				$ex = new Exercise();
+				$ex->name = $exercise_names[$exercise_id];
+				$ex->description = $exercise_descriptions[$exercise_id];
+				$ex->save(array($user,$workout));
+			}
 
 			// View all workouts for user
 			// TODO view this workout?
