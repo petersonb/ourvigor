@@ -67,6 +67,22 @@ class Workouts extends CI_Controller {
 		// Load libraries and helpers
 		$this->load->library(array('form_validation', 'table'));
 		$this->load->helper('form');
+
+		
+		// Post input for exercises must be checked for both
+		// valid and invalid form validation
+		$exercises = $this->input->post('exercises');
+		if ($exercises)
+		{
+			$exercise_names = $this->input->post('exercise_names');
+			$exercise_descriptions = $this->input->post('exercise_descriptions');
+
+			foreach ($exercises as $exercise)
+			{
+				
+			}
+		}
+		
 		
 		if ($this->form_validation->run('workouts_create') == FALSE)
 		{
@@ -79,9 +95,7 @@ class Workouts extends CI_Controller {
 		}
 		else
 		{
-			$exercises = $this->input->post('exercises');
-			$exercise_names = $this->input->post('exercise_names');
-			$exercise_descriptions = $this->input->post('exercise_descriptions');
+
 			
 			// Grab Post Data
 			$name = $this->input->post('name');

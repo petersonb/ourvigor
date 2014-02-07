@@ -113,6 +113,11 @@ $config = array (
 			'field' => 'description',
 			'label' => 'Description',
 			'rules' => 'required|max_length[500]'
+		),
+		array (
+			'field' => 'exercises',
+			'label' => 'Exercises',
+			'rules' => 'required'
 		)
 	),
 	
