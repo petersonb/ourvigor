@@ -68,25 +68,28 @@ class Workouts extends CI_Controller {
 		$this->load->library(array('form_validation', 'table'));
 		$this->load->helper('form');
 
-		
-		// Post input for exercises must be checked for both
-		// valid and invalid form validation
-		$exercises = $this->input->post('exercises');
-		if ($exercises)
-		{
-			$exercise_names = $this->input->post('exercise_names');
-			$exercise_descriptions = $this->input->post('exercise_descriptions');
-
-			foreach ($exercises as $exercise)
-			{
-				
-			}
-		}
-		
-		
 		if ($this->form_validation->run('workouts_create') == FALSE)
 		{
+			$exercises = $this->input->post('exercises');
+			$names = $this->input->post('exercise_names');
+			$descriptions = $this->input->post('exercise_descriptions');
+
+			$index = 0;
 			
+			if ($exercises)
+			{
+				foreach ($exercises as $exercise)
+				{
+					$index ++;
+					$data['exercises'][$index] = array (
+						'index' => $index,
+						'name' => $names[$exercise],
+						'description' => $descriptions[$exercise]
+					);
+				}
+			}
+
+			$data['exercise_index'] = $index;
 			// No input, load page and form
 			$data['title'] = 'Create Workout';
 			$data['content'] = 'workouts/create';
@@ -95,32 +98,7 @@ class Workouts extends CI_Controller {
 		}
 		else
 		{
-
 			
-			// Grab Post Data
-			$name = $this->input->post('name');
-			$description = $this->input->post('description');
-			
-			// Get current user
-			$user = new User($this->user_id);
-
-			// Create new workout and save to current user
-			$workout = new Workout();
-			$workout->name = $name;
-			$workout->description = $description;
-			$workout->save($user);
-
-
-			foreach ($exercises as $exercise_id)
-			{
-				$ex = new Exercise();
-				$ex->name = $exercise_names[$exercise_id];
-				$ex->description = $exercise_descriptions[$exercise_id];
-				$ex->save(array($user,$workout));
-			}
-
-			// View all workouts for user
-			// TODO view this workout?
 		}
 	}
 

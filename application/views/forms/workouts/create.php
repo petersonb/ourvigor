@@ -8,9 +8,17 @@ echo $this->table->generate();
 ?>
 <h3>Add Exercises</h3>
 <div id="exerciseTable">
-
+<?php
+if (isset($exercises))
+{
+	foreach ($exercises as $exercise)
+	{
+		$this->load->view('dynamic/exercises/create.php', $exercise);
+	}
+}
+?>
 </div>
 <input type="button" value="Add Exercise" onclick="addExercise()" />
-<input type="hidden" value="0" name="exercise_count" id="exerciseCount" />
+<input type="hidden" value="<?php echo $exercise_index; ?>" name="exercise_count" id="exerciseCount" />
 <input type="submit" value="Submit" />
 </form>

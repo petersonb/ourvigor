@@ -25,5 +25,6 @@ function updateExerciseCount()
 }
 
 $(document).ready( function () {
-    
+    exercise_count = Number($('#exerciseCount').val());
+    exercise_index = Number($('#exerciseCount').val()) + 1;
 });
