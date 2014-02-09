@@ -215,9 +215,26 @@ class Users extends CI_Controller {
 		redirect('main');
 	}
 
-	
+
+	/*
+	Confirmation Email
+	--------------------------------------------------
+	Create a new email confirmation requirement and
+	send to the user.
+
+	The user will follow the link in the email in
+	order to confirm their email address. There is an
+	attached code to the URL parameters that will
+	confirm their email is valid.
+	--------------------------------------------------
+	*/
 	public function confirmation_email()
 	{
+		// TODO : Make sure this is the right way to do this
+		if (!$this->user_id)
+		{
+			return false;
+		}
 		$this->load->library('email');
 
 		$user = new User($this->user_id);
@@ -236,6 +253,7 @@ class Users extends CI_Controller {
 		$this->email->send();
 
 		echo $this->email->print_debugger();
+		return true;
 	}
 
 
