@@ -17,6 +17,8 @@ class Main extends CI_Controller {
 	 */
 	public function index()
 	{
+		$this->load->helper('form');
+		
 		$data['content'] = array('main/home');
 		$this->load->view('master',$data);
 	}
