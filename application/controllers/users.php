@@ -228,7 +228,7 @@ class Users extends CI_Controller {
 	confirm their email is valid.
 	--------------------------------------------------
 	*/
-	public function confirmation_email()
+	private function send_confirmation_email()
 	{
 		// TODO : Make sure this is the right way to do this
 		if (!$this->user_id)
@@ -236,9 +236,15 @@ class Users extends CI_Controller {
 			return false;
 		}
 		$this->load->library('email');
+		$this->load->helper('keygen');
 
 		$user = new User($this->user_id);
 
+		$code = new EmailConfirmation();
+		$code->code = keygen_generate(32);
+		$code->secret_code = $user->email;
+		$code->save($user);
+		
 		$data['firstname'] = $user->firstname;
 		$data['lastname'] = $user->lastname;
 		$data['code'] = 'hi';
