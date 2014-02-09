@@ -241,7 +241,7 @@ class Users extends CI_Controller {
 
 		$data['firstname'] = $user->firstname;
 		$data['lastname'] = $user->lastname;
-		$data['confirm_code'] = 'hi';
+		$data['code'] = 'hi';
 		$data['content'] = 'users/confirmation_email';
 
 		$message = $this->load->view('email_master',$data, true);
