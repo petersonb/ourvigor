@@ -1,0 +1,9 @@
+<html>
+    <head>
+    </head>
+</html>
+<body>
+    <?php
+    $this->load->view('email/'.$content);
+    ?>
+</body>

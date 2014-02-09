@@ -135,6 +135,7 @@ class Users extends CI_Controller {
 				// TODO : Send confirmation email
 				
 				$this->session->set_userdata('user_id',$user->id);
+				$this->user_id = $user->id;
 				redirect('users/index');
 			}
 			else
@@ -212,6 +213,29 @@ class Users extends CI_Controller {
 		$this->session->unset_userdata('user_id');
 
 		redirect('main');
+	}
+
+	
+	public function confirmation_email()
+	{
+		$this->load->library('email');
+
+		$user = new User($this->user_id);
+
+		$data['firstname'] = $user->firstname;
+		$data['lastname'] = $user->lastname;
+		$data['confirm_code'] = 'hi';
+		$data['content'] = 'users/confirmation_email';
+
+		$message = $this->load->view('email_master',$data, true);
+
+		$this->email->from('bepeterson@petersonb.com', 'Brett Peterson');
+		$this->email->to($user->email);
+		$this->email->subject('Fitness Confirmation Email');
+		$this->email->message($message);
+		$this->email->send();
+
+		echo $this->email->print_debugger();
 	}
 
 
