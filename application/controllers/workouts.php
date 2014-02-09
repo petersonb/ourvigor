@@ -54,6 +54,20 @@ class Workouts extends CI_Controller {
 	--------------------------------------------------
 
 	Create a new workout routine
+
+	The page that feeds into this controller has
+	dynamic exercise objects. These objects are read
+	in through post data through the following fields.
+
+	exercises - javascript assigned id's for each
+	  exercise to associate the names and descriptions
+
+	exercise_names - array of exercises indexed by the
+	  above id's
+
+	exercise_descriptions - array of exercise
+	  descriptions indexed by the above id's
+
 	--------------------------------------------------
 	 */
 	public function create()
@@ -98,7 +112,32 @@ class Workouts extends CI_Controller {
 		}
 		else
 		{
+			// Grab workout information
+			$workout_name = $this->input->post('name');
+			$workout_description = $this->input->post('description');
+			$exercises = $this->input->post('exercises');
+
+			// Create and save workout object
+			$workout = new Workout();
+			$workout->name = $workout_name;
+			$workout->description = $workout_description;
+
 			
+			$workout->save();
+			
+			if ($exercises)
+			{
+				$exercise_names = $this->input->post('exercise_names');
+				$exercise_descriptions = $this->input->post('exercise_descriptions');
+				
+				foreach ($exercises as $exercise_id)
+				{
+					$exercise = new Exercise();
+					$exercise->name = $exercise_names[$exercise_id];
+					$exercise->description = $exercise_descriptions[$exercise_id];
+					$exercise->save($workout);
+				}
+			}
 		}
 	}
 
