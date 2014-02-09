@@ -17,14 +17,6 @@ class Main extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->library('form_validation');
-		
-		$user = new User(1);
-		$user2 = new User(3);
-
-		$user->save($user2);
-		$user2->save($user);
-
 		$data['content'] = array('main/home');
 		$this->load->view('master',$data);
 	}

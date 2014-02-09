@@ -1,5 +1,5 @@
 <?php
 
 $config = array (
-	'mailtype' = 'html'
+	'mailtype' => 'html'
 );
