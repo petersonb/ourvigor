@@ -14,6 +14,7 @@ class Users extends CI_Controller {
 	--------------------------------------------------
 
 	The main page for users.
+	
 	--------------------------------------------------
 	 */
 	public function index()
@@ -36,6 +37,142 @@ class Users extends CI_Controller {
 		// Generate page
 		$data['title'] = 'Users';
 		$data['content'] = 'users/main';
+		
+		$this->load->view('master',$data);
+	}
+
+	/*
+	Confirm Account
+	--------------------------------------------------
+
+	This method allows users to confirm their email
+	address associated with their account.
+	
+	--------------------------------------------------
+	*/
+	public function confirm_account()
+	{
+
+		// TODO : HOLY SHIT PLEASE CLEAN UP THIS CODE (CONFIRM ACCOUNT)
+		$this->load->library('form_validation');
+		
+		$data['success'] = FALSE;
+		
+		if ($this->user_id)
+		{
+			$email = $this->input->get('email');
+			$code = $this->input->get('confirm_code');
+			// Get user
+			$user = new User($this->user_id);
+			
+			// Get user's email confirmation
+			$econf = $user->emailconfirmation;
+			$econf->get();
+			
+			// IF  econf actually exists
+			// AND econf code matches provided code
+			// AND econf email matches users email
+			if($econf->exists() && $econf->code === $code && $econf->email === $user->email)
+			{
+				$econf->delete();
+				$data['success'] = TRUE;
+			}
+			else
+			{
+				redirect('users');
+			}
+			$data['logged_in'] = TRUE;
+		}
+		elseif ($this->form_validation->run('users_confirm_account'))
+		{
+			// If not logged in, and data has been posted
+			$email = $this->input->post('email');
+			$code  = $this->input->post('confirm_code');
+			$password = $this->input->post('password');
+
+			// Make sure email and password are valid login
+			if ($this->valid_login($email, $password))
+			{
+				// Get user
+				$user = new User();
+				$user->where('email', $email);
+				$user->get();
+
+				// Log user in
+				$this->session->set_userdata('user_id',$user->id);
+				$this->user_id = $user->id;
+				
+				// Get user's email confirmation
+				$econf = $user->emailconfirmation;
+				$econf->get();
+				
+				// IF  econf actually exists
+				// AND econf code matches provided code
+				// AND econf email matches users email
+				if($econf->exists() && $econf->code === $code && $econf->email === $user->email)
+				{
+					$econf->delete();
+					$data['success'] = TRUE;
+				}
+				
+				$data['logged_in'] = TRUE;
+			}
+		}
+		else
+		{
+			// Else: if not logged in, and not posting,
+			//  there must be get data in url, or post
+			if (!$this->input->post())
+			{
+				$email = $this->input->get('email');
+				$confirm_code = $this->input->get('confirm_code');
+			}
+			else
+			{
+				$email = $this->input->post('email');
+				$confirm_code = $this->input->post('confirm_code');
+			}
+
+			$econf = new EmailConfirmation();
+			$econf->where('email',$email);
+			$econf->where('code', $confirm_code);
+			$econf->get();
+
+			if (!$econf->exists())
+			{
+				echo 'econf did not exist';
+				die();
+				redirect('users/login');
+			}
+
+			$user = $econf->user;
+			$user->get();
+
+			// Make suer user email is same as given email
+			if ($user->email !== $email)
+			{
+				
+				echo "{$user->email} does not match {$email}";
+				redirect('users/login');
+			}
+
+			$data['user'] = array(
+				'firstname' => $user->firstname,
+				'email' => $user->email
+			);
+			
+			// if not logged in
+			$this->load->helper('form');
+			
+			$data['logged_in'] = FALSE;
+			$data['email'] = $email;
+			$data['confirm_code'] = $confirm_code;
+
+		}
+		$data['content'] = 'users/confirm_account';
+
+		$data['email'] = $email;
+	
 		
 		$this->load->view('master',$data);
 	}
@@ -97,6 +234,7 @@ class Users extends CI_Controller {
 	lastname  - same as first
 	password  - required | len 8+
 	confirm   - same as password
+	
 	--------------------------------------------------
 	 */
 	public function register()
@@ -152,6 +290,7 @@ class Users extends CI_Controller {
 
 	A login page, or where you can post data to log in
 	from other parts of the site.
+	
 	--------------------------------------------------
 	 */
 	public function login()
@@ -206,6 +345,7 @@ class Users extends CI_Controller {
 
 	This method logs out the current user by unsetting
 	the current userdata 'user_id'.
+	
 	--------------------------------------------------
 	 */
 	public function logout()
@@ -219,6 +359,7 @@ class Users extends CI_Controller {
 	/*
 	Confirmation Email
 	--------------------------------------------------
+	
 	Create a new email confirmation requirement and
 	send to the user.
 
@@ -226,6 +367,7 @@ class Users extends CI_Controller {
 	order to confirm their email address. There is an
 	attached code to the URL parameters that will
 	confirm their email is valid.
+	
 	--------------------------------------------------
 	*/
 	public function send_confirmation_email()
@@ -277,6 +419,8 @@ class Users extends CI_Controller {
 	information provided is valid.
 
 	returns True if user is allowed to log in
+	
+	--------------------------------------------------
 	 */
 	private function valid_login($email, $password)
 	{

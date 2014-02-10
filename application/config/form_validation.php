@@ -57,6 +57,14 @@ $config = array (
 	//////////////////////////////////////////////////
 	// Users                                        //
 	//////////////////////////////////////////////////
+
+	'users_confirm_account' => array (
+		array (
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => 'required'
+		)
+	),
 	
 	'users_login' => array (
 		array (
