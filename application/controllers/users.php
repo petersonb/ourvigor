@@ -228,7 +228,7 @@ class Users extends CI_Controller {
 	confirm their email is valid.
 	--------------------------------------------------
 	*/
-	private function send_confirmation_email()
+	public function send_confirmation_email()
 	{
 		// TODO : Make sure this is the right way to do this
 		if (!$this->user_id)
@@ -238,18 +238,23 @@ class Users extends CI_Controller {
 		$this->load->library('email');
 		$this->load->helper('keygen');
 
+		// Grab logged in user
 		$user = new User($this->user_id);
 
-		$code = new EmailConfirmation();
-		$code->code = keygen_generate(32);
-		$code->secret_code = $user->email;
-		$code->save($user);
+		// Create a new EmailConfirmation
+		$econf = new EmailConfirmation();
+		$econf->code = keygen_generate(32);
+		$econf->email = $user->email;
+		$econf->save($user);
 		
-		$data['firstname'] = $user->firstname;
-		$data['lastname'] = $user->lastname;
-		$data['code'] = 'hi';
-		$data['content'] = 'users/confirmation_email';
+		$data['user'] = array(
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname,
+		);
 
+		$data['link'] = base_url('users/confirm_account') . '?email=' . urlencode($user->email) . '&code=' . urlencode($econf->code);
+		
+		$data['content'] = 'users/confirmation_email';								     
 		$message = $this->load->view('email_master',$data, true);
 
 		$this->email->from('bepeterson@petersonb.com', 'Brett Peterson');
@@ -258,7 +263,7 @@ class Users extends CI_Controller {
 		$this->email->message($message);
 		$this->email->send();
 
-		echo $this->email->print_debugger();
+		echo $message;
 		return true;
 	}
 
