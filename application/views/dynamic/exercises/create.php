@@ -1,7 +1,7 @@
 <table id="exercise_<?php echo $index; ?>">
     <input type="hidden" name="exercises[<?php echo $index; ?>]" value="<?php echo $index; ?>" />
     <tr>
-	<td>Name <?php echo $index; ?></td>
+	<td>Name</td>
 	<td><input type="text" name="exercise_names[<?php echo $index; ?>]" value="<?php if (isset($name)) echo $name;?>" /></td>
     </tr>
     <tr>
