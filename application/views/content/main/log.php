@@ -1,5 +1,6 @@
 <h1>Development Log</h1>
+<pre>
 <?php
-
-foreach ($log as $line)
-	echo $line.'<br /';
+echo $log;
+?>
+</pre>

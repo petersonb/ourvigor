@@ -7,4 +7,7 @@
 	<li><a href="<?php echo base_url('workouts/view'); ?>">View</a></li>
     </ul>
     <li>About</li>
+    <ul>
+	<li><a href="<?php echo base_url('main/log'); ?>">Development Log</a></li>
+    </ul>
 </ul>

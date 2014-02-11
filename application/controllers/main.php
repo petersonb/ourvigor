@@ -38,8 +38,8 @@ class Main extends CI_Controller {
 	{
 
 
-		$log = shell_exec('git log');
-		$data['log'] = explode('commit',$log);
+		$log = shell_exec('git log --pretty=format:"%ad %s" --date=short');
+		$data['log'] = $log;
 
 		$data['title'] = 'Git Log';
 		$data['content'] = 'main/log';

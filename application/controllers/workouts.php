@@ -215,12 +215,7 @@ class Workouts extends CI_Controller {
 		$workouts->get();
 
 		// If this workout does not exist, get all workouts
-		if (!$workouts->exists())
-		{
-			$workouts = $user->workout;
-			$workouts->get();
-		}
-		else
+		if ($workouts->exists() && $workout_id)
 		{
 			// get exercises for this workout
 			$exercises = $workouts->exercise;
@@ -234,6 +229,11 @@ class Workouts extends CI_Controller {
 					'description' => $exercise->description
 				);
 			}
+		}
+		else
+		{
+			$workouts = $user->workout;
+			$workouts->get();
 		}
 			
 
