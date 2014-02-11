@@ -112,6 +112,8 @@ class Workouts extends CI_Controller {
 		}
 		else
 		{
+			$user = new User($this->user_id);
+			
 			// Grab workout information
 			$workout_name = $this->input->post('name');
 			$workout_description = $this->input->post('description');
@@ -123,7 +125,7 @@ class Workouts extends CI_Controller {
 			$workout->description = $workout_description;
 
 			
-			$workout->save();
+			$workout->save($user);
 			
 			if ($exercises)
 			{
@@ -138,6 +140,7 @@ class Workouts extends CI_Controller {
 					$exercise->save($workout);
 				}
 			}
+			redirect('workouts/view');
 		}
 	}
 
@@ -188,7 +191,7 @@ class Workouts extends CI_Controller {
 	User can view all of their workouts.
 	--------------------------------------------------
 	 */
-	public function view()
+	public function view($workout_id = null)
 	{
 		// User Login
 		if (!$this->user_id)
@@ -197,13 +200,41 @@ class Workouts extends CI_Controller {
 		}
 
 		$this->load->library('table');
-		
-		// Grab user
+
 		$user = new User($this->user_id);
 
 		// Grab user's workouts
 		$workouts = $user->workout;
+
+		// If an id is provided, get one particular workout
+		if ($workout_id)
+		{
+			$workouts->where('id', $workout_id);
+		}
 		$workouts->get();
+
+		// If this workout does not exist, get all workouts
+		if (!$workouts->exists())
+		{
+			$workouts = $user->workout;
+			$workouts->get();
+		}
+		else
+		{
+			// get exercises for this workout
+			$exercises = $workouts->exercise;
+			$exercises->get();
+
+			foreach ($exercises as $exercise)
+			{
+				$data['exercises'][$exercise->id] = array (
+					'id' => $exercise->id,
+					'name' => $exercise->name,
+					'description' => $exercise->description
+				);
+			}
+		}
+			
 
 		// Build workout output
 		foreach ($workouts as $wo)
