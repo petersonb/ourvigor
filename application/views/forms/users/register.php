@@ -23,5 +23,6 @@
     <tr>
 	<td colspan="2"><?php echo form_submit('submit','Register'); ?></td>
     </tr>
+</table>
 </form>
 
