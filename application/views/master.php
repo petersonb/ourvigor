@@ -29,7 +29,7 @@
 	    </div>
 	    <div id="leftCol">
 		<div id="menuCol">
-		    <?php $this->load->view('menus/menu_bar.php'); ?>
+		    <?php $this->load->view('menus/menu_col.php'); ?>
 		</div>
 	    </div>
 	    <div id="content">

@@ -193,6 +193,7 @@ class Workouts extends CI_Controller {
 	 */
 	public function view($workout_id = null)
 	{
+		// TODO : This method needs cleaning and work (workouts/view)
 		// User Login
 		if (!$this->user_id)
 		{
