@@ -17,6 +17,10 @@ class Main extends CI_Controller {
 	 */
 	public function index()
 	{
+		if ($this->user_id)
+		{
+			redirect('users');
+		}
 		$this->load->helper('form');
 		
 		$data['content'] = array('main/home');
@@ -39,6 +43,14 @@ class Main extends CI_Controller {
 
 		$data['title'] = 'Git Log';
 		$data['content'] = 'main/log';
+		$this->load->view('master',$data);
+	}
+
+	public function style()
+	{
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+		$data['content'] = 'style';
 		$this->load->view('master',$data);
 	}
 }
