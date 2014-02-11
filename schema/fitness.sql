@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 09, 2014 at 03:22 AM
+-- Generation Time: Feb 11, 2014 at 02:44 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.7-pl0-gentoo
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 CREATE TABLE IF NOT EXISTS `emailconfirmations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(32) NOT NULL,
-  `secret_code` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
