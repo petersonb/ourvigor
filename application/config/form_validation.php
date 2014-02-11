@@ -17,12 +17,12 @@ $config = array (
 		array (
 			'field' => 'name',
 			'label' => 'Name',
-			'rules' => 'required|max_length[32]|strip_tags'
+			'rules' => 'required|max_length[32]'
 		),
 		array (
 			'field' => 'description',
 			'label' => 'Description',
-			'rules' => 'required|max_length[500]|strip_tags'
+			'rules' => 'required|max_length[500]'
 		),
 	),
 			
@@ -35,17 +35,17 @@ $config = array (
 		array (
 			'field' => 'name',
 			'label' => 'Group Name',
-			'rules' => 'required|min_length[3]|max_length[64]|strip_tags',
+			'rules' => 'required|min_length[3]|max_length[64]',
 		),
 		array (
 			'field' => 'description',
 			'label' => 'Description',
-			'rules' => 'required|max_length[1000]|strip_tags',
+			'rules' => 'required|max_length[1000]',
 		),
 		array (
 			'field' => 'visibility',
 			'label' => 'Visibility',
-			'rules' => 'required|strip_tags'
+			'rules' => 'required'
 		),
 		array (
 			'field' => 'category',
@@ -62,7 +62,7 @@ $config = array (
 		array (
 			'field' => 'password',
 			'label' => 'Password',
-			'rules' => 'required|strip_tags'
+			'rules' => 'required'
 		)
 	),
 	
@@ -70,12 +70,12 @@ $config = array (
 		array (
 			'field' => 'email',
 			'label' => 'Email',
-			'rules' => 'required|strip_tags'
+			'rules' => 'required'
 		),
 		array (
 			'field' => 'password',
 			'label' => 'Password',
-			'rules' => 'required|strip_tags'
+			'rules' => 'required'
 		)
 	),
 	
@@ -83,27 +83,27 @@ $config = array (
 		array (
 			'field' => 'email',
 			'label' => 'Email',
-			'rules' => 'valid_email|required|is_unique[users.email]|strip_tags'
+			'rules' => 'valid_email|required|is_unique[users.email]'
 		),
 		array (
 			'field' => 'firstname',
 			'label' => 'First Name',
-			'rules' => 'required|min_length[2]|max_length[64]|alpha_dash|strip_tags'
+			'rules' => 'required|min_length[2]|max_length[64]|alpha_dash'
 		),
 		array (
 			'field' => 'lastname',
 			'label' => 'Last Name',
-			'rules' => 'required|min_length[2]|max_length[64]|alpha_dash|strip_tags'
+			'rules' => 'required|min_length[2]|max_length[64]|alpha_dash'
 		),
 		array (
 			'field' => 'password',
 			'label' => 'Password',
-			'rules' => 'required|min_length[8]|strip_tags'
+			'rules' => 'required|min_length[8]'
 		),
 		array (
 			'field' => 'confirm',
 			'label' => 'Confirm',
-			'rules' => 'matches[password]|strip_tags'
+			'rules' => 'matches[password]'
 		)
 	),
 
@@ -115,17 +115,17 @@ $config = array (
 		array (
 			'field' => 'name',
 			'label' => 'Name',
-			'rules' => 'required|max_length[30]|strip_tags'
+			'rules' => 'required|max_length[30]'
 		),
 		array (
 			'field' => 'description',
 			'label' => 'Description',
-			'rules' => 'required|max_length[500]|strip_tags'
+			'rules' => 'required|max_length[500]'
 		),
 		array (
 			'field' => 'exercises',
 			'label' => 'Exercises',
-			'rules' => 'required|strip_tags'
+			'rules' => 'required'
 		)
 	),
 	
