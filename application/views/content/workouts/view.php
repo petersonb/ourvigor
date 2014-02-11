@@ -6,7 +6,8 @@
 	
 	foreach ($workouts as $wo)
 	{
-		$this->table->add_row($wo['name'],$wo['description']);
+		$workout_link = sprintf('<a href="%s">%s</a>',base_url('workouts/view/'.$wo['id']),$wo['name']);
+		$this->table->add_row($workout_link,$wo['description']);
 	}
 	$this->table->set_heading('Workout', 'Description');
 	echo $this->table->generate();
