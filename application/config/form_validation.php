@@ -55,6 +55,63 @@ $config = array (
 	),
 
 	//////////////////////////////////////////////////
+	// Profiles                                     //
+	//////////////////////////////////////////////////
+
+	'profiles_edit' => array(
+		array (
+			'field' => 'gender',
+			'label' => 'Gender',
+			'rules' => 'required|max_lenght[3]'
+		),
+		array (
+			'field' => 'date_of_birth',
+			'label' => 'Birth Date',
+			'rules' => 'alpha_dash|exact_length[10]'
+		),
+		array (
+			'field' => 'phone',
+			'label' => 'Phone',
+			'rules' => 'min_length[7]'
+		),
+		array (
+			'field' => 'phone_ext',
+			'label' => 'Phone Extension',
+			'rules' => 'max_length[16]',
+		),
+		array (
+			'field' => 'street_1',
+			'label' => 'Street 1',
+			'rules' => 'max_length[64]'
+		),
+		array (
+			'field' => 'street_2',
+			'label' => 'Street 2',
+			'rules' => 'max_length[64]',
+		),
+		array (
+			'field' => 'city',
+			'label' => 'City',
+			'rules' => 'max_length[32]',
+		),
+		array (
+			'field' => 'state',
+			'label' => 'Sate/Province',
+			'rules' => 'max_length[32]'
+		),
+		array (
+			'field' => 'zip',
+			'label' => 'Zip',
+			'rules' => 'max_length[16]'
+		),
+		array (
+			'field' => 'about',
+			'label' => 'About',
+			'rules' => 'max_length[1000]'
+		)
+	),
+
+	//////////////////////////////////////////////////
 	// Users                                        //
 	//////////////////////////////////////////////////
 

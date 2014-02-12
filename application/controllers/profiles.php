@@ -19,7 +19,8 @@ class Profiles extends CI_Controller {
 		{
 			redirect('users/login');
 		}
-		$this->load->library('form_validation');
+		$this->load->library(array('form_validation','table'));
+		$this->load->helper('form');
 
 		if ($this->form_validation->run('profiles_edit') == FALSE)
 		{
@@ -31,18 +32,36 @@ class Profiles extends CI_Controller {
 			$profile->get();
 			
 			// Pack existing profile info for content
-			$data['profile'] = array(
-				'gender' => $profile->gender,
-				'date_of_birth' => $profile->date_of_birth,
-				'phone' => $profile->phone,
-				'phone_ext' => $profile->phone_ext,
-				'address_street_1' => $profile->address_street_1,
-				'address_street_2' => $profile->address_street_2,
-				'address_city' => $profile->address_city,
-				'address_state' => $profile->address_state,
-				'address_zip' => $profile->address_zip,
-				'about' => $profile->about
-			);
+			if ($this->input->post())
+			{
+				$data['profile'] = array (
+					'gender' => set_value('gender'),
+					'date_of_birth' => set_value('date_of_birth'),
+					'phone' => set_value('phone'),
+					'phone_ext' => set_value('phone_ext'),
+					'address_street_1' => set_value('street_1'),
+					'address_street_2' => set_value('street_2'),
+					'address_city' => set_value('city'),
+					'address_state' => set_value('state'),
+					'address_zip' => set_value('zip'),
+					'about' => set_value('about')
+				);
+			}
+			else
+			{
+				$data['profile'] = array (
+					'gender' => $profile->gender,
+					'date_of_birth' => $profile->date_of_birth,
+					'phone' => $profile->phone,
+					'phone_ext' => $profile->phone_ext,
+					'address_street_1' => $profile->address_street_1,
+					'address_street_2' => $profile->address_street_2,
+					'address_city' => $profile->address_city,
+					'address_state' => $profile->address_state_province,
+					'address_zip' => $profile->address_zip,
+					'about' => $profile->about
+				);
+			}
 
 			// Pack user information for content
 			$data['user'] = array (
@@ -64,9 +83,9 @@ class Profiles extends CI_Controller {
 			$phone = $this->input->post('phone');
 			$phone_ext = $this->input->post('phone_ext');
 			$address_street_1 = $this->input->post('street_1');
-			$address_street_2 = $this->input->post('strett_2');
+			$address_street_2 = $this->input->post('street_2');
 			$address_city = $this->input->post('city');
-			$address_state = $this->input->ost('state');
+			$address_state = $this->input->post('state');
 			$address_zip = $this->input->post('zip');
 			$about = $this->input->post('about');
 
@@ -79,12 +98,11 @@ class Profiles extends CI_Controller {
 			$profile->get();
 
 			// If no existing profile
-			/* TODO : Don't think I need this, double check
+			
 			if (!$profile->exists())
 			{
 				$profile = new Profile();
 			}
-			*/
 
 			// Save Profile
 			$profile->gender = $gender;
@@ -94,11 +112,11 @@ class Profiles extends CI_Controller {
 			$profile->address_street_1 = $address_street_1;
 			$profile->address_street_2 = $address_street_2;
 			$profile->address_city = $address_city;
-			$profile->address_state = $address_state;
+			$profile->address_state_province = $address_state;
 			$profile->address_zip = $address_zip;
 			$profile->about = $about;
 
-			$user->save($profile);
+			$profile->save($user);
 		}
 	}
 }
