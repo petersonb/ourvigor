@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 11, 2014 at 02:44 AM
+-- Generation Time: Feb 12, 2014 at 05:35 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.7-pl0-gentoo
 
@@ -151,6 +151,28 @@ CREATE TABLE IF NOT EXISTS `groups_workouts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `workout_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profiles`
+--
+
+CREATE TABLE IF NOT EXISTS `profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `gender` varchar(1) NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `phone_ext` varchar(16) NOT NULL,
+  `address_street_1` varchar(64) NOT NULL,
+  `address_street_2` varchar(64) NOT NULL,
+  `address_city` varchar(32) NOT NULL,
+  `address_state_province` varchar(32) NOT NULL,
+  `address_zip` varchar(16) NOT NULL,
+  `about` varchar(1012) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
