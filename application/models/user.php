@@ -5,7 +5,6 @@ User Model
 
 This is the model used represent users.
  */
-
 class User extends DataMapper {
 
 	// Require the password to be encrypted
@@ -20,7 +19,8 @@ class User extends DataMapper {
 		);
 
 	var $has_one = array(
-		'emailconfirmation'
+		'emailconfirmation',
+		'profile'
 	);
 	var $has_many = array(
 		'group'=>array('join_table'=>'users_groups'),
