@@ -45,6 +45,10 @@ body {
     list-style : none;
 }
 
+#menuCol ul ul {
+    padding-left : 2em;
+}
+
 /************************************************/
 
 #contentMenuSep {
