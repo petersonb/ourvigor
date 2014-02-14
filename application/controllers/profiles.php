@@ -119,6 +119,44 @@ class Profiles extends CI_Controller {
 			$profile->save($user);
 		}
 	}
+
+	public function upload_profile_picture()
+	{
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+
+		$file_name = "profile_pic_{$this->user_id}.png";
+		
+		$upload_config = array(
+			'upload_path' => './uploads/profile_pictures/',
+			'allowed_types' => 'png|jpg|jpeg',
+			'file_name' => "profile_pic_{$this->user_id}.png",
+			'max_size' => '3072',
+			'remove_spaces' => TRUE,
+			'overwrite' => TRUE
+		);
+		
+		$this->load->library('upload',$upload_config);
+		$this->load->helper('form');
+
+		if (!$this->upload->do_upload())
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			var_dump($error);
+
+			$data['content'] = 'profiles/upload_profile_picture';
+			$this->load->view('master', $data);
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+
+			echo "<img src=\"".base_url("uploads/profile_pictures/{$file_name}")."\" alt=\"profile_pic\" />";
+		}
+	}
 }
 
 /* End of file oauth.php */
