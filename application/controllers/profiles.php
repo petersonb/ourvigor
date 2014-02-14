@@ -8,9 +8,50 @@ class Profiles extends CI_Controller {
 		$this->user_id = $this->session->userdata('user_id');
 	}
 
-	public function view()
+	public function view($view_user_id = null)
 	{
+		// TODO : View profiles without being logged in?
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
 
+		$this->load->library('table');
+
+		if ($view_user_id)
+		{
+			$user = new User($view_user_id);
+		}
+		else
+		{
+			$user = new User($this->user_id);
+		}
+
+		$profile = $user->profile;
+		$profile->get();
+
+		$data['user'] = array (
+			'id' => $user->id,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname,
+			'email' => $user->email
+		);
+
+		$data['profile'] = array (
+			'gender' => $profile->gender,
+			'date_of_birth' => $profile->date_of_birth,
+			'phone' => $profile->phone,
+			'phone_ext' => $profile->phone_ext,
+			'address_street_1' => $profile->address_street_1,
+			'address_street_2' => $profile->address_street_2,
+			'address_city' => $profile->address_city,
+			'address_state' => $profile->address_state_province,
+			'address_zip' => $profile->address_zip,
+			'about' => $profile->about
+		);
+
+		$data['content'] = 'profiles/view';
+		$this->load->view('master',$data);
 	}
 
 	public function edit()
@@ -117,6 +158,8 @@ class Profiles extends CI_Controller {
 			$profile->about = $about;
 
 			$profile->save($user);
+
+			redirect('profiles/view');
 		}
 	}
 
@@ -145,16 +188,13 @@ class Profiles extends CI_Controller {
 		{
 			$error = array('error' => $this->upload->display_errors());
 
-			var_dump($error);
-
 			$data['content'] = 'profiles/upload_profile_picture';
 			$this->load->view('master', $data);
 		}
 		else
 		{
 			$data = array('upload_data' => $this->upload->data());
-
-			echo "<img src=\"".base_url("uploads/profile_pictures/{$file_name}")."\" alt=\"profile_pic\" />";
+			redirect('profiles/view');
 		}
 	}
 }

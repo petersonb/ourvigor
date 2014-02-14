@@ -1,6 +1,11 @@
 <ul>
     <li><a href="<?php echo base_url('main'); ?>">Home</a></li>
     <li>Profile</li>
+    <ul>
+	<li><a href="<?php echo base_url('profiles/view'); ?>">View</a></li>
+	<li><a href="<?php echo base_url('profiles/edit'); ?>">Edit</a></li>
+	<li><a href="<?php echo base_url('profiles/upload_profile_picture'); ?>">Upload Profile Picture</a></li>
+    </ul>
     <li>Workouts</li>
     <ul>
 	<li><a href="<?php echo base_url('workouts/create'); ?>">Create</a></li>
