@@ -136,6 +136,46 @@ class Exercises extends CI_Controller {
 		$data['index'] = $index;
 		$this->load->view('dynamic/exercises/create',$data);
 	}
+
+	public function load_distance_widget($index)
+	{
+		$data['type'] = 'Distance';
+		$data['units'] = array(
+			'miles',
+			'kilometers',
+			'yards',
+			'meters',
+			'feet',
+			'inches',
+			'cm'
+		);
+		$data['index'] = $index;
+		$this->load->view('dynamic/exercises/measurement', $data);
+	}
+
+	public function load_count_widget($index)
+	{
+		$data['type'] = 'Count';
+		$data['units'] = array(
+			'Repetitions',
+			'Sets',
+			'Laps'
+		);
+		$data['index'] = $index;
+		$this->load->view('dynamic/exercises/measurement', $data);
+	}
+
+	public function load_time_widget($index)
+	{
+		$data['type'] = 'Time';
+		$data['units'] = array (
+			'Hours',
+			'Minutes',
+			'Seconds'
+		);
+		$data['index'] = $index;
+		$this->load->view('dynamic/exercises/measurement', $data);
+	}
 }
 
 /* End of file exercises.php */
