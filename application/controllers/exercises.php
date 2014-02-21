@@ -150,7 +150,7 @@ class Exercises extends CI_Controller {
 			'cm'
 		);
 		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/measurement', $data);
+		$this->load->view('dynamic/exercises/unit_view', $data);
 	}
 
 	public function load_count_widget($index)
@@ -162,7 +162,7 @@ class Exercises extends CI_Controller {
 			'Laps'
 		);
 		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/measurement', $data);
+		$this->load->view('dynamic/exercises/unit_view', $data);
 	}
 
 	public function load_time_widget($index)
@@ -174,7 +174,7 @@ class Exercises extends CI_Controller {
 			'Seconds'
 		);
 		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/measurement', $data);
+		$this->load->view('dynamic/exercises/unit_view', $data);
 	}
 }
 
