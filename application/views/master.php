@@ -24,7 +24,7 @@
 	<div id="pageWrap">
 	    <div id="header">
 		<div id="innerHeader">
-		    <h1>Fitness Header</h1>
+		    <h1>OurVigor</h1>
 		</div>
 	    </div>
 	    <div id="leftCol">
@@ -56,7 +56,7 @@
 	    </div>
 	    <div id="footer">
 		<div id="innerFooter">
-		    <h3>Fitness Footer</h3>
+		    <h3>OurVigor</h3>
 		</div>
 	    </div>
 	</div>
