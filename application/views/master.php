@@ -18,7 +18,7 @@
 	}
 	?>
 	<link rel="stylesheet" href="<?php echo base_url('css/master.css'); ?>" type="text/css" />
-	<title><?php if (isset($title)) echo $title; ?></title>
+	<title>OurVigor<?php if (isset($title)) echo ' | '.$title; ?></title>
     </head>
     <body>
 	<div id="pageWrap">
