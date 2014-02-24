@@ -271,6 +271,7 @@ class Users extends CI_Controller {
 			{
 			 
 				// TODO : Send confirmation email
+				$this->send_confirmation_email();
 				
 				$this->session->set_userdata('user_id',$user->id);
 				$this->user_id = $user->id;
@@ -370,7 +371,7 @@ class Users extends CI_Controller {
 	
 	--------------------------------------------------
 	*/
-	public function send_confirmation_email()
+	private function send_confirmation_email()
 	{
 		// TODO : Make sure this is the right way to do this
 		if (!$this->user_id)
