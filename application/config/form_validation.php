@@ -25,6 +25,14 @@ $config = array (
 			'rules' => 'required|max_length[500]'
 		),
 	),
+	
+	'exercises_welcome_intro' => array (
+		array (
+			'field' => 'submit',
+			'label' => 'Submit',
+			'rules' => 'required'
+		),
+	),
 			
 
 	//////////////////////////////////////////////////

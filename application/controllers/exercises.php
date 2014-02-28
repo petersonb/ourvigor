@@ -131,6 +131,46 @@ class Exercises extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
+	public function welcome_intro()
+	{
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		$data['default_exercises'] = array(
+			array (
+				'name'=>'run',
+				'label'=>'Running'
+			),
+			array (
+				'name'=>'bike',
+				'label'=>'Biking'
+			),
+			array (
+				'name'=>'swim',
+				'label'=>'Swimming'
+			),
+			array (
+				'name'=>'walk',
+				'label'=>'Walking',
+			)
+		);
+		if ($this->form_validation->run('exercises_welcome_intro') == FALSE)
+		{
+			
+		}
+		else
+		{
+			foreach ($data['default_exercises'] as $exercise)
+			{
+				echo $this->input->post($exercise['name']);
+			}
+		}
+		
+		$data['title'] = 'Welcome';
+		$data['content'] = 'exercises/welcome_intro';
+		$this->load->view('master', $data);
+	}
+
 	public function load_create_form($index)
 	{
 		$data['index'] = $index;
