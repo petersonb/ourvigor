@@ -144,22 +144,28 @@ class Exercises extends CI_Controller {
 		$data['default_exercises'] = array(
 			array (
 				'name'=>'run',
-				'label'=>'Running'
+				'label'=>'Run'
 			),
 			array (
 				'name'=>'bike',
-				'label'=>'Biking'
+				'label'=>'Bike'
 			),
 			array (
 				'name'=>'swim',
-				'label'=>'Swimming'
+				'label'=>'Swim'
 			),
 			array (
 				'name'=>'walk',
-				'label'=>'Walking',
+				'label'=>'Walk',
 			)
 		);
+
+		// TODO : this needs to be handled better
 		if ($this->form_validation->run('exercises_welcome_intro') == FALSE)
+		{
+
+		}
+		else
 		{
 			$user = new User($this->user_id);
 			
@@ -181,14 +187,19 @@ class Exercises extends CI_Controller {
 				$bike->name = 'Bike';
 				$bike->save($user);
 			}
-			
-			
-		}
-		else
-		{
-			foreach ($data['default_exercises'] as $exercise)
+
+			if ($swim)
 			{
-				echo $this->input->post($exercise['name']);
+				$swim = new Exercise();
+				$swim->name = 'Swim';
+				$swim->save($user);
+			}
+
+			if ($walk)
+			{
+				$walk = new Exercise();
+				$walk->name = 'Walk';
+				$walk->save($user);
 			}
 		}
 		
