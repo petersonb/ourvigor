@@ -133,6 +133,11 @@ class Exercises extends CI_Controller {
 
 	public function welcome_intro()
 	{
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+		
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
@@ -156,6 +161,27 @@ class Exercises extends CI_Controller {
 		);
 		if ($this->form_validation->run('exercises_welcome_intro') == FALSE)
 		{
+			$user = new User($this->user_id);
+			
+			$run = $this->input->post('run');
+			$bike = $this->input->post('bike');
+			$swim = $this->input->post('swim');
+			$walk = $this->input->post('walk');
+
+			if ($run)
+			{
+				$run = new Exercise();
+				$run->name = 'Run';
+				$run->save($user);
+			}
+
+			if ($bike)
+			{
+				$bike = new Exercise();
+				$bike->name = 'Bike';
+				$bike->save($user);
+			}
+			
 			
 		}
 		else
