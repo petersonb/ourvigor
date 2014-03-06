@@ -25,6 +25,14 @@ $config = array (
 			'rules' => 'required|max_length[500]'
 		),
 	),
+
+	'exercises_log' => array (
+		array (
+			'field' => 'distance',
+			'label' => 'Distance',
+			'rules' => 'required'
+		),
+	),
 	
 	'exercises_welcome_intro' => array (
 		array (

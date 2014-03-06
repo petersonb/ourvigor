@@ -105,6 +105,52 @@ class Exercises extends CI_Controller {
 	 */
 	public function log()
 	{
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+		
+		$this->load->library('form_validation');
+		$this->load->helper(array('form','distance'));
+
+		$user_exercises = array();
+		if ($this->form_validation->run('exercises_log') == FALSE)
+		{
+
+			$user = new User($this->user_id);
+			
+			$exercises = $user->exercise;
+			$exercises->get();
+
+
+			foreach ($exercises as $exercise)
+			{
+				$user_exercises[$exercise->id] = array (
+					'id' => $exercise->id,
+					'name' => $exercise->name,
+					'description' => $exercise->description
+				);
+
+			}
+			
+			$data['user_exercises'] = $user_exercises;
+		}
+		else
+		{
+			$exercise_id = $this->input->post('exercise_id');
+			$distance = $this->input->post('distance');
+//			$distance = floatval($distance);
+			echo $distance;
+			echo ' | ' . distance_miles_to_meters($distance);
+			
+			$exercise = new Exercise($exercise_id);
+			$user = new User($this->user_id);
+			
+			$log = new ExerciseLog();
+			$log->distance = distance_miles_to_meters(16093.439);
+			$log->save($exercise);
+		}
+		
 		$data['title'] = 'Log Exercise';
 		$data['content'] = 'exercises/log';
 		$this->load->view('master', $data);
@@ -216,6 +262,9 @@ class Exercises extends CI_Controller {
 				$walk->name = 'Walk';
 				$walk->save($user);
 			}
+
+			// TODO : Change redirecet after welcome_intro
+			redirect('exercises/view');
 		}
 		
 		$data['title'] = 'Welcome';

@@ -10,6 +10,7 @@
     <ul>
     	<li><a href="<?php echo base_url('exercises/create'); ?>">Create</a></li>
 	<li><a href="<?php echo base_url('exercises/view'); ?>">View</a></li>
+	<li><a href="<?php echo base_url('exercises/log'); ?>">Log</a></li>
     </ul>
     <li>Workouts</li>
     <ul>
