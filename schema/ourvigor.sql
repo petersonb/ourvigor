@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 12, 2014 at 05:35 AM
+-- Generation Time: Mar 06, 2014 at 02:28 AM
 -- Server version: 5.1.70-log
--- PHP Version: 5.5.7-pl0-gentoo
+-- PHP Version: 5.5.9-pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `fitness`
+-- Database: `ourvigor`
 --
 
 -- --------------------------------------------------------
@@ -71,6 +71,20 @@ CREATE TABLE IF NOT EXISTS `emailconfirmations` (
   `code` varchar(32) NOT NULL,
   `email` varchar(64) NOT NULL,
   `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exerciselogs`
+--
+
+CREATE TABLE IF NOT EXISTS `exerciselogs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exercise_id` int(11) NOT NULL,
+  `time` decimal(8,3) NOT NULL,
+  `distance` decimal(10,6) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
