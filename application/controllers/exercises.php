@@ -139,15 +139,21 @@ class Exercises extends CI_Controller {
 		{
 			$exercise_id = $this->input->post('exercise_id');
 			$distance = $this->input->post('distance');
-//			$distance = floatval($distance);
-			echo $distance;
-			echo ' | ' . distance_miles_to_meters($distance);
+			$time_hour = $this->input->post('time_hour');
+			$time_minute = $this->input->post('time_minute');
+			$time_second = $this->input->post('time_second');
+
+			$time_output = time_seconds($time_hour, $time_minute, $time_second);
 			
 			$exercise = new Exercise($exercise_id);
 			$user = new User($this->user_id);
+
+			$meter_distance = distance_miles_to_meters($distance);
+			echo $meter_distance;
 			
 			$log = new ExerciseLog();
-			$log->distance = distance_miles_to_meters(16093.439);
+			$log->distance = $meter_distance;
+			$log->time = $time_output;
 			$log->save($exercise);
 		}
 		

@@ -275,7 +275,7 @@ class Users extends CI_Controller {
 				
 				$this->session->set_userdata('user_id',$user->id);
 				$this->user_id = $user->id;
-				redirect('users/index');
+				redirect('exercises/welcome_intro');
 			}
 			else
 			{
