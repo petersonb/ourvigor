@@ -96,6 +96,21 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
+	Log
+	--------------------------------------------------
+	
+	Log a single exercise. This is a page where the
+	user is presented with 
+	--------------------------------------------------
+	 */
+	public function log()
+	{
+		$data['title'] = 'Log Exercise';
+		$data['content'] = 'exercises/log';
+		$this->load->view('master', $data);
+	}
+
+	/*
 	View
 	--------------------------------------------------
 
@@ -141,7 +156,7 @@ class Exercises extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
-		$data['default_exercises'] = array(
+		$default_exercises = array(
 			array (
 				'name'=>'run',
 				'label'=>'Run'
@@ -163,7 +178,7 @@ class Exercises extends CI_Controller {
 		// TODO : this needs to be handled better
 		if ($this->form_validation->run('exercises_welcome_intro') == FALSE)
 		{
-
+			$data['default_exercises'] = $default_exercises;
 		}
 		else
 		{
