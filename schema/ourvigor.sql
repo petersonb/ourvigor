@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 06, 2014 at 02:28 AM
+-- Generation Time: Mar 07, 2014 at 09:26 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.9-pl0-gentoo
 
@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `emailconfirmations` (
 CREATE TABLE IF NOT EXISTS `exerciselogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `exercise_id` int(11) NOT NULL,
-  `time` decimal(8,3) NOT NULL,
-  `distance` decimal(10,6) NOT NULL,
+  `time` decimal(18,3) NOT NULL,
+  `distance` decimal(18,6) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
