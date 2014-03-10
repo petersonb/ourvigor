@@ -111,7 +111,7 @@ class Exercises extends CI_Controller {
 		}
 		
 		$this->load->library('form_validation');
-		$this->load->helper(array('form','distance'));
+		$this->load->helper(array('form','distance','time'));
 
 		$user_exercises = array();
 		if ($this->form_validation->run('exercises_log') == FALSE)
@@ -137,23 +137,35 @@ class Exercises extends CI_Controller {
 		}
 		else
 		{
+			//////////////////////////////////////////////////
+			// Get Data From Form                           //
+			//////////////////////////////////////////////////
+			
 			$exercise_id = $this->input->post('exercise_id');
-			$distance = $this->input->post('distance');
-			$time_hour = $this->input->post('time_hour');
+			$distance    = $this->input->post('distance');
+			$time_hour   = $this->input->post('time_hour');
 			$time_minute = $this->input->post('time_minute');
 			$time_second = $this->input->post('time_second');
-
-			$time_output = time_seconds($time_hour, $time_minute, $time_second);
 			
-			$exercise = new Exercise($exercise_id);
-			$user = new User($this->user_id);
-
+			//////////////////////////////////////////////////
+			// Convert Units                                //
+			//////////////////////////////////////////////////
+			
+			$time_output    = time_seconds($time_hour, $time_minute, $time_second);
 			$meter_distance = distance_miles_to_meters($distance);
-			echo $meter_distance;
 			
+			//////////////////////////////////////////////////
+			// Log Exercise                                 //
+			//////////////////////////////////////////////////
+			
+			$user     = new User($this->user_id);
+			$exercise = $user->exercise;
+			$exercise->where('id', $exercise_id);
+			$exercise->get();
+						
 			$log = new ExerciseLog();
 			$log->distance = $meter_distance;
-			$log->time = $time_output;
+			$log->time     = $time_output;
 			$log->save($exercise);
 		}
 		

@@ -15,14 +15,18 @@
 	<tr>
 	    <td>Distance:</td>
 	    <td>
-		<input type="text" name="distance" />
+		<input style="width:2em" type="text" name="distance" /> Miles
 	    </td>
 	</tr>
 	<tr>
 	    <td>Time:</td>
-	    <td><input type="text" name="time_hour" />:
-		<input type="text" name="time_minute" />:
-		<input type="text" name="time_second" />
+	    <td>
+		<input style="width:2em" type="text" name="time_hour" />
+		:
+		<input style="width:2em" type="text" name="time_minute" />
+		:
+		<input style="width:2em" type="text" name="time_second" />
+	    </td>
 	</tr>
     </table>
     <input type="submit" value="Save Exercise" />
