@@ -189,22 +189,34 @@ class Exercises extends CI_Controller {
 			redirect('users/login');
 		}
 
-		$this->load->library('table');
-
+		$this->load->helper(array('distance','time'));
+		
 		$user = new User($this->user_id);
-
+		
 		$exercises = $user->exercise;
 		$exercises->get();
 
 		foreach ($exercises as $ex)
 		{
+			$logs = $ex->exerciselog;
+			$logs->get();
+
+			$log_array = array();
+			foreach ($logs as $log)
+			{
+				$log_array[$log->id] = array (
+					'distance' => distance_meters_to_miles($log->distance),
+					'time' => time_seconds_to_string($log->time)
+				);
+			}
 			$data['exercises'][$ex->id] = array(
 				'id' => $ex->id,
 				'name' => $ex->name,
-				'description' => $ex->description
+				'description' => $ex->description,
+				'logs' => $log_array
 			);
 		}
-
+		
 		$data['title'] = 'View Exercises';
 		$data['content'] = 'exercises/view';
 		$this->load->view('master', $data);
