@@ -9,17 +9,17 @@ class Oauth extends CI_Controller {
 	}
 
 	/*
-	Auth
-	--------------------------------------------------
-
-	This page handles the authorization of users.
-	Applications can direct to this page along with a
-	client_id in order to request the users's
-	permission to have access to their information.
-
-	After the user allows authorization, a token will
-	be sent to the redirect url of the application.
-	--------------------------------------------------
+	 * Auth
+	 * --------------------------------------------------
+	 * 
+	 * This page handles the authorization of users.
+	 * Applications can direct to this page along with a
+	 * client_id in order to request the users's
+	 * permission to have access to their information.
+	 * 
+	 * After the user allows authorization, a token will
+	 * be sent to the redirect url of the application.
+	 * --------------------------------------------------
 	 */
 	public function auth()
 	{
@@ -82,34 +82,14 @@ class Oauth extends CI_Controller {
 			$this->load->view('master',$data);
 		}
 	}
-
-	// TODO delete this shit
-	public function create_testing()
-	{
-		$app = new Application();
-		$app->name = 'Fit App';
-		$app->client_id = 1;
-		$app->client_secret = 12;
-		$app->redirect_url = base_url('oauth/test_catch');
-		$app->save();
-
-		echo $app->name;
-	}
-
-	// TODO delete this shit
-	public function test_catch()
-	{
-		echo 'I CAUGHT YO SHIT';
-	}
-
-
+	
 	/*
-	Generate Token
-	--------------------------------------------------
-
-	This method generates a unique token that can be
-	saved to a user and application.
-	--------------------------------------------------
+	 * Generate Token
+	 * --------------------------------------------------
+	 * 
+	 * This method generates a unique token that can be
+	 * saved to a user and application.
+	 * --------------------------------------------------
 	 */
 	private function generate_token()
 	{

@@ -10,12 +10,11 @@ class Users extends CI_Controller {
 
 
 	/*
-	Index
-	--------------------------------------------------
-
-	The main page for users.
-	
-	--------------------------------------------------
+	 * Index
+	 * --------------------------------------------------
+	 * 
+	 * The main page for users.
+	 * --------------------------------------------------
 	 */
 	public function index()
 	{
@@ -42,14 +41,14 @@ class Users extends CI_Controller {
 	}
 
 	/*
-	Confirm Account
-	--------------------------------------------------
-
-	This method allows users to confirm their email
-	address associated with their account.
-	
-	--------------------------------------------------
-	*/
+	 * Confirm Account
+	 * --------------------------------------------------
+	 * 
+	 * This method allows users to confirm their email
+	 * address associated with their account.
+	 * 
+	 * --------------------------------------------------
+	 */
 	public function confirm_account()
 	{
 
@@ -178,11 +177,11 @@ class Users extends CI_Controller {
 	}
 
 	/*
-	Find
-	--------------------------------------------------
-
-	Find other users to connect with by searching.
-	--------------------------------------------------
+	 * Find
+	 * --------------------------------------------------
+	 * 
+	 * Find other users to connect with by searching.
+	 * --------------------------------------------------
 	 */
 
 	public function find()
@@ -222,20 +221,19 @@ class Users extends CI_Controller {
 	}
 	
 	/*
-	Register
-	--------------------------------------------------
-	
-	This method handles the creation of user accounts.
-	User accounts must be created abiding by these
-	fields and rules...
-
-	firstname - required | unique | valid
-	firstname - required | len 2-64 | alpha_dash
-	lastname  - same as first
-	password  - required | len 8+
-	confirm   - same as password
-	
-	--------------------------------------------------
+	 * Register
+	 * --------------------------------------------------
+	 * 
+	 * This method handles the creation of user accounts.
+	 * User accounts must be created abiding by these
+	 * fields and rules...
+	 * 
+	 * firstname - required | unique | valid
+	 * firstname - required | len 2-64 | alpha_dash
+	 * lastname  - same as first
+	 * password  - required | len 8+
+	 * confirm   - same as password
+	 * --------------------------------------------------
 	 */
 	public function register()
 	{
@@ -286,13 +284,12 @@ class Users extends CI_Controller {
 	}
 
 	/*
-	Login
-	--------------------------------------------------
-
-	A login page, or where you can post data to log in
-	from other parts of the site.
-	
-	--------------------------------------------------
+	 * Login
+	 * --------------------------------------------------
+	 * 
+	 * A login page, or where you can post data to log in
+	 * from other parts of the site.
+	 * --------------------------------------------------
 	 */
 	public function login()
 	{
@@ -341,13 +338,12 @@ class Users extends CI_Controller {
 	}
 	
 	/*
-	Logout
-	--------------------------------------------------
-
-	This method logs out the current user by unsetting
-	the current userdata 'user_id'.
-	
-	--------------------------------------------------
+	 * Logout
+	 * --------------------------------------------------
+	 * 
+	 * This method logs out the current user by unsetting
+	 * the current userdata 'user_id'.
+	 * --------------------------------------------------
 	 */
 	public function logout()
 	{
@@ -358,19 +354,18 @@ class Users extends CI_Controller {
 
 
 	/*
-	Confirmation Email
-	--------------------------------------------------
-	
-	Create a new email confirmation requirement and
-	send to the user.
-
-	The user will follow the link in the email in
-	order to confirm their email address. There is an
-	attached code to the URL parameters that will
-	confirm their email is valid.
-	
-	--------------------------------------------------
-	*/
+	 * Confirmation Email
+	 * --------------------------------------------------
+	 * 
+	 * Create a new email confirmation requirement and
+	 * send to the user.
+	 * 
+	 * The user will follow the link in the email in
+	 * order to confirm their email address. There is an
+	 * attached code to the URL parameters that will
+	 * confirm their email is valid.
+	 * --------------------------------------------------
+	 */
 	private function send_confirmation_email()
 	{
 		// TODO : Make sure this is the right way to do this
@@ -412,16 +407,15 @@ class Users extends CI_Controller {
 
 
 	/*
-	Login
-	------------------------------------------------
-	
-	This method takes the email and password of the
-	potential user, then confirms if the login
-	information provided is valid.
-
-	returns True if user is allowed to log in
-	
-	--------------------------------------------------
+	 * Login
+	 * --------------------------------------------------
+	 * 
+	 * This method takes the email and password of the
+	 * potential user, then confirms if the login
+	 * information provided is valid.
+	 * 
+	 * returns True if user is allowed to log in
+	 * --------------------------------------------------
 	 */
 	private function valid_login($email, $password)
 	{

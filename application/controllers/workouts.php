@@ -10,10 +10,10 @@ class Workouts extends CI_Controller {
 
 	
 	/*
-	Add Exercise
-	--------------------------------------------------
-	Add an exercise to a workout
-	--------------------------------------------------
+	 * Add Exercise
+	 * --------------------------------------------------
+	 * Add an exercise to a workout
+	 * --------------------------------------------------
 	 */
 	public function add_exercise($workout_id, $exercise_id)
 	{
@@ -50,25 +50,25 @@ class Workouts extends CI_Controller {
 	}
 
 	/*
-	Create
-	--------------------------------------------------
-
-	Create a new workout routine
-
-	The page that feeds into this controller has
-	dynamic exercise objects. These objects are read
-	in through post data through the following fields.
-
-	exercises - javascript assigned id's for each
-	  exercise to associate the names and descriptions
-
-	exercise_names - array of exercises indexed by the
-	  above id's
-
-	exercise_descriptions - array of exercise
-	  descriptions indexed by the above id's
-
-	--------------------------------------------------
+	 * Create
+	 * --------------------------------------------------
+	 *
+	 * Create a new workout routine
+	 *
+	 * The page that feeds into this controller has
+	 * dynamic exercise objects. These objects are read
+	 * in through post data through the following fields.
+	 *
+	 * exercises - javascript assigned id's for each
+	 *  exercise to associate the names and descriptions
+	 *
+	 * exercise_names - array of exercises indexed by the
+	 *  above id's
+	 *
+	 * exercise_descriptions - array of exercise
+	 * descriptions indexed by the above id's
+	 *
+	 * --------------------------------------------------
 	 */
 	public function create()
 	{
@@ -145,11 +145,11 @@ class Workouts extends CI_Controller {
 	}
 
 	/*
-	Find
-	--------------------------------------------------
-
-	Find workouts to add to user's workouts.
-	--------------------------------------------------
+	 * Find
+	 * --------------------------------------------------
+	 *
+	 * Find workouts to add to user's workouts.
+	 * --------------------------------------------------
 	 */
 	public function find()
 	{
@@ -185,11 +185,11 @@ class Workouts extends CI_Controller {
 	}
 
 	/*
-	View
-	--------------------------------------------------
-
-	User can view all of their workouts.
-	--------------------------------------------------
+	 * View
+	 * --------------------------------------------------
+	 *
+	 * User can view all of their workouts.
+	 * --------------------------------------------------
 	 */
 	public function view($workout_id = null)
 	{

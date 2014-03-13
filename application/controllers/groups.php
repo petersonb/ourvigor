@@ -29,11 +29,11 @@ class Groups extends CI_Controller {
 	}
 
 	/*
-	Create
-	--------------------------------------------------
-
-	Create a new group assigned under the user.
-	--------------------------------------------------
+	 * Create
+	 * --------------------------------------------------
+	 * 
+	 * Create a new group assigned under the user.
+	 * --------------------------------------------------
 	 */
 	public function create()
 	{
@@ -74,12 +74,12 @@ class Groups extends CI_Controller {
 	}
 
 	/*
-	View All
-	--------------------------------------------------
-
-	View all groups in a table. You can select one to
-	view or edit if you are and admin.
-	--------------------------------------------------
+	 * View All
+	 * --------------------------------------------------
+	 * 
+	 * View all groups in a table. You can select one to
+	 * view or edit if you are and admin.
+	 * --------------------------------------------------
 	 */
 	public function view_all()
 	{
@@ -111,13 +111,13 @@ class Groups extends CI_Controller {
 		
 		$this->load->view('master',$data);
 	}
-
+	
 	/*
-	View Group
-	--------------------------------------------------
-
-	View a single group.
-	--------------------------------------------------
+	 * View Group
+	 * --------------------------------------------------
+	 * 
+	 * View a single group.
+	 * --------------------------------------------------
 	 */
 	public function view($group_id = null)
 	{

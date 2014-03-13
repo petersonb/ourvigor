@@ -11,12 +11,12 @@ class Exercises extends CI_Controller {
 
 
 	/*
-	Create
-	--------------------------------------------------
-
-	Create a new exercise and add to user's list of
-	exercises.
-	--------------------------------------------------
+	 * Create
+	 * --------------------------------------------------
+	 * 
+	 * Create a new exercise and add to user's list of
+	 * exercises.
+	 * --------------------------------------------------
 	 */
 	public function create()
 	{
@@ -57,13 +57,13 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
-	Find
-	--------------------------------------------------
-
-	Allow the user to find exercises they have not
-	added to their list of exercises yet.
-	--------------------------------------------------
-	*/
+	 * Find
+	 * --------------------------------------------------
+	 * 
+	 * Allow the user to find exercises they have not
+	 * added to their list of exercises yet.
+	 * --------------------------------------------------
+	 */
 	public function find()
 	{
 		$this->load->library('table');
@@ -96,12 +96,12 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
-	Log
-	--------------------------------------------------
-	
-	Log a single exercise. This is a page where the
-	user is presented with 
-	--------------------------------------------------
+	 * Log
+	 * --------------------------------------------------
+	 * 
+	 * Log a single exercise. This is a page where the
+	 * user is presented with 
+	 * --------------------------------------------------
 	 */
 	public function log()
 	{
@@ -182,12 +182,12 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
-	View
-	--------------------------------------------------
-
-	View exercises the uses has created, or has added
-	to their list of exercises.
-	--------------------------------------------------
+	 * View
+	 * --------------------------------------------------
+	 * 
+	 * View exercises the uses has created, or has added
+	 * to their list of exercises.
+	 * --------------------------------------------------
 	 */
 	public function view()
 	{
