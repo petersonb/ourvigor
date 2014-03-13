@@ -137,7 +137,7 @@ class Workouts extends CI_Controller {
 					$exercise = new Exercise();
 					$exercise->name = $exercise_names[$exercise_id];
 					$exercise->description = $exercise_descriptions[$exercise_id];
-					$exercise->save($workout);
+					$exercise->save(array($workout,$user));
 				}
 			}
 			redirect('workouts/view');
