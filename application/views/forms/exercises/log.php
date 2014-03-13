@@ -13,6 +13,10 @@
 	    </td>
 	</tr>
 	<tr>
+	    <td>Date :</td>
+	    <td><input type="text" id="datepicker" value="<?php echo $date; ?>" name="date" /></td>
+	</tr>
+	<tr>
 	    <td>Distance:</td>
 	    <td>
 		<input style="width:2em" type="text" name="distance" /> Miles

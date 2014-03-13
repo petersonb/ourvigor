@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 07, 2014 at 09:26 AM
+-- Generation Time: Mar 13, 2014 at 05:32 PM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.9-pl0-gentoo
 
@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `emailconfirmations` (
 CREATE TABLE IF NOT EXISTS `exerciselogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `exercise_id` int(11) NOT NULL,
+  `date` date NOT NULL,
   `time` decimal(18,3) NOT NULL,
   `distance` decimal(18,6) NOT NULL,
   PRIMARY KEY (`id`)

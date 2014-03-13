@@ -111,7 +111,7 @@ class Exercises extends CI_Controller {
 		}
 		
 		$this->load->library('form_validation');
-		$this->load->helper(array('form','distance','time'));
+		$this->load->helper(array('form','distance','time','date'));
 
 		$user_exercises = array();
 		if ($this->form_validation->run('exercises_log') == FALSE)
@@ -132,7 +132,7 @@ class Exercises extends CI_Controller {
 				);
 
 			}
-			
+			$data['date'] = date("m/d/Y");
 			$data['user_exercises'] = $user_exercises;
 		}
 		else
@@ -146,6 +146,7 @@ class Exercises extends CI_Controller {
 			$time_hour   = $this->input->post('time_hour');
 			$time_minute = $this->input->post('time_minute');
 			$time_second = $this->input->post('time_second');
+			$date        = $this->input->post('date');
 			
 			//////////////////////////////////////////////////
 			// Convert Units                                //
@@ -153,6 +154,7 @@ class Exercises extends CI_Controller {
 			
 			$time_output    = time_seconds($time_hour, $time_minute, $time_second);
 			$meter_distance = distance_miles_to_meters($distance);
+			$mysql_date  = date_std_mysql($date);
 			
 			//////////////////////////////////////////////////
 			// Log Exercise                                 //
@@ -164,13 +166,18 @@ class Exercises extends CI_Controller {
 			$exercise->get();
 						
 			$log = new ExerciseLog();
+			$log->date     = $mysql_date;
 			$log->distance = $meter_distance;
 			$log->time     = $time_output;
 			$log->save($exercise);
+
+			redirect('exercises/view');
 		}
 		
 		$data['title'] = 'Log Exercise';
 		$data['content'] = 'exercises/log';
+		$data['javascript'] = array('jquery','jquery-ui','date');
+		$data['css'] = array('calendar_widget/jquery-ui');
 		$this->load->view('master', $data);
 	}
 
