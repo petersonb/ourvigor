@@ -264,14 +264,14 @@ class Users extends CI_Controller {
 		$this->form_validation->set_message('is_unique', 'The desired eamil is already in use.');
 		if ($this->form_validation->run('users_register') == FALSE)
 		{
-			$data['title'] = 'Register';
+			$data['title']   = 'Register';
 			$data['content'] = 'users/register';
 			$this->load->view('master',$data);
 		}
 		
 		else
 		{			
-			
+		 
 			// Grab post data
 			$firstname = $this->input->post('firstname');
 			$lastname  = $this->input->post('lastname');
@@ -281,16 +281,15 @@ class Users extends CI_Controller {
 			// Build new user
 			$user = new User();
 			$user->firstname = $firstname;
-			$user->lastname = $lastname;
-			$user->email = $email;
-			$user->password = $password;
+			$user->lastname  = $lastname;
+			$user->email     = $email;
+			$user->password  = $password;
 			$user->save();
+		 
 		 
 			// Log New User In
 			if ($this->valid_login($email, $password))
-			{
-			 
-				// TODO : Send confirmation email
+			{			 
 				$this->send_confirmation_email();
 				
 				$this->session->set_userdata('user_id',$user->id);
@@ -299,8 +298,8 @@ class Users extends CI_Controller {
 			}
 			else
 			{
-				// TODO : Handle failed account creation better
-				redirect('users/login');
+				echo "Whoops! Something whent wrong!";
+				die();
 			}
 		}
 	}
