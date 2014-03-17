@@ -52,17 +52,22 @@ class Users extends CI_Controller {
 	public function confirm_account()
 	{
 
-		// TODO : HOLY SHIT PLEASE CLEAN UP THIS CODE (CONFIRM ACCOUNT)
 		$this->load->library('form_validation');
 		
 		$data['success'] = FALSE;
 		
 		if ($this->user_id)
 		{
+			//////////////////////////////////////////////////
+			// IF user is logged in                         //
+			//   They should be coming directly from their  //
+			//   email.                                     //
+			//////////////////////////////////////////////////
+			
 			$email = $this->input->get('email');
-			$code = $this->input->get('confirm_code');
-			// Get user
-			$user = new User($this->user_id);
+			$code  = $this->input->get('confirm_code');
+
+			$user  = new User($this->user_id);
 			
 			// Get user's email confirmation
 			$econf = $user->emailconfirmation;
@@ -84,9 +89,16 @@ class Users extends CI_Controller {
 		}
 		elseif ($this->form_validation->run('users_confirm_account'))
 		{
-			// If not logged in, and data has been posted
-			$email = $this->input->post('email');
-			$code  = $this->input->post('confirm_code');
+			//////////////////////////////////////////////////
+			// If not logged in, and form validation has    //
+			// been run, log the user in provided they have //
+			// proper credentials. The code should come     //
+			// from post data from the special login form   //
+			// used with confirming the account.            //
+			//////////////////////////////////////////////////
+			
+			$email    = $this->input->post('email');
+			$code     = $this->input->post('confirm_code');
 			$password = $this->input->post('password');
 
 			// Make sure email and password are valid login
@@ -119,16 +131,24 @@ class Users extends CI_Controller {
 		}
 		else
 		{
-			// Else: if not logged in, and not posting,
-			//  there must be get data in url, or post
+			//////////////////////////////////////////////////
+			// Else: if not logged in, and not posting,     //
+			//  there must be get data in url, or post      //
+			//////////////////////////////////////////////////
+
+
+			//////////////////////////////////////////////////
+			// Catch failed login or initial non-logged in  //
+			// user. Continue from there.                   //
+			//////////////////////////////////////////////////
 			if (!$this->input->post())
 			{
-				$email = $this->input->get('email');
+				$email        = $this->input->get('email');
 				$confirm_code = $this->input->get('confirm_code');
 			}
 			else
 			{
-				$email = $this->input->post('email');
+				$email        = $this->input->post('email');
 				$confirm_code = $this->input->post('confirm_code');
 			}
 
@@ -137,21 +157,25 @@ class Users extends CI_Controller {
 			$econf->where('code', $confirm_code);
 			$econf->get();
 
+			//////////////////////////////////////////////////
+			// Bad code trial. Redirect them to norm login  //
+			//////////////////////////////////////////////////
+			
 			if (!$econf->exists())
 			{
-				echo 'econf did not exist';
-				die();
 				redirect('users/login');
 			}
 
 			$user = $econf->user;
 			$user->get();
 
-			// Make suer user email is same as given email
+			//////////////////////////////////////////////////
+			// Make suer user email is same as given email  //
+			//////////////////////////////////////////////////
+			
 			if ($user->email !== $email)
 			{
 				
-				echo "{$user->email} does not match {$email}";
 				redirect('users/login');
 			}
 
@@ -163,15 +187,13 @@ class Users extends CI_Controller {
 			// if not logged in
 			$this->load->helper('form');
 			
-			$data['logged_in'] = FALSE;
-			$data['email'] = $email;
+			$data['logged_in']    = FALSE;
+			$data['email']        = $email;
 			$data['confirm_code'] = $confirm_code;
 
 		}
 		$data['content'] = 'users/confirm_account';
-
-		$data['email'] = $email;
-	
+		$data['email']   = $email;
 		
 		$this->load->view('master',$data);
 	}
