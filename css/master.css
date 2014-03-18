@@ -13,18 +13,36 @@ body {
     width:960px;
     margin:0px auto;
     text-align:left;
-    background-color:#e3c;
+    background-color:#3e9e99;
 }
 
 /************************************************/
 
 #header {
-    background : #aa00ff;
-    height: 50px;
+
 }
 
 #innerHeader {
-    padding: 10px;
+    background-image:url('ourvigor_style/header.png');
+    height: 45px;
+}
+
+.headerText {
+    color: #fff;
+    font-family : Arial;
+    font-weight : bold;
+    text-decoration : none;
+    font-size:30px;
+    position : relative;
+    top : 4px;
+    left : 16px;
+}
+
+/************************************************/
+
+.contentSpacer {
+    height: 5px;
+    background: #999;
 }
 
 /************************************************/
@@ -58,7 +76,7 @@ body {
 }
 
 #content {
-    background : #33bbff;
+    background : #eeeeee;
     width: 810px;
     float: right;
 }
@@ -67,6 +85,13 @@ body {
     padding: 10px;
     border-left:1px black solid;
     min-height: 500px;
+}
+
+/************************************************/
+
+.profilePictureViewProfile {
+    max-width : 400px;
+    max-height : 400px;
 }
 
 /************************************************/
@@ -103,7 +128,7 @@ body {
 /************************************************/
 
 #footer {
-    background : #00ff33;
+    background : #0b5e69;
     height: 30px;
     clear: both;
 }

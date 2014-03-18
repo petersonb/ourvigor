@@ -1,4 +1,4 @@
-<img src="<?php echo base_url("uploads/profile_pictures/profile_pic_{$user['id']}.png"); ?>" />
+<img class="profilePictureViewProfile" src="<?php echo base_url("uploads/profile_pictures/profile_pic_{$user['id']}.png"); ?>" />
 
 <h1><?php echo "{$user['firstname']} {$user['lastname']}"; ?></h1>
 <?php

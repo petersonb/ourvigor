@@ -33,9 +33,7 @@
     <body>
 	<div id="pageWrap">
 	    <div id="header">
-		<div id="innerHeader">
-		    <h1>OurVigor</h1>
-		</div>
+		<?php $this->load->view('main/header'); ?>
 	    </div>
 	    <div id="leftCol">
 		<div id="menuCol">
@@ -65,6 +63,8 @@
 		</div>
 	    </div>
 	    <div id="footer">
+		<div class="contentSpacer">
+		</div>
 		<div id="innerFooter">
 		    <h3>OurVigor</h3>
 		</div>
