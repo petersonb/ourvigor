@@ -33,8 +33,9 @@ class Exercises extends CI_Controller {
 		// If form validation fails, or is not run, load input form
 		if ($this->form_validation->run('exercises_create') == FALSE)
 		{
-			$data['title'] = 'Create Exercise';
-			$data['content'] = 'exercises/create';
+			$data['title']      = 'Create Exercise';
+			$data['content']    = 'exercises/create';
+			$data['javascript'] = array('jquery','exercises/create');
 			$this->load->view('master',$data);
 		}
 		else
@@ -42,13 +43,17 @@ class Exercises extends CI_Controller {
 			$user = new User($this->user_id);
 			
 			// Grab post data
-			$name = $this->input->post('name');
-			$description = $this->input->post('description');
+			$name                = $this->input->post('name');
+			$description         = $this->input->post('description');
+			$include_description = $this->input->post('include_description');
 
 			// Create a new exercise
 			$exercise = new Exercise();
 			$exercise->name = $name;
-			$exercise->description = $description;
+			if ($include_description)
+			{
+				$exercise->description = $description;
+			}
 			$exercise->save($user);
 
 			// TODO redirect somewhere smart

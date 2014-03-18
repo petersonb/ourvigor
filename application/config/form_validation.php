@@ -22,7 +22,7 @@ $config = array (
 		array (
 			'field' => 'description',
 			'label' => 'Description',
-			'rules' => 'required|max_length[500]'
+			'rules' => 'max_length[500]'
 		),
 	),
 
