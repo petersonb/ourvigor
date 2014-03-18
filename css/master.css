@@ -7,6 +7,10 @@ html * {
 body {
     text-align:center;
     background: #161A1F;
+    background-image:url('ourvigor_style/logo.png');
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-position:right 25px bottom 25px; 
 }
 
 p {

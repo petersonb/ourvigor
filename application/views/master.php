@@ -69,6 +69,5 @@
 		</div>
 	    </div>
 	</div>
-	<img id="cornerLogo" src="<?php echo base_url("images/logo.png"); ?>" />
     </body>
 </html>
