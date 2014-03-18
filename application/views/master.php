@@ -66,9 +66,9 @@
 		<div class="contentSpacer">
 		</div>
 		<div id="innerFooter">
-		    <h3>OurVigor</h3>
 		</div>
 	    </div>
 	</div>
+	<img id="cornerLogo" src="<?php echo base_url("images/logo.png"); ?>" />
     </body>
 </html>

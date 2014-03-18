@@ -129,10 +129,18 @@ body {
 
 #footer {
     background : #0b5e69;
-    height: 30px;
+    min-height: 30px;
     clear: both;
 }
 
 #innerFooter {
     padding-left: 10px;
+}
+
+#cornerLogo {
+    position : absolute;
+    right : 25px;
+    bottom : 25px;
+    height : 6em;
+    z-index : -1000;
 }
