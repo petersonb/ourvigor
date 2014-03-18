@@ -9,11 +9,20 @@ body {
     background: #161A1F;
 }
 
+p {
+    font-size : 1em;
+}
+
+a {
+    color : #555;
+    font-size : 1em;
+}
+
 #pageWrap {
     width:960px;
     margin:0px auto;
     text-align:left;
-    background-color:#3e9e99;
+    background-color:#ccc;
 }
 
 /************************************************/
