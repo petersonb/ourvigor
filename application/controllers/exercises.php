@@ -28,7 +28,7 @@ class Exercises extends CI_Controller {
 		
 		// Load libraries and helpers
 		$this->load->library(array('form_validation','table'));
-		$this->load->helper('form');
+		$this->load->helper(array('form'));
 
 		// If form validation fails, or is not run, load input form
 		if ($this->form_validation->run('exercises_create') == FALSE)
@@ -179,10 +179,10 @@ class Exercises extends CI_Controller {
 			redirect('exercises/view');
 		}
 		
-		$data['title'] = 'Log Exercise';
-		$data['content'] = 'exercises/log';
+		$data['title']      = 'Log Exercise';
+		$data['content']    = 'exercises/log';
 		$data['javascript'] = array('jquery','jquery-ui','date');
-		$data['css'] = array('calendar_widget/jquery-ui');
+		$data['css']        = array('calendar_widget/jquery-ui');
 		$this->load->view('master', $data);
 	}
 
@@ -201,7 +201,7 @@ class Exercises extends CI_Controller {
 			redirect('users/login');
 		}
 
-		$this->load->helper(array('distance','time'));
+		$this->load->helper(array('distance','time','date'));
 		
 		$user = new User($this->user_id);
 		
@@ -217,6 +217,7 @@ class Exercises extends CI_Controller {
 			foreach ($logs as $log)
 			{
 				$log_array[$log->id] = array (
+					'date'     => date_mysql_std($log->date),
 					'distance' => distance_meters_to_miles($log->distance),
 					'time' => time_seconds_to_string($log->time)
 				);
@@ -229,7 +230,7 @@ class Exercises extends CI_Controller {
 			);
 		}
 		
-		$data['title'] = 'View Exercises';
+		$data['title']   = 'View Exercises';
 		$data['content'] = 'exercises/view';
 		$this->load->view('master', $data);
 	}

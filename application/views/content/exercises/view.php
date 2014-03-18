@@ -10,11 +10,13 @@
 	    <?php if (sizeof($ex['logs']) > 0): ?>
 		<tr>
 		    <td></td>
+		    <td>Date</td>
 		    <td>Distance</td>
 		    <td>Time</td>
 		    <?php foreach ($ex['logs'] as $log): ?>
 			<tr>
 			    <td></td>
+			    <td><?php echo $log['date']; ?>
 			    <td><?php echo $log['distance']; ?></td>
 			    <td><?php echo $log['time']; ?></td>
 			</tr>

@@ -28,6 +28,15 @@ function time_seconds_to_string($seconds)
 	$time = $time - time_minutes_to_seconds($minutes);
 	
 	$seconds = $time;
+
+	if ($minutes < 10)
+	{
+		$minutes = "0{$minutes}";
+	}
+	if ($seconds < 10)
+	{
+		$seconds = "0{$seconds}";
+	}
 	
 	$string =  "{$hours}:{$minutes}:{$seconds}";
 	return $string;
