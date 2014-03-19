@@ -1,5 +1,4 @@
 <ul>
-    <li><a href="<?php echo base_url('main'); ?>">Home</a></li>
     <li>Profile</li>
     <ul>
 	<li><a href="<?php echo base_url('profiles/view'); ?>">View</a></li>
