@@ -187,6 +187,74 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
+	 * Modify
+	 * --------------------------------------------------
+	 * Modify an existing workout
+	 * --------------------------------------------------
+	 */
+	public function modify ($exercise_id = null)
+	{
+		// Must be logged in
+		if (! $this->user_id)
+		{
+			redirect('users/login');
+		}
+
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		$user = new User($this->user_id);
+
+		// Get exercise from user
+		$exercise = $user->exercise;
+		$exercise->where('id', $exercise_id);
+		$exercise->get();
+
+		// If exercise does not exist, redirect
+		if (! $exercise->exists())
+		{
+			redirect('users/login');
+		}
+		
+		
+		// Form validation uses same as create
+		
+		if (! $this->form_validation->run('exercises_create'))
+		{
+			$data['exercise'] = array(
+				'id'          => $exercise->id,
+				'name'        => $exercise->name,
+				'description' => $exercise->description
+			);
+			
+			$data['content']    = 'exercises/modify';
+			$data['title']      = $exercise->name;
+			$data['javascript'] = array('jquery', 'exercises/create');
+			$this->load->view('master', $data);
+		}
+		else
+		{
+			$name                = $this->input->post('name');
+			$description         = $this->input->post('description');
+			$include_description = $this->input->post('include_description');
+			
+			$exercise->name        = $name;
+			if ($include_description)
+			{
+				$exercise->description = $description;
+			}
+			else
+			{
+				$exercise->description = null;
+			}
+			$exercise->save();
+
+			redirect("exercises/view_one/{$exercise->id}");
+		}
+		
+	}
+
+	/*
 	 * View
 	 * --------------------------------------------------
 	 * 
@@ -232,6 +300,63 @@ class Exercises extends CI_Controller {
 		
 		$data['title']   = 'View Exercises';
 		$data['content'] = 'exercises/view';
+		$this->load->view('master', $data);
+	}
+
+	/*
+	 * View One
+	 * --------------------------------------------------
+	 * View a single exercise
+	 * --------------------------------------------------
+	 */
+
+	public function view_one($exercise_id = null)
+	{
+		// Must be logged in and exercise_id must be supplied
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+
+		if (!$exercise_id)
+		{
+			redirect('exercises/view');
+		}
+
+		$this->load->helper(array('time','distance','date'));
+
+		// Get exercise from user
+		$user = new User($this->user_id);
+
+		$exercise = $user->exercise;
+		$exercise->where('id', $exercise_id);
+		$exercise->get();
+
+		// Get exercise logs
+		$exercise_logs = $exercise->exerciselog;
+		$exercise_logs->get();
+		$logs = array();
+		
+		foreach ($exercise_logs as $log)
+		{
+			$logs[$log->id] = array (
+				'id'   => $log->id,
+				'date' => date_mysql_std($log->date),
+				'time' => time_seconds_to_string($log->time),
+				'distance' => distance_meters_to_miles($log->distance)
+			);
+		}
+		
+		$data['exercise'] = array (
+			'id'          => $exercise->id,
+			'name'        => $exercise->name,
+			'description' => $exercise->description,
+			'logs'        => $logs
+			
+		);
+
+		$data['title']   = $exercise->name;
+		$data['content'] = 'exercises/view_one';
 		$this->load->view('master', $data);
 	}
 

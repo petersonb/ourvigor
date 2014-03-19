@@ -8,6 +8,10 @@ $(document).ready(function () {
 		$(row).hide();
 		$(hidden_include_description).val('0');
 	}
+	else {
+		$(hidden_include_description).val('1');
+		$(description).html("Remove Description");
+	}
 	
 	$(description).click (function () {
 		$(row).toggle();
@@ -20,6 +24,5 @@ $(document).ready(function () {
 			$(description).html("Include Description");
 			$(hidden_include_description).val('0');
 		}
-		
 	});
 });

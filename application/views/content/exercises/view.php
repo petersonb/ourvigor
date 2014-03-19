@@ -5,7 +5,7 @@
     <?php foreach ($exercises as $ex): ?>
 	<table>
 	    <tr>
-		<td><?php echo $ex['name']; ?></td>
+		<td><a href="<?php echo base_url("exercises/view_one/{$ex['id']}"); ?>"><?php echo $ex['name']; ?></a></td>
 		<td><?php echo $ex['description']; ?></td>
 	    </tr>
 	</table>
@@ -24,10 +24,9 @@
 				<td><?php echo $log['time']; ?></td>
 			</tr>
 		    <?php endforeach; ?>
-
+	    </table>
 	<?php endif; ?>
     <?php endforeach; ?>
-	    </table>
 <?php else:?>
-	    <h3>You don't have any exercises!</h3>
+    <h3>You don't have any exercises!</h3>
 <?php endif; ?>
