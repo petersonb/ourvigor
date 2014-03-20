@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 13, 2014 at 05:32 PM
+-- Generation Time: Mar 20, 2014 at 06:46 AM
 -- Server version: 5.1.70-log
--- PHP Version: 5.5.9-pl0-gentoo
+-- PHP Version: 5.5.10-pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -57,6 +57,22 @@ CREATE TABLE IF NOT EXISTS `buddies_users` (
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `developmentmessages`
+--
+
+CREATE TABLE IF NOT EXISTS `developmentmessages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `message` varchar(1024) NOT NULL,
+  `type` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
