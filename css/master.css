@@ -14,12 +14,18 @@ body {
 }
 
 p {
+    margin-top : 1em;
+    margin-bottom : 1em;
     font-size : 1em;
 }
 
 a {
     color : #555;
     font-size : 1em;
+}
+
+ul {
+    margin-left : 2em;
 }
 
 #pageWrap {
@@ -70,7 +76,7 @@ a {
 }
 
 #menuCol ul {
-    
+    padding-left : 0px;
 }
 
 #menuCol li {
@@ -78,7 +84,7 @@ a {
 }
 
 #menuCol ul ul {
-    padding-left : 2em;
+
 }
 
 /************************************************/

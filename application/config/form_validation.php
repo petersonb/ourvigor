@@ -10,6 +10,38 @@
 $config = array (
 
 	//////////////////////////////////////////////////
+	// Development                                  //
+	//////////////////////////////////////////////////
+
+	'development_submit_bug' => array (
+		array (
+			'field' => 'title',
+			'label' => 'Title',
+			'rules' => 'required|min_length[3]|max_length[50]'
+		),
+		array (
+			'field' => 'location',
+			'label' => 'Location',
+			'rules' => 'required|min_length[16]|max_length[64]'
+		),
+		array (
+			'field' => 'phone',
+			'label' => 'Phone',
+			'rules' => ''
+		),
+		array (
+			'field' => 'message',
+			'label' => 'Message',
+			'rules' => 'required|min_length[10]|max_length[1000]'
+		),
+		array (
+			'field' => 'email_confirm',
+			'label' => 'Email Confirmation',
+			'rules' => 'required'
+		)
+	),
+	
+	//////////////////////////////////////////////////
 	// Exercises                                    //
 	//////////////////////////////////////////////////
 

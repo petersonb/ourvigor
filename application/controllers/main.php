@@ -27,25 +27,6 @@ class Main extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
-	/*
-	Log
-	--------------------------------------------------
-
-	Development log for those following along at home.
-	--------------------------------------------------
-	 */
-	public function log()
-	{
-
-
-		$log = shell_exec('git log --pretty=format:"%ad %s" --date=short');
-		$data['log'] = $log;
-
-		$data['title'] = 'Git Log';
-		$data['content'] = 'main/log';
-		$this->load->view('master',$data);
-	}
-
 	public function style()
 	{
 		$this->load->library('form_validation');

@@ -33,7 +33,7 @@ class User extends DataMapper {
 			'other_field'=>'user',
 			'reciprocal'=> TRUE
 		),
-
+		'developmentmessage',
 		'token',
 		'exercise' => array('join_table' => 'users_exercises'),
 		'workout' => array('join_table' => 'users_workouts'),

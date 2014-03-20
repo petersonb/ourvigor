@@ -36,9 +36,7 @@
 		<?php $this->load->view('main/header'); ?>
 	    </div>
 	    <div id="leftCol">
-		<div id="menuCol">
-		    <?php $this->load->view('menus/menu_col.php'); ?>
-		</div>
+		<?php $this->load->view('menus/menu_col.php'); ?>
 	    </div>
 	    <div id="content">
 		<div id="innerContent">

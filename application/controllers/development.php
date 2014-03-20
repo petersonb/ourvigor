@@ -6,129 +6,126 @@ class Development extends CI_Controller {
 	{
 		parent::__construct();
 
-		$user = new User();
-		$user->get();
-
-		if ($user->exists())
-		{
-			echo 'setup already done';
-			die();
-		}
-		
 		$this->user_id = $this->session->userdata('user_id');
-
-		$this->universal_password = "pass";
 	}
 
 	public function index()
 	{
+		$data['content'] = 'development/main.php';
+		$this->load->view('master', $data);
+	}
+
+	/*
+	 * General Message
+	 * --------------------------------------------------
+	 * A page that allows users to submit a general
+	 * development message.
+	 * --------------------------------------------------
+	 */
+	public function general_message()
+	{
+		echo 'coming soon';
+	}
+
+	/*
+	 * Learn
+	 * --------------------------------------------------
+	 * An about page about the technology used in this
+	 * web application.
+	 * --------------------------------------------------
+	 */
+	public function learn()
+	{
+		echo 'coming soon';
+	}
+
+	/*
+	 * Log
+	 * --------------------------------------------------
+	 * Show development log from 'git log'
+	 * --------------------------------------------------
+	 */
+	public function log()
+	{
+		$log = shell_exec('git log --pretty=format:"%ad %s" --date=short');
+		$data['log'] = $log;
+
+		$data['title'] = 'Git Log';
+		$data['content'] = 'main/log';
+		$this->load->view('master',$data);
+	}
+
+	/*
+	 * Request Feature
+	 * --------------------------------------------------
+	 * A page where users can request new features of the
+	 * web application.
+	 * --------------------------------------------------
+	 */
+	public function request_feature()
+	{
+		echo 'coming soon';
+	}
+
+	/*
+	 * Submit Bug
+	 * --------------------------------------------------
+	 * Allows user to submit bugs to OurVigor
+ 	 * --------------------------------------------------
+	 */
+	public function submit_bug()
+	{
+		// User must be logged in
+		if (!$this->user_id)
+		{
+			redirect('users/login?redirect_url=development/submit_bug');
+		}
+
+		$this->load->library('form_validation');
+		$this->load->helper(array('form'));
 		
-	}
+		if (!$this->form_validation->run('development_submit_bug'))
+		{
+			$user = new User($this->user_id);
+			$data['user'] = array (
+				'email' => $user->email
+			);
 
-	public function simple_setup()
-	{
-		$u0 = $this->create_user('Brett','E','Peterson','bepeterson14@gmail.com');
-		$u1 = $this->create_user('Tony','P','Stark', 'tstark@petersonb.com');
-		$u2 = $this->create_user('Clark','G','Kent', 'superman@petersonb.com');
-		$u3 = $this->create_user('Peter','J','Parker', 'spidey@petersonb.com');
+			$data['success'] = FALSE;
+			$data['content'] = 'development/submit_bug';
+			$this->load->view('master', $data);
+		}
+		else
+		{
+			$user = new User($this->user_id);
+			$type = 'bug';
 
-		$g0 = $this->create_group('Super Strength Group','Group support for super strength',2);
+			// Grab input
+			$title    = $this->input->post('title');
+			$location = $this->input->post('location');
+			$phone    = $this->input->post('phone');
+			$message  = $this->input->post('message');
 
+			// Current date
+			$date    = date('Y-m-d');
+			// Message with location and phone
+			$message = "({$location}) [{$phone}] $message";
 
-		$cat = $this->create_category('Cardio');
-		$cat1 = $this->create_category('Muscular Endurance');
+			// Save development message
+			$development_message = new DevelopmentMessage();
+			$development_message->title    = $title;
+			$development_message->date     = $date;
+			$development_message->message  = $message;
+			$development_message->type     = $type;
+			$development_message->save($user);
 
-		$ex0 = $this->create_exercise('Push-up', 'Make the ground move away from you');
-		$ex1 = $this->create_exercise('Pull-up', 'Pull the sky towards you');
-
-		$u0->save(array($ex0,$ex1));
-
-		$g0->save(array($cat,$cat1));
-
-		$g0->save(array($u1,$u2));
-
-		echo 'Done :D';
-	}
-
-	public function api_testing()
-	{
-		$this->load->library('table');
-		$user = $this->create_user("Gandalf","the","Gray","wizmaster@petersonb.com");
-		$app = $this->create_application("Wizzap");
-		$token = $this->create_token($user,$app);
-
-		$this->table->add_row('Client_Secret',$app->client_secret);
-		$this->table->add_row('User_Token', $token->value);
-		echo $this->table->generate();
-	}
-
-
-	private function create_application($name)
-	{
-
-		$app = new Application();
-		$app->name = $name;
-		$app->client_id = 1;
-		$app->client_secret = 12;
-		$app->redirect_url = base_url('oauth/test_catch');
-		$app->save();
-
-		return $app;
-	}
-
-	private function create_category($name)
-	{
-		$cat = new Category();
-		$cat->name = $name;
-		$cat->save();
-
-		return $cat;
-	}
-
-	private function create_exercise($name, $description)
-	{
-		$ex = new Exercise();
-		$ex->name = $name;
-		$ex->description = $description;
-		$ex->save();
-
-		return $ex;
-	}
-
-	private function create_group($name, $description, $visibility)
-	{
-		$group = new Group();
-		$group->name = $name;
-		$group->description = $description;
-		$group->visibility = $visibility;
-		$group->save();
-
-		return $group;
-	}
-	
-
-	private function create_user($first,$middle,$last,$email)
-	{
-		$user = new User();
-		$user->firstname = $first;
-		$user->middlename = $middle;
-		$user->lastname = $last;
-		$user->email = $email;
-		$user->password = $this->universal_password;
-		$user->save();
-
-		return $user;
-	}
-
-
-
-	private function create_token($user, $application)
-	{
-		$token = new Token();
-		$token->value = 123;
-		$token->save(array($user, $application));
-
-		return $token;
+			// TODO : Email development account
+			
+			// Show success page
+			$data['success'] = TRUE;
+			$data['content'] = 'development/submit_bug';
+			$this->load->view('master', $data);
+		}
 	}
 }
 
