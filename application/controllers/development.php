@@ -64,7 +64,42 @@ class Development extends CI_Controller {
 	 */
 	public function request_feature()
 	{
-		echo 'coming soon';
+		if (!$this->user_id)
+		{
+			redirect('users/login?redirect_url=development/request_feature');
+		}
+
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		if (!$this->form_validation->run('development_request_feature'))
+		{
+			$user = new User($this->user_id);
+			
+			$profile = $user->profile;
+			$profile->get();
+			
+			$data['user'] = array (
+				'email' => $user->email,
+				'phone' => $profile->phone
+			);
+			
+			$data['success'] = FALSE;
+		}
+		else
+		{
+			$title   = $this->input->post('title');
+			$phone   = $this->input->post('phone');
+			$message = $this->input->post('message');
+			
+			$message = "[{$phone}] {$message}";
+			$type    = "reqf";
+
+			$this->submit_message($title,$message,$type);
+			$data['success'] = TRUE;
+		}
+		$data['content'] = 'development/request_feature';
+		$this->load->view('master', $data);
 	}
 
 	/*
@@ -82,7 +117,7 @@ class Development extends CI_Controller {
 		}
 
 		$this->load->library('form_validation');
-		$this->load->helper(array('form'));
+		$this->load->helper('form');
 		
 		if (!$this->form_validation->run('development_submit_bug'))
 		{
@@ -126,6 +161,40 @@ class Development extends CI_Controller {
 			$data['content'] = 'development/submit_bug';
 			$this->load->view('master', $data);
 		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// Private Methods                                                       //
+	///////////////////////////////////////////////////////////////////////////
+
+	/*
+	Submit Message
+	--------------------------------------------------
+	Since all development messages are submitted to
+	the same database table, might as well save some
+	of the trouble of saving development messages in
+	each method.
+	--------------------------------------------------
+	 */
+	private function submit_message($title,$message,$type)
+	{
+		if (!$this->user_id)
+		{
+			die();
+		}
+		
+		$user = new User($this->user_id);
+
+		$date = date('Y-m-d');
+
+		// TODO : Email from here
+		
+		$development_message = new DevelopmentMessage();
+		$development_message->title   = $title;
+		$development_message->date    = $date;
+		$development_message->message = $message;
+		$development_message->type    = $type;
+		$development_message->save($user);
 	}
 }
 
