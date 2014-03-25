@@ -62,6 +62,93 @@ class Exercises extends CI_Controller {
 	}
 
 	/*
+	 * Delete
+	 * --------------------------------------------------
+	 * Delete an exercise and all of its logs.
+	 * --------------------------------------------------
+	 */
+	public function delete($exercise_id = null)
+	{
+		if (!$exercise_id || !$this->user_id)
+		{
+			redirect('exercises/view');
+		}
+
+		$this->load->helper('form');
+
+		//////////////////////////////////////////////////
+		// Load users and grab exercise from current    //
+		// user to avoid mischief                       //
+		//////////////////////////////////////////////////
+		
+		$user = new User($this->user_id);
+
+		$exercise = $user->exercise;
+		$exercise->where('id', $exercise_id);
+		$exercise->get();
+
+		if ($exercise->exists())
+		{
+			if (!$this->input->post())
+			{
+				//////////////////////////////////////////////////
+				// Not handling submission                      //
+				//////////////////////////////////////////////////
+				
+				$data['exercise'] = array(
+					'id'          => $exercise->id,
+					'name'        => $exercise->name,
+					'description' => $exercise->description
+				);
+				
+				$data['success'] = FALSE;
+			}
+			else
+			{
+				//////////////////////////////////////////////////
+				// Handle submission                            //
+				//////////////////////////////////////////////////
+				
+				$confirm = $this->input->post('confirm');
+
+				//////////////////////////////////////////////////
+				// If they check the submission box, delete all //
+				// things to do witht this exercise.            //
+				//                                              //
+				// If not, lazy solution of just redirecting    //
+				// back to the same page.                       //
+				//////////////////////////////////////////////////
+				if ($confirm)
+				{
+
+					$logs = $exercise->exerciselog;
+					$logs->get();
+
+					foreach ($logs as $log)
+					{
+						$log->delete();
+					}
+
+					$exercise->delete();
+
+					$data['success'] = TRUE;
+				}
+				else
+				{
+					redirect("exercises/delete/{$exercise->id}");
+				}
+			}
+
+			$data['content'] = 'exercises/delete';
+			$this->load->view('master', $data);
+		}
+		else
+		{
+			redirect('exercises/view');
+		}
+	}
+
+	/*
 	 * Find
 	 * --------------------------------------------------
 	 * 
@@ -360,6 +447,14 @@ class Exercises extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
+	/*
+	 * Welcome Intro
+	 * --------------------------------------------------
+	 * A welcome page where new users can select some
+	 * pre-made exercises to immediately add to their
+	 * exercises.
+	 * --------------------------------------------------
+	 */
 	public function welcome_intro()
 	{
 		if (!$this->user_id)
