@@ -20,7 +20,8 @@ class User extends DataMapper {
 
 	var $has_one = array(
 		'emailconfirmation',
-		'profile'
+		'profile',
+		'passwordreset'
 	);
 	var $has_many = array(
 		'group'=>array('join_table'=>'users_groups'),

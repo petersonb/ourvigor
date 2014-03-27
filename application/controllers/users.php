@@ -199,6 +199,92 @@ class Users extends CI_Controller {
 	}
 
 	/*
+	 * Confirm Password Reset
+	 * --------------------------------------------------
+	 * Handle a password reset from users being directed
+	 * from their email.
+	 * --------------------------------------------------
+	 */
+	public function confirm_password_reset()
+	{
+		//////////////////////////////////////////////////
+		// Grab Some input                              //
+		//////////////////////////////////////////////////
+
+		if (!$this->input->post())
+		{
+			$code  = $this->input->get('code');
+			$email = $this->input->get('email');
+		}
+		else
+		{
+			$code  = $this->input->post('code');
+			$email = $this->input->post('email');
+		}
+
+		//////////////////////////////////////////////////
+		// Make sure they're legit                      //
+		//////////////////////////////////////////////////
+
+		// Have to have code and email in url params
+		if (!$code || !$email)
+		{
+			redirect('main');
+		}
+		
+		// Grab request by the code and make sure it exists
+		$reset_request = new PasswordReset();
+		$reset_request->where('code',$code);
+		$reset_request->get();
+
+		if (!$reset_request->exists())
+		{
+			redirect('main');
+		}
+		
+		// Grab user from the reset request
+		$user = $reset_request->user;
+		$user->get();
+
+		// Make sure the user exists (redundant) and make sure
+		//   the provided email matches.
+		if (!$user->exists() || $user->email != $email)
+		{
+			redirect('main');
+		}
+
+		//////////////////////////////////////////////////
+		// Lets reset their password                    //
+		//////////////////////////////////////////////////
+
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+		
+		$data['code']  = $code;
+		$data['email'] = $email;
+
+		if (!$this->form_validation->run('users_confirm_password_reset'))
+		{
+			$data['content'] = 'users/reset_password';
+			$this->load->view('master', $data);
+		}
+		else
+		{
+			// Just password, confirm matches in form validation
+			$password = $this->input->post('password');
+
+			$user->password = $password;
+			$user->save();
+
+			$reset_request->delete();
+
+			$this->session->set_userdata('user_id', $user->id);
+			redirect('users');
+		}
+
+	}
+
+	/*
 	 * Find
 	 * --------------------------------------------------
 	 * 
@@ -240,6 +326,41 @@ class Users extends CI_Controller {
 		$data['title'] = 'Find Users';
 		$data['content'] = 'users/find';
 		$this->load->view('master',$data);
+	}
+
+	public function forgot_password()
+	{
+		if ($this->user_id)
+		{
+			redirect('users');
+		}
+
+		$this->load->library('form_validation');
+		$this->load->helper('keygen','form');
+
+		if (!$this->form_validation->run('users_forgot_password'))
+		{
+			$data['success'] = FALSE;
+		}
+		else
+		{
+			$email = $this->input->post('email');
+
+			$user = new User();
+			$user->where('email', $email);
+			$user->get();
+
+			if (!$user->exists())
+			{
+				redirect('main');
+			}
+
+			$this->send_forgot_password_email($user->id);
+
+			$data['success'] = TRUE;
+		}
+		$data['content'] = 'users/forgot_password';
+		$this->load->view('master', $data);
 	}
 	
 	/*
@@ -399,7 +520,7 @@ class Users extends CI_Controller {
 
 		// Grab logged in user
 		$user = new User($this->user_id);
-
+		
 		// Create a new EmailConfirmation
 		$econf = new EmailConfirmation();
 		$econf->code = keygen_generate(32);
@@ -416,9 +537,9 @@ class Users extends CI_Controller {
 		$data['content'] = 'users/confirmation_email';								     
 		$message = $this->load->view('email_master',$data, true);
 
-		$this->email->from('bepeterson@petersonb.com', 'Brett Peterson');
+		$this->email->from('support@ourvigor.com', 'OurVigor Support');
 		$this->email->to($user->email);
-		$this->email->subject('Fitness Confirmation Email');
+		$this->email->subject('OurVigor Confirmation Email');
 		$this->email->message($message);
 		$this->email->send();
 
@@ -426,6 +547,71 @@ class Users extends CI_Controller {
 		return true;
 	}
 
+
+	/*
+	 * Forgot Password Email
+	 * --------------------------------------------------
+	 * Send to user with parameter id a password reset
+	 * request.
+	 * --------------------------------------------------
+	 */
+	private function send_forgot_password_email($user_id)
+	{
+		$this->load->library('email');
+		$this->load->helper('keygen');
+		
+		$user = new User($user_id);
+		
+		//////////////////////////////////////////////////
+		// Generate a unique code                       //
+		//////////////////////////////////////////////////
+		
+		$code = keygen_generate(64);
+		
+		$check = new PasswordReset();
+		$check->where('code', $code);
+		$check->get();
+		
+		while ($check->exists())
+		{
+			$code = keygen_generate(64);
+			
+			$check = new PasswordReset();
+			$check->where('code', $code);
+			$check->get();
+		}
+
+		$reset = $user->passwordreset;
+		$reset->get();
+		if ($reset->exists())
+		{
+			$reset->code = $code;
+			$reset->save();
+		}
+		else
+		{
+			$reset = new PasswordReset();
+			$reset->code = $code;
+			$reset->save($user);
+		}
+
+		$data['code'] = $reset->code;
+		$data['user'] = array (
+			'id'        => $user->id,
+			'firstname' => $user->firstname,
+			'lastname'  => $user->lastname,
+			'email'     => $user->email
+		);
+
+		$data['content'] = 'password_reset';
+		$message = $this->load->view('email_master', $data, true);
+
+		$this->email->from('support@ourvigor.com', 'OurVigor Support');
+		$this->email->to($user->email);
+		$this->email->subject('OurVigor Password Reset');
+		$this->email->message($message);
+		$this->email->send();
+	}
 
 	/*
 	 * Login
