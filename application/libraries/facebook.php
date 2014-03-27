@@ -18,4 +18,24 @@ class CI_Facebook {
 
 		$this->facebook = new Facebook($config);
 	}
+
+	public function getUser()
+	{
+		$id = $this->facebook->getUser();
+		$id = $this->facebook->getLoginUrl();
+		return $id;
+	}
+
+	public function getUserToken($code)
+	{
+		$params = array (
+			'code' => $code,
+			'client_id' => $this->facebook->getAppId(),
+			'client_secret' => $this->facebook->getAppSecret(),
+			'redirect_uri' => base_url('fb')
+		);
+		$token = $this->facebook->api('oauth/access_token','GET',$params);
+
+		return "({$token})";
+	}
 }
