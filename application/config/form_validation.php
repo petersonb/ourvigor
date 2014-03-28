@@ -194,7 +194,28 @@ $config = array (
 			'rules' => 'required'
 		)
 	),
-	
+
+	'users_confirm_password_reset' => array (
+		array (
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => 'required|min_length[8]'
+		),
+		array (
+			'field' => 'confirm',
+			'label' => 'Confirm',
+			'rules' => 'matches[password]'
+		)
+	),
+
+	'users_forgot_password' => array (
+		array (
+			'field' => 'email',
+			'label' => 'Email',
+			'rules' => 'valid_email|required'
+		),	
+	),
+		
 	'users_login' => array (
 		array (
 			'field' => 'email',

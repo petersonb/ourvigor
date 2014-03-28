@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2014 at 06:46 AM
+-- Generation Time: Mar 27, 2014 at 12:40 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.10-pl0-gentoo
 
@@ -182,6 +182,19 @@ CREATE TABLE IF NOT EXISTS `groups_workouts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `workout_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `passwordresets`
+--
+
+CREATE TABLE IF NOT EXISTS `passwordresets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `code` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

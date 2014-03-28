@@ -17,8 +17,13 @@ else
 	<td>Password</td>
 	<td><?php echo form_password('password'); ?></td>
     </tr>
+        <tr>
+	<td></td>
+	<td><a href="users/forgot_password">Forgot Password</a></td>
+    </tr>
     <tr>
 	<td colspan="2"><?php echo form_submit('submit','Login'); ?></td>
     </tr>
+
 </table>
 </form>
