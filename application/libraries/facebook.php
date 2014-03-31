@@ -28,24 +28,6 @@ class CI_Facebook {
 				$facebook_id = null;
 			}
 		}
-
-		if ($facebook_id)
-		{
-			var_dump($user_info);
-			$user = new User();
-			$user->where('facebook_id', $facebook_id);
-			$user->get();
-
-			if ($user->exists())
-			{
-				$this->session->set_userdata('user_id', $user->id);
-			}
-			else
-			{
-				$this->facebook->destroySession();
-			}
-		}
-		echo $facebook_id;
 	}
 
 	public function getUser()
@@ -62,19 +44,6 @@ class CI_Facebook {
 		
 		$url = $this->facebook->getLoginUrl($params);
 		return $url;
-	}
-
-	public function getUserToken($code)
-	{
-		$params = array (
-			'code' => $code,
-			'client_id' => $this->facebook->getAppId(),
-			'client_secret' => $this->facebook->getAppSecret(),
-			'redirect_uri' => base_url('fb')
-		);
-		$token = $this->facebook->api('oauth/access_token','GET',$params);
-
-		return "({$token})";
 	}
 
 	public function logout()
