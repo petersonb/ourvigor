@@ -10,27 +10,25 @@ class Fb extends CI_Controller {
 
 	public function index()
 	{
-		$code = $this->input->get('code');
-		if ($this->input->post())
+		$user = $this->facebook->getUser();
+		echo $user;
+		if (!$user)
 		{
-			var_dump($this->input->post());
-			die();
-		}
-		//echo $code;
-		if ($code)
-		{
-			echo $this->facebook->getUserToken($code);
-			//echo $this->facebook->getAccessToken();
+			echo '<a href="'.$this->facebook->getLoginUrl().'">Login</a>';
 		}
 		else
 		{
-			echo $this->facebook->getUser();
+			echo 'success';
 		}
 	}
 
-	public function catch_token()
+	public function link_account()
 	{
-		
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+		echo '<a href="'.$this->facebook->getLoginUrl($this->user_id).'">Link</a>';
 	}
 }
 

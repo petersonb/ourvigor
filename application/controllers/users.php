@@ -490,7 +490,7 @@ class Users extends CI_Controller {
 	public function logout()
 	{
 		$this->session->unset_userdata('user_id');
-
+		$this->facebook->logout();
 		redirect('main');
 	}
 

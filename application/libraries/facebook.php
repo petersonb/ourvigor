@@ -17,13 +17,51 @@ class CI_Facebook {
 		);
 
 		$this->facebook = new Facebook($config);
+
+		$facebook_id = $this->facebook->getUser();
+
+		if ($facebook_id)
+		{
+			try {
+				$user_info = $this->facebook->api('/me');
+			} catch (Exception $e){
+				$facebook_id = null;
+			}
+		}
+
+		if ($facebook_id)
+		{
+			var_dump($user_info);
+			$user = new User();
+			$user->where('facebook_id', $facebook_id);
+			$user->get();
+
+			if ($user->exists())
+			{
+				$this->session->set_userdata('user_id', $user->id);
+			}
+			else
+			{
+				$this->facebook->destroySession();
+			}
+		}
+		echo $facebook_id;
 	}
 
 	public function getUser()
 	{
 		$id = $this->facebook->getUser();
-		$id = $this->facebook->getLoginUrl();
 		return $id;
+	}
+
+	public function getLoginUrl($user_id)
+	{
+		$params = array (
+			'redirect_uri' => base_url("?user_id={$user_id}")
+		);
+		
+		$url = $this->facebook->getLoginUrl($params);
+		return $url;
 	}
 
 	public function getUserToken($code)
@@ -37,5 +75,13 @@ class CI_Facebook {
 		$token = $this->facebook->api('oauth/access_token','GET',$params);
 
 		return "({$token})";
+	}
+
+	public function logout()
+	{
+		if ($this->facebook->getUser())
+		{
+			$this->facebook->destroySession();
+		}
 	}
 }
