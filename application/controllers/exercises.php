@@ -276,7 +276,7 @@ class Exercises extends CI_Controller {
 	/*
 	 * Modify
 	 * --------------------------------------------------
-	 * Modify an existing workout
+	 * Modify an existing exercise
 	 * --------------------------------------------------
 	 */
 	public function modify ($exercise_id = null)
@@ -341,246 +341,291 @@ class Exercises extends CI_Controller {
 		
 	}
 
-	/*
-	 * View
-	 * --------------------------------------------------
-	 * 
-	 * View exercises the uses has created, or has added
-	 * to their list of exercises.
-	 * --------------------------------------------------
-	 */
-	public function view()
+	public function modify_log($log_id = null)
 	{
+		//////////////////////////////////////////////////
+		// Security                                     //
+		//////////////////////////////////////////////////
+
+		// Must be logged in
 		if (!$this->user_id)
 		{
 			redirect('users/login');
 		}
 
-		$this->load->helper(array('distance','time','date'));
-		
-		$user = new User($this->user_id);
-		
-		$exercises = $user->exercise;
-		$exercises->get();
-
-		foreach ($exercises as $ex)
-		{
-			$logs = $ex->exerciselog;
-			$logs->get();
-
-			$log_array = array();
-			foreach ($logs as $log)
-			{
-				$log_array[$log->id] = array (
-					'date'     => date_mysql_std($log->date),
-					'distance' => distance_meters_to_miles($log->distance),
-					'time' => time_seconds_to_string($log->time)
-				);
-			}
-			$data['exercises'][$ex->id] = array(
-				'id' => $ex->id,
-				'name' => $ex->name,
-				'description' => $ex->description,
-				'logs' => $log_array
-			);
-		}
-		
-		$data['title']   = 'View Exercises';
-		$data['content'] = 'exercises/view';
-		$this->load->view('master', $data);
-	}
-
-	/*
-	 * View One
-	 * --------------------------------------------------
-	 * View a single exercise
-	 * --------------------------------------------------
-	 */
-
-	public function view_one($exercise_id = null)
-	{
-		// Must be logged in and exercise_id must be supplied
-		if (!$this->user_id)
-		{
-			redirect('users/login');
-		}
-
-		if (!$exercise_id)
+		// Must have log_id in url
+		if (!$log_id)
 		{
 			redirect('exercises/view');
 		}
 
-		$this->load->helper(array('time','distance','date'));
+		$log = new ExerciseLog($log_id);
 
-		// Get exercise from user
-		$user = new User($this->user_id);
+		// Log must exist
+		if (!$log->exists())
+		{
+			redirect('exercises/view');
+		}
 
-		$exercise = $user->exercise;
-		$exercise->where('id', $exercise_id);
+		// Exercise from log
+		$exercise = $log->exercise;
 		$exercise->get();
 
-		// Get exercise logs
-		$exercise_logs = $exercise->exerciselog;
-		$exercise_logs->get();
-		$logs = array();
-		
-		foreach ($exercise_logs as $log)
+		// User from exercise
+		$user = $exercise->user;
+		$user->get();
+
+		// User id from exercise must match logged in user
+		if ($user->id != $this->user_id)
 		{
-			$logs[$log->id] = array (
-				'id'   => $log->id,
-				'date' => date_mysql_std($log->date),
-				'time' => time_seconds_to_string($log->time),
-				'distance' => distance_meters_to_miles($log->distance)
-			);
-		}
-		
-		$data['exercise'] = array (
-			'id'          => $exercise->id,
-			'name'        => $exercise->name,
-			'description' => $exercise->description,
-			'logs'        => $logs
-			
-		);
-
-		$data['title']   = $exercise->name;
-		$data['content'] = 'exercises/view_one';
-		$this->load->view('master', $data);
-	}
-
-	/*
-	 * Welcome Intro
-	 * --------------------------------------------------
-	 * A welcome page where new users can select some
-	 * pre-made exercises to immediately add to their
-	 * exercises.
-	 * --------------------------------------------------
-	 */
-	public function welcome_intro()
-	{
-		if (!$this->user_id)
-		{
-			redirect('users/login');
-		}
-		
-		$this->load->library('form_validation');
-		$this->load->helper('form');
-
-		$default_exercises = array(
-			array (
-				'name'=>'run',
-				'label'=>'Run'
-			),
-			array (
-				'name'=>'bike',
-				'label'=>'Bike'
-			),
-			array (
-				'name'=>'swim',
-				'label'=>'Swim'
-			),
-			array (
-				'name'=>'walk',
-				'label'=>'Walk',
-			)
-		);
-
-		// TODO : this needs to be handled better
-		if ($this->form_validation->run('exercises_welcome_intro') == FALSE)
-		{
-			$data['default_exercises'] = $default_exercises;
-		}
-		else
-		{
-			$user = new User($this->user_id);
-			
-			$run = $this->input->post('run');
-			$bike = $this->input->post('bike');
-			$swim = $this->input->post('swim');
-			$walk = $this->input->post('walk');
-
-			if ($run)
-			{
-				$run = new Exercise();
-				$run->name = 'Run';
-				$run->save($user);
-			}
-
-			if ($bike)
-			{
-				$bike = new Exercise();
-				$bike->name = 'Bike';
-				$bike->save($user);
-			}
-
-			if ($swim)
-			{
-				$swim = new Exercise();
-				$swim->name = 'Swim';
-				$swim->save($user);
-			}
-
-			if ($walk)
-			{
-				$walk = new Exercise();
-				$walk->name = 'Walk';
-				$walk->save($user);
-			}
-
-			// TODO : Change redirecet after welcome_intro
 			redirect('exercises/view');
 		}
-		
-		$data['title'] = 'Welcome';
-		$data['content'] = 'exercises/welcome_intro';
-		$this->load->view('master', $data);
-	}
 
-	public function load_create_form($index)
-	{
-		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/create',$data);
-	}
+		//////////////////////////////////////////////////
+		// End Security                                 //
+		//////////////////////////////////////////////////
+	 }
 
-	public function load_distance_widget($index)
-	{
-		$data['type'] = 'Distance';
-		$data['units'] = array(
-			'miles',
-			'kilometers',
-			'yards',
-			'meters',
-			'feet',
-			'inches',
-			'cm'
-		);
-		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/unit_view', $data);
-	}
+	 /*
+	  * View
+	  * --------------------------------------------------
+	  * 
+	  * View exercises the uses has created, or has added
+	  * to their list of exercises.
+	  * --------------------------------------------------
+	  */
+	 public function view()
+	 {
+		 if (!$this->user_id)
+		 {
+			 redirect('users/login');
+		 }
 
-	public function load_count_widget($index)
-	{
-		$data['type'] = 'Count';
-		$data['units'] = array(
-			'Repetitions',
-			'Sets',
-			'Laps'
-		);
-		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/unit_view', $data);
-	}
+		 $this->load->helper(array('distance','time','date'));
 
-	public function load_time_widget($index)
-	{
-		$data['type'] = 'Time';
-		$data['units'] = array (
-			'Hours',
-			'Minutes',
-			'Seconds'
-		);
-		$data['index'] = $index;
-		$this->load->view('dynamic/exercises/unit_view', $data);
-	}
-}
+		 $user = new User($this->user_id);
 
-/* End of file exercises.php */
-/* Location: ./application/controllers/exercises.php */
+		 $exercises = $user->exercise;
+		 $exercises->get();
+
+		 foreach ($exercises as $ex)
+		 {
+			 $logs = $ex->exerciselog;
+			 $logs->get();
+
+			 $log_array = array();
+			 foreach ($logs as $log)
+			 {
+				 $log_array[$log->id] = array (
+					 'date'     => date_mysql_std($log->date),
+					 'distance' => distance_meters_to_miles($log->distance),
+					 'time' => time_seconds_to_string($log->time)
+				 );
+			 }
+			 $data['exercises'][$ex->id] = array(
+				 'id' => $ex->id,
+				 'name' => $ex->name,
+				 'description' => $ex->description,
+				 'logs' => $log_array
+			 );
+		 }
+
+		 $data['title']   = 'View Exercises';
+		 $data['content'] = 'exercises/view';
+		 $this->load->view('master', $data);
+	 }
+
+	 /*
+	  * View One
+	  * --------------------------------------------------
+	  * View a single exercise
+	  * --------------------------------------------------
+	  */
+
+	 public function view_one($exercise_id = null)
+	 {
+		 // Must be logged in and exercise_id must be supplied
+		 if (!$this->user_id)
+		 {
+			 redirect('users/login');
+		 }
+
+		 if (!$exercise_id)
+		 {
+			 redirect('exercises/view');
+		 }
+
+		 $this->load->helper(array('time','distance','date'));
+
+		 // Get exercise from user
+		 $user = new User($this->user_id);
+
+		 $exercise = $user->exercise;
+		 $exercise->where('id', $exercise_id);
+		 $exercise->get();
+
+		 // Get exercise logs
+		 $exercise_logs = $exercise->exerciselog;
+		 $exercise_logs->get();
+		 $logs = array();
+
+		 foreach ($exercise_logs as $log)
+		 {
+			 $logs[$log->id] = array (
+				 'id'   => $log->id,
+				 'date' => date_mysql_std($log->date),
+				 'time' => time_seconds_to_string($log->time),
+				 'distance' => distance_meters_to_miles($log->distance)
+			 );
+		 }
+
+		 $data['exercise'] = array (
+			 'id'          => $exercise->id,
+			 'name'        => $exercise->name,
+			 'description' => $exercise->description,
+			 'logs'        => $logs
+
+		 );
+
+		 $data['title']   = $exercise->name;
+		 $data['content'] = 'exercises/view_one';
+		 $this->load->view('master', $data);
+	 }
+
+	 /*
+	  * Welcome Intro
+	  * --------------------------------------------------
+	  * A welcome page where new users can select some
+	  * pre-made exercises to immediately add to their
+	  * exercises.
+	  * --------------------------------------------------
+	  */
+	 public function welcome_intro()
+	 {
+		 if (!$this->user_id)
+		 {
+			 redirect('users/login');
+		 }
+
+		 $this->load->library('form_validation');
+		 $this->load->helper('form');
+
+		 $default_exercises = array(
+			 array (
+				 'name'=>'run',
+				 'label'=>'Run'
+			 ),
+			 array (
+				 'name'=>'bike',
+				 'label'=>'Bike'
+			 ),
+			 array (
+				 'name'=>'swim',
+				 'label'=>'Swim'
+			 ),
+			 array (
+				 'name'=>'walk',
+				 'label'=>'Walk',
+			 )
+		 );
+
+		 // TODO : this needs to be handled better
+		 if ($this->form_validation->run('exercises_welcome_intro') == FALSE)
+		 {
+			 $data['default_exercises'] = $default_exercises;
+		 }
+		 else
+		 {
+			 $user = new User($this->user_id);
+
+			 $run = $this->input->post('run');
+			 $bike = $this->input->post('bike');
+			 $swim = $this->input->post('swim');
+			 $walk = $this->input->post('walk');
+
+			 if ($run)
+			 {
+				 $run = new Exercise();
+				 $run->name = 'Run';
+				 $run->save($user);
+			 }
+
+			 if ($bike)
+			 {
+				 $bike = new Exercise();
+				 $bike->name = 'Bike';
+				 $bike->save($user);
+			 }
+
+			 if ($swim)
+			 {
+				 $swim = new Exercise();
+				 $swim->name = 'Swim';
+				 $swim->save($user);
+			 }
+
+			 if ($walk)
+			 {
+				 $walk = new Exercise();
+				 $walk->name = 'Walk';
+				 $walk->save($user);
+			 }
+
+			 // TODO : Change redirecet after welcome_intro
+			 redirect('exercises/view');
+		 }
+
+		 $data['title'] = 'Welcome';
+		 $data['content'] = 'exercises/welcome_intro';
+		 $this->load->view('master', $data);
+	 }
+
+	 public function load_create_form($index)
+	 {
+		 $data['index'] = $index;
+		 $this->load->view('dynamic/exercises/create',$data);
+	 }
+
+	 public function load_distance_widget($index)
+	 {
+		 $data['type'] = 'Distance';
+		 $data['units'] = array(
+			 'miles',
+			 'kilometers',
+			 'yards',
+			 'meters',
+			 'feet',
+			 'inches',
+			 'cm'
+		 );
+		 $data['index'] = $index;
+		 $this->load->view('dynamic/exercises/unit_view', $data);
+	 }
+
+	 public function load_count_widget($index)
+	 {
+		 $data['type'] = 'Count';
+		 $data['units'] = array(
+			 'Repetitions',
+			 'Sets',
+			 'Laps'
+		 );
+		 $data['index'] = $index;
+		 $this->load->view('dynamic/exercises/unit_view', $data);
+	 }
+
+	 public function load_time_widget($index)
+	 {
+		 $data['type'] = 'Time';
+		 $data['units'] = array (
+			 'Hours',
+			 'Minutes',
+			 'Seconds'
+		 );
+		 $data['index'] = $index;
+		 $this->load->view('dynamic/exercises/unit_view', $data);
+	 }
+ }
+
+ /* End of file exercises.php */
+ /* Location: ./application/controllers/exercises.php */
