@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2014 at 12:40 AM
+-- Generation Time: Apr 01, 2014 at 09:34 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.10-pl0-gentoo
 
@@ -242,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `tokens` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `facebook_id` int(16) DEFAULT NULL,
   `firstname` varchar(64) NOT NULL,
   `middlename` varchar(64) NOT NULL,
   `lastname` varchar(64) NOT NULL,
