@@ -233,18 +233,18 @@ class Exercises extends CI_Controller {
 			// Get Data From Form                           //
 			//////////////////////////////////////////////////
 			
-			$exercise_id = $this->input->post('exercise_id');
-			$distance    = $this->input->post('distance');
-			$time_hour   = $this->input->post('time_hour');
-			$time_minute = $this->input->post('time_minute');
-			$time_second = $this->input->post('time_second');
-			$date        = $this->input->post('date');
+			$exercise_id  = $this->input->post('exercise_id');
+			$distance     = $this->input->post('distance');
+			$time_hours   = $this->input->post('time_hours');
+			$time_minutes = $this->input->post('time_minutes');
+			$time_seconds = $this->input->post('time_seconds');
+			$date         = $this->input->post('date');
 			
 			//////////////////////////////////////////////////
 			// Convert Units                                //
 			//////////////////////////////////////////////////
 			
-			$time_output    = time_seconds($time_hour, $time_minute, $time_second);
+			$time_output    = time_seconds($time_hours, $time_minutes, $time_seconds);
 			$meter_distance = distance_miles_to_meters($distance);
 			$mysql_date  = date_std_mysql($date);
 			
@@ -341,6 +341,14 @@ class Exercises extends CI_Controller {
 		
 	}
 
+	/*
+	 * Modify Log
+	 * --------------------------------------------------
+	 * Modify a logged exercise.
+	 * 
+	 * TODO : Move this to log controller
+	 * --------------------------------------------------
+	 */
 	public function modify_log($log_id = null)
 	{
 		//////////////////////////////////////////////////
@@ -384,6 +392,46 @@ class Exercises extends CI_Controller {
 		//////////////////////////////////////////////////
 		// End Security                                 //
 		//////////////////////////////////////////////////
+
+		$this->load->helper(array('date','distance','form','time'));
+		$this->load->library('form_validation');
+
+		if ($this->form_validation->run('exercises_modify_log') == FALSE)
+		{
+			
+			$data['exercise'] = array (
+				'id'          => $exercise->id,
+				'name'        => $exercise->name,
+				'description' => $exercise->description
+			);
+			
+			$data['log']      = array (
+				'id'       => $log->id,
+				'date'     => date_mysql_std($log->date),
+				'time'     => time_seconds_to_units($log->time),
+				'distance' => distance_meters_to_miles($log->distance)
+			);
+			
+			$data['content'] = 'exercises/modify_log';
+			$data['javascript'] = array('jquery','jquery-ui','date');
+			$data['css']        = array('calendar_widget/jquery-ui');
+			$this->load->view('master', $data);
+		}
+		else
+		{
+			$distance = $this->input->post('distance');
+			$date     = $this->input->post('date');
+			$hours    = $this->input->post('time_hours');
+			$minutes  = $this->input->post('time_minutes');
+			$seconds  = $this->input->post('time_seconds');
+
+			$log->distance = distance_miles_to_meters($distance);
+			$log->time     = time_seconds($hours, $minutes, $seconds);
+			$log->date     = date_std_mysql($date);
+			$log->save();
+
+			redirect('exercises/view');
+		}
 	}
 
 	/*
@@ -417,9 +465,10 @@ class Exercises extends CI_Controller {
 			foreach ($logs as $log)
 			{
 				$log_array[$log->id] = array (
+					'id'       => $log->id,
 					'date'     => date_mysql_std($log->date),
 					'distance' => distance_meters_to_miles($log->distance),
-					'time' => time_seconds_to_string($log->time)
+					'time'     => time_seconds_to_string($log->time)
 				);
 			}
 			$data['exercises'][$ex->id] = array(
