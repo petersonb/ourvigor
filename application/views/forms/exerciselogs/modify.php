@@ -1,5 +1,5 @@
 <?php echo validation_errors(); ?>
-<?php echo form_open('exercises/modify_log/'.$log['id']); ?>
+<?php echo form_open('exerciselogs/modify/'.$log['id']); ?>
     <table>
 	<tr>
 	    <td>Exercise: </td>

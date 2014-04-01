@@ -1,5 +1,5 @@
 <?php echo validation_errors(); ?>
-<?php echo form_open('exercises/log'); ?>
+<?php echo form_open('exerciselogs/log'); ?>
 <?php if (count($user_exercises) > 0): ?>
     <table>
 	<tr>

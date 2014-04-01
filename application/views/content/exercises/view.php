@@ -22,7 +22,7 @@
 			    <td><?php echo $log['date']; ?>
 				<td><?php echo $log['distance']; ?></td>
 				<td><?php echo $log['time']; ?></td>
-				<td><a href="<?php echo base_url('exercises/modify_log/'.$log['id']); ?>">Edit</a></td>
+				<td><a href="<?php echo base_url('exerciselogs/modify/'.$log['id']); ?>">Edit</a></td>
 			</tr>
 		    <?php endforeach; ?>
 	    </table>

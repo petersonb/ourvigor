@@ -15,9 +15,10 @@
 	    <?php foreach ($exercise['logs'] as $log): ?>
 		<tr>
 		    <td></td>
-		    <td><?php echo $log['date']; ?>
-			<td><?php echo $log['distance']; ?></td>
-			<td><?php echo $log['time']; ?></td>
+		    <td><?php echo $log['date']; ?></td>
+		    <td><?php echo $log['distance']; ?></td>
+		    <td><?php echo $log['time']; ?></td>
+		    <td><a href="<?php base_url('exerciselogs/modify/'.$log['id']); ?>">Edit</a></td>
 		</tr>
 	    <?php endforeach; ?>
     </table>
