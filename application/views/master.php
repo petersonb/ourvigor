@@ -35,15 +35,14 @@
 	    <div id="header">
 		<?php $this->load->view('main/header'); ?>
 	    </div>
-	    <div id="leftCol">
-		<?php $this->load->view('menus/menu_col.php'); ?>
-	    </div>
+	    <?php if ($this->user_id): ?>
+		<div id="leftCol">
+		    <?php $this->load->view('menus/menu_col.php'); ?>
+		</div>
+	    <?php endif; ?>
 	    <div id="content">
 		<div id="innerContent">
 		    <?php
-		    // Load Menu
-		    //$this->load->view('menus/development');
-		    
 		    // Load each content
 		    if (isset($content))
 		    {

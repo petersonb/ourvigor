@@ -82,11 +82,49 @@ $config = array (
 		),
 	),
 
+	'exercises_modify_log' => array (
+		array (
+			'field' => 'distance',
+			'label' => 'Distance',
+			'rules' => 'required|numeric'
+		),
+		array (
+			'field' => 'time_hours',
+			'label' => 'Hours',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'time_minutes',
+			'label' => 'Minutes',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'time_seconds',
+			'label' => 'Seconds',
+			'rules' => 'numeric'
+		),
+	),
+
 	'exercises_log' => array (
 		array (
 			'field' => 'distance',
 			'label' => 'Distance',
-			'rules' => 'required'
+			'rules' => 'required|numeric'
+		),
+		array (
+			'field' => 'time_hours',
+			'label' => 'Hours',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'time_minutes',
+			'label' => 'Minutes',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'time_seconds',
+			'label' => 'Seconds',
+			'rules' => 'numeric'
 		),
 	),
 	

@@ -1,5 +1,5 @@
 <?php echo validation_errors(); ?>
-<?php echo form_open('exercises/log'); ?>
+<?php echo form_open('exerciselogs/log'); ?>
 <?php if (count($user_exercises) > 0): ?>
     <table>
 	<tr>
@@ -25,11 +25,11 @@
 	<tr>
 	    <td>Time:</td>
 	    <td>
-		<input style="width:2em" type="text" name="time_hour" />
+		<input style="width:2em" type="text" name="time_hours" />
 		:
-		<input style="width:2em" type="text" name="time_minute" />
+		<input style="width:2em" type="text" name="time_minutes" />
 		:
-		<input style="width:2em" type="text" name="time_second" />
+		<input style="width:2em" type="text" name="time_seconds" />
 	    </td>
 	</tr>
     </table>

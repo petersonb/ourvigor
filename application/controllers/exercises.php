@@ -186,97 +186,11 @@ class Exercises extends CI_Controller {
 		$data['content'] = 'exercises/find';
 		$this->load->view('master', $data);
 	}
-
-	/*
-	 * Log
-	 * --------------------------------------------------
-	 * 
-	 * Log a single exercise. This is a page where the
-	 * user is presented with 
-	 * --------------------------------------------------
-	 */
-	public function log()
-	{
-		if (!$this->user_id)
-		{
-			redirect('users/login');
-		}
-		
-		$this->load->library('form_validation');
-		$this->load->helper(array('form','distance','time','date'));
-
-		$user_exercises = array();
-		if ($this->form_validation->run('exercises_log') == FALSE)
-		{
-
-			$user = new User($this->user_id);
-			
-			$exercises = $user->exercise;
-			$exercises->get();
-
-
-			foreach ($exercises as $exercise)
-			{
-				$user_exercises[$exercise->id] = array (
-					'id' => $exercise->id,
-					'name' => $exercise->name,
-					'description' => $exercise->description
-				);
-
-			}
-			$data['date'] = date("m/d/Y");
-			$data['user_exercises'] = $user_exercises;
-		}
-		else
-		{
-			//////////////////////////////////////////////////
-			// Get Data From Form                           //
-			//////////////////////////////////////////////////
-			
-			$exercise_id = $this->input->post('exercise_id');
-			$distance    = $this->input->post('distance');
-			$time_hour   = $this->input->post('time_hour');
-			$time_minute = $this->input->post('time_minute');
-			$time_second = $this->input->post('time_second');
-			$date        = $this->input->post('date');
-			
-			//////////////////////////////////////////////////
-			// Convert Units                                //
-			//////////////////////////////////////////////////
-			
-			$time_output    = time_seconds($time_hour, $time_minute, $time_second);
-			$meter_distance = distance_miles_to_meters($distance);
-			$mysql_date  = date_std_mysql($date);
-			
-			//////////////////////////////////////////////////
-			// Log Exercise                                 //
-			//////////////////////////////////////////////////
-			
-			$user     = new User($this->user_id);
-			$exercise = $user->exercise;
-			$exercise->where('id', $exercise_id);
-			$exercise->get();
-						
-			$log = new ExerciseLog();
-			$log->date     = $mysql_date;
-			$log->distance = $meter_distance;
-			$log->time     = $time_output;
-			$log->save($exercise);
-
-			redirect('exercises/view');
-		}
-		
-		$data['title']      = 'Log Exercise';
-		$data['content']    = 'exercises/log';
-		$data['javascript'] = array('jquery','jquery-ui','date');
-		$data['css']        = array('calendar_widget/jquery-ui');
-		$this->load->view('master', $data);
-	}
-
+	
 	/*
 	 * Modify
 	 * --------------------------------------------------
-	 * Modify an existing workout
+	 * Modify an existing exercise
 	 * --------------------------------------------------
 	 */
 	public function modify ($exercise_id = null)
@@ -337,10 +251,9 @@ class Exercises extends CI_Controller {
 			$exercise->save();
 
 			redirect("exercises/view_one/{$exercise->id}");
-		}
-		
+		}	
 	}
-
+	
 	/*
 	 * View
 	 * --------------------------------------------------
@@ -357,9 +270,9 @@ class Exercises extends CI_Controller {
 		}
 
 		$this->load->helper(array('distance','time','date'));
-		
+
 		$user = new User($this->user_id);
-		
+
 		$exercises = $user->exercise;
 		$exercises->get();
 
@@ -372,9 +285,10 @@ class Exercises extends CI_Controller {
 			foreach ($logs as $log)
 			{
 				$log_array[$log->id] = array (
+					'id'       => $log->id,
 					'date'     => date_mysql_std($log->date),
 					'distance' => distance_meters_to_miles($log->distance),
-					'time' => time_seconds_to_string($log->time)
+					'time'     => time_seconds_to_string($log->time)
 				);
 			}
 			$data['exercises'][$ex->id] = array(
@@ -384,7 +298,7 @@ class Exercises extends CI_Controller {
 				'logs' => $log_array
 			);
 		}
-		
+
 		$data['title']   = 'View Exercises';
 		$data['content'] = 'exercises/view';
 		$this->load->view('master', $data);
@@ -423,7 +337,7 @@ class Exercises extends CI_Controller {
 		$exercise_logs = $exercise->exerciselog;
 		$exercise_logs->get();
 		$logs = array();
-		
+
 		foreach ($exercise_logs as $log)
 		{
 			$logs[$log->id] = array (
@@ -433,13 +347,13 @@ class Exercises extends CI_Controller {
 				'distance' => distance_meters_to_miles($log->distance)
 			);
 		}
-		
+
 		$data['exercise'] = array (
 			'id'          => $exercise->id,
 			'name'        => $exercise->name,
 			'description' => $exercise->description,
 			'logs'        => $logs
-			
+
 		);
 
 		$data['title']   = $exercise->name;
@@ -461,7 +375,7 @@ class Exercises extends CI_Controller {
 		{
 			redirect('users/login');
 		}
-		
+
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
@@ -492,7 +406,7 @@ class Exercises extends CI_Controller {
 		else
 		{
 			$user = new User($this->user_id);
-			
+
 			$run = $this->input->post('run');
 			$bike = $this->input->post('bike');
 			$swim = $this->input->post('swim');
@@ -529,7 +443,7 @@ class Exercises extends CI_Controller {
 			// TODO : Change redirecet after welcome_intro
 			redirect('exercises/view');
 		}
-		
+
 		$data['title'] = 'Welcome';
 		$data['content'] = 'exercises/welcome_intro';
 		$this->load->view('master', $data);

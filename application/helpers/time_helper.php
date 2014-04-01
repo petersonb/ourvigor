@@ -42,6 +42,25 @@ function time_seconds_to_string($seconds)
 	return $string;
 }
 
+function time_seconds_to_units($seconds)
+{
+	$time = time_seconds_to_string($seconds);
+
+	$split = explode(':',$time);
+
+	$hours   = $split[0];
+	$minutes = $split[1];
+	$seconds = $split[2];
+	
+	$units = array (
+		'hours'   => $hours,
+		'minutes' => $minutes,
+		'seconds' => $seconds
+	);
+
+	return $units;
+}
+
 function time_hours_to_seconds($hours)
 {
 	$minutes = time_hours_to_minutes($hours);
