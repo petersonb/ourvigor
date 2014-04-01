@@ -44,7 +44,7 @@ class CI_Facebook {
 
 		if ($user_facebook_id and !$facebook_id)
 		{
-			redirect($this->getLoginUrl());
+			redirect($this->getLoginUrl($user_id));
 		}
 	}
 
