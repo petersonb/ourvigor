@@ -46,7 +46,7 @@ class Main extends CI_Controller {
 				$user = new User($this->user_id);
 				$user->facebook_id = $facebook_user_id;
 				$user->save();
-				redirect('users');
+				redirect('fb/link_account');
 			}
 			else
 			{

@@ -22,14 +22,49 @@ class Fb extends CI_Controller {
 		}
 	}
 
+	/*
+	 * Link Account
+	 * --------------------------------------------------
+	 * A page explaining what linking account does for
+	 * the user, as well as a link to get them there.
+	 * 
+	 * If their account is already linked, they can unlink
+	 * their account here as well.
+	 * --------------------------------------------------
+	 */
 	public function link_account()
 	{
 		if (!$this->user_id)
 		{
 			redirect('users/login');
 		}
-		echo '<a href="'.$this->facebook->getLoginUrl($this->user_id).'">Link</a>';
+
+		$linked = FALSE;
+		if (!$this->facebook->getUser())
+		{
+			$data['link'] = $this->facebook->getLoginUrl($this->user_id);
+		}
+		else
+		{
+			$linked = TRUE;
+			$data['link'] = base_url('fb/unlink_account');
+		}
+		
+		$data['content'] = 'fb/link_account';
+		$data['linked'] = $linked;
+		$this->load->view('master', $data);
 	}
+
+	public function unlink_account()
+	{
+		$user = new User($this->user_id);
+		$user->facebook_id = null;
+		$user->save();
+
+		$this->facebook->logout();
+		redirect('fb/link_account');
+	}
+
 }
 
 /* End of file fb.php */
