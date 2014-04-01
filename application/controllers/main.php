@@ -20,11 +20,11 @@ class Main extends CI_Controller {
 	public function index()
 	{
 		
-		if (!$this->user_id)
+		if ($this->user_id && $this->facebook->getUser())
 		{
 			redirect('users');
 		}
-		else
+		elseif($this->user_id)
 		{
 			$get_user_id = $this->input->get('user_id');
 			$facebook_user_id = $this->facebook->getUser();
