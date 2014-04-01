@@ -20,13 +20,13 @@ class Main extends CI_Controller {
 	public function index()
 	{
 		
-		if ($this->user_id && $this->facebook->getUser())
+		if ($this->user_id && $this->session->userdata('facebook_id'))
 		{
 			redirect('users');
 		}
 		elseif($this->user_id)
 		{
-			$get_user_id = $this->input->get('user_id');
+			$get_user_id      = $this->input->get('user_id');
 			$facebook_user_id = $this->facebook->getUser();
 
 			if ($facebook_user_id == '0')
@@ -46,11 +46,11 @@ class Main extends CI_Controller {
 				$user = new User($this->user_id);
 				$user->facebook_id = $facebook_user_id;
 				$user->save();
-
 				redirect('users');
 			}
 			else
 			{
+				// TODO : Handle if facebook account is linked to other
 				redirect('users');
 			}
 		}

@@ -32,7 +32,7 @@ class CI_Facebook {
 			$user_facebook_id = $user->facebook_id;
 		}
 
-		if ($facebook_id and !$session_facebook_id)
+		if ($facebook_id && !$session_facebook_id && $user_facebook_id)
 		{
 			try {
 				$user_info = $this->facebook->api('/me');
@@ -42,7 +42,7 @@ class CI_Facebook {
 			}
 		}
 
-		if ($user_facebook_id and !$facebook_id)
+		if ($user_facebook_id && !$facebook_id)
 		{
 			redirect($this->getLoginUrl($user_id));
 		}
