@@ -64,6 +64,7 @@
 		<div class="contentSpacer">
 		</div>
 		<div id="innerFooter">
+		    <?php $this->load->view('main/footer'); ?>
 		</div>
 	    </div>
 	</div>

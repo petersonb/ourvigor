@@ -17,16 +17,34 @@ class CI_Facebook {
 		);
 
 		$this->facebook = new Facebook($config);
+		$this->CI =& get_instance();
+		
+		$facebook_id         = $this->facebook->getUser();
+		$user_id             = $this->CI->session->userdata('user_id');
+		$session_facebook_id = $this->CI->session->userdata('facebook_id');
 
-		$facebook_id = $this->facebook->getUser();
 
-		if ($facebook_id)
+		$user_facebook_id = null;
+		
+		if ($user_id)
+		{
+			$user = new User($user_id);
+			$user_facebook_id = $user->facebook_id;
+		}
+
+		if ($facebook_id and !$session_facebook_id)
 		{
 			try {
 				$user_info = $this->facebook->api('/me');
-			} catch (Exception $e){
+				$this->CI->session->set_userdata('facebook_id', $facebook_id);
+			} catch (FacebookApiException $e){
 				$facebook_id = null;
 			}
+		}
+
+		if ($user_facebook_id and !$facebook_id)
+		{
+			redirect($this->getLoginUrl());
 		}
 	}
 
@@ -51,6 +69,7 @@ class CI_Facebook {
 		if ($this->facebook->getUser())
 		{
 			$this->facebook->destroySession();
+			$this->CI->session->unset_userdata('facebook_id');
 		}
 	}
 }
