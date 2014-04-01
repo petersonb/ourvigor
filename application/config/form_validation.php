@@ -7,6 +7,8 @@
   stored and configured here.
 */
 
+$password_creation_rules = 'required|min_length[8]';
+
 $config = array (
 
 	//////////////////////////////////////////////////
@@ -266,6 +268,24 @@ $config = array (
 			'rules' => 'required'
 		)
 	),
+
+	'users_change_password' => array (
+		array (
+			'field' => 'current',
+			'label' => 'Current password',
+			'rules' => 'required'
+		),
+		array (
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => $password_creation_rules
+		),
+		array (
+			'field' => 'confirm',
+			'label' => 'Confirm',
+			'rules' => 'matches[password]'
+		)
+	),
 	
 	'users_register' => array (
 		array (
@@ -286,7 +306,7 @@ $config = array (
 		array (
 			'field' => 'password',
 			'label' => 'Password',
-			'rules' => 'required|min_length[8]'
+			'rules' => $password_creation_rules
 		),
 		array (
 			'field' => 'confirm',

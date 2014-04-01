@@ -494,6 +494,37 @@ class Users extends CI_Controller {
 		redirect('main');
 	}
 
+	public function change_password()
+	{
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		$data['success'] = FALSE;
+		if ($this->form_validation->run('users_change_password'))
+		{
+			$user = new User($this->user_id);
+			
+			$current  = $this->input->post('current');
+			$password = $this->input->post('password');
+			
+			if ($this->valid_login($user->email, $current))
+			{
+				$user = new User($this->user_id);
+				$user->password = $password;
+				$user->save();
+
+				$data['success'] = TRUE;
+			}
+			else
+			{
+				$data['error_message'] = "Your current password is incorrect.";
+			}
+		}
+		
+		$data['content'] = 'users/change_password';
+		$this->load->view('master', $data);
+	}
+
 
 	/*
 	 * Confirmation Email
