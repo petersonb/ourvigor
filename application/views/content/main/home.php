@@ -8,6 +8,8 @@
 <div>
     <p>Don't have an account?</p>
     <h3>Register</h3>
-    <?php $this->load->view('forms/users/register'); ?>
+    <p><a href="<?php echo $this->facebook->getLoginUrl(); ?>">Register With Facebook</a></p>
+    <p>OurVigor requires a valid email address used for logging in.</p>
+    <p>Don't have a Facebook account? <a href="<?php echo base_url('users/register');2 ?>"> Click Here</a></p>
 </div>
 

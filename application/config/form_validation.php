@@ -248,6 +248,19 @@ $config = array (
 		)
 	),
 
+	'users_facebook_register' => array (
+		array (
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => $password_creation_rules
+		),
+		array (
+			'field' => 'confirm',
+			'label' => 'Confirm',
+			'rules' => 'matches[password]'
+		)
+	),
+
 	'users_forgot_password' => array (
 		array (
 			'field' => 'email',

@@ -48,18 +48,28 @@ class CI_Facebook {
 		}
 	}
 
+	public function api($request, $method = null, $params = null)
+	{
+		return $this->facebook->api($request);
+	}
+
 	public function getUser()
 	{
 		$id = $this->facebook->getUser();
 		return $id;
 	}
 
-	public function getLoginUrl($user_id)
+	public function getLoginUrl($user_id=null)
 	{
+		if (!$user_id)
+		{
+			$user_id = 'register';
+		}
 		$params = array (
-			'redirect_uri' => base_url("?user_id={$user_id}")
+			'redirect_uri' => base_url("?user_id={$user_id}"),
+			'scope'        => 'email'
 		);
-		
+				
 		$url = $this->facebook->getLoginUrl($params);
 		return $url;
 	}

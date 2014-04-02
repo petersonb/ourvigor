@@ -284,6 +284,51 @@ class Users extends CI_Controller {
 
 	}
 
+	public function facebook_register()
+	{
+		$facebook_user_id = $this->facebook->getUser();;
+		if (!$this->user_id || !$facebook_user_id)
+		{
+			echo 'first';
+			die();
+			redirect('users/login');
+		}
+
+		if (!$this->session->userdata('facebook_register'))
+		{
+			echo 'second';
+			die();
+			redirect('users/login');
+		}
+					      
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		$user = new User($this->user_id);
+		
+		if ($this->form_validation->run('users_facebook_register') == FALSE)
+		{
+			$data['user'] = array (
+				'firstname' => $user->firstname,
+				'lastname'  => $user->lastname,
+				'email'     => $user->email,
+			);
+		}
+		else
+		{
+			$password = $this->input->post('password');
+			
+			$user->password = $password;
+			$user->save();
+
+			$this->session->unset_userdata('facebook_register');
+			redirect('users');
+		}
+
+		$data['content'] = 'users/facebook_register';
+		$this->load->view('master', $data);
+	}
+
 	/*
 	 * Find
 	 * --------------------------------------------------
