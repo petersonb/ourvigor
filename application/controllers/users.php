@@ -304,6 +304,8 @@ class Users extends CI_Controller {
 			'email' => $user->email,
 			
 		);
+
+		$data['sent'] = FALSE;
 		
 		$data['content'] = 'users/email_quarentine';
 		$this->load->view('master', $data);
@@ -497,6 +499,25 @@ class Users extends CI_Controller {
 				die();
 			}
 		}
+	}
+
+	public function resend_confirmation_email()
+	{
+		if (!$this->logged_in)
+		{
+			redirect('users/login');
+		}
+
+		$this->send_confirmation_email();
+
+		$user = new User($this->user_id);
+		$data['user'] = array (
+			'email' => $user->email
+		);
+		
+		$data['content'] = 'users/email_quarentine';
+		$data['sent'] = TRUE;
+		$this->load->view('master', $data);
 	}
 
 	/*
