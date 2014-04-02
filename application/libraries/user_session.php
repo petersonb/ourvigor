@@ -5,9 +5,12 @@ class CI_User_session {
 	public function __construct()
 	{
 		$this->CI =& get_instance();
-		
+
 		$this->user_id = $this->CI->session->userdata('user_id');
 		$this->user_valid = $this->CI->session->userdata('user_valid');
+
+		// TODO : temporary fix, inefficient on every page request
+		$this->updateValidation();
 	}
 
 	public function getUserId()
