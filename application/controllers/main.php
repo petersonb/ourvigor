@@ -51,7 +51,6 @@ class Main extends CI_Controller {
 		elseif(!$this->user_id && $get_user_id == 'register' && $facebook_user_id)
 		{
 			$facebook_user_info = $this->facebook->api('/me');
-			var_dump($facebook_user_info);
 
 			$user = new User();
 			$user->where('email', $facebook_user_info['email']);
@@ -79,24 +78,12 @@ class Main extends CI_Controller {
 				$user->password    = $password;
 				$user->save();
 
-				$user = new User();
-				$user->email = $facebook_user_info['email'];
-				$user->password = $password;
-
-				if ($user->login())
-				{
-					$this->session->set_userdata('user_id', $user->id);
-					$this->user_id = $user->id;
-					
-					$this->session->set_userdata('facebook_register', TRUE);
-					redirect('users/facebook_register');
-				}
-				else
-				{
-					echo 'fail';
-					die();
-					redirect('main');
-				}
+				// TODO : Security on login
+				$this->session->set_userdata('user_id', $user->id);
+				$this->user_id = $user->id;
+				
+				$this->session->set_userdata('facebook_register', TRUE);
+				redirect('users/facebook_register');
 			}
 		}
 
