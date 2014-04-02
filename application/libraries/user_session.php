@@ -5,80 +5,75 @@ class CI_User_session {
 	public function __construct()
 	{
 		$this->CI =& get_instance();
-		$this->user_id = $this->CI->session->userdata('user_id');
-		$this->valid_account = $this->CI->session->userdata('email_valid');
 		
-		if ($this->user_id && !$this->valid_account)
-		{
-			$user = new User($this->user_id);
-			$conf = $user->emailconfirmation;
-			$conf->get();
+		$this->user_id = $this->CI->session->userdata('user_id');
+		$this->user_valid = $this->CI->session->userdata('user_valid');
+	}
 
-			if ($conf->count() > 0)
-			{
-				$this->CI->session->set_userdata('valid_account', FALSE);
-				$this->valid_account = FALSE;
-			}
-			else
-			{
-				$this->CI->session->set_userdata('valid_account', TRUE);
-				$this->valid_account = TRUE;
-			}
+	public function getUserId()
+	{
+		return $this->user_id;
+	}
+
+	public function isLoggedIn()
+	{
+		if ($this->user_id)
+		{
+			return TRUE;
 		}
-
-		if ($this->user_id && $this->valid_account == FALSE)
+		return FALSE;
+	}
+	
+	public function isValidLoggedIn()
+	{
+		if ($this->user_id && $this->user_valid)
 		{
-			$allowed_pages =  array (
-				'main',
-				'users/email_quarentine',
-				'users/change_email',
-				'users/confirm_account'
-			);
 			
-			$uri = uri_string();
-			$uri_parts = explode('/', $uri);
-
-			$valid = FALSE;
-			foreach ($allowed_pages as $page)
-			{
-				$page_parts = explode('/', $page);
-				
-				if ($uri_parts[0] === $page_parts[0])
-				{
-					if (count($uri_parts) > 1 && count($page_parts) > 1)
-					{
-						if($uri_parts[1] === $page_parts[1])
-						{
-							$valid = TRUE;
-							break;
-						}
-					}
-					elseif(count($uri_parts) === count($page_parts))
-					{
-						$valid = TRUE;
-					}
-				}
-			}
-			if ($valid == FALSE)
-			{
-				redirect('users/email_quarentine');
-			}
+			return TRUE;
 		}
+		return FALSE;
 	}
 
-	public function set_account_invalid()
+	public function login($user_id)
 	{
-		$this->CI->session->set_userdata('valid_account', FALSE);
+		$this->user_id = $user_id;
+
+		$user_valid = $this->validate();
+		
+		$this->CI->session->set_userdata('user_id',$user_id);
+		$this->CI->session->set_userdata('user_valid', $user_valid);
 	}
 
-	public function set_account_valid()
+	public function logout()
 	{
-		$this->CI->session->set_userdata('valid_account', TRUE);
+		$this->CI->session->unset_userdata('user_id');
+		$this->CI->session->unset_userdata('email_valid');
 	}
 
-	public function valid()
+	public function updateValidation()
 	{
-		return $this->valid_account;
+		$user_valid = $this->validate();
+		$this->CI->session->set_userdata('user_valid', $user_valid);
+		$this->user_valid = $user_valid;
+		return $user_valid;
+	}
+
+	public function validate()
+	{
+		$user = new User($this->user_id);
+		$email_confirmation = $user->emailconfirmation;
+		$email_confirmation->get();
+
+		if ($email_confirmation->count() > 0)
+		{
+			$user_valid = FALSE;
+		}
+		else
+		{
+			$user_valid = TRUE;
+		}
+
+		return $user_valid;
 	}
 }
 

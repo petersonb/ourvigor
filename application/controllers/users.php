@@ -5,7 +5,9 @@ class Users extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 
@@ -19,7 +21,7 @@ class Users extends CI_Controller {
 	public function index()
 	{
 		// Redirect if not logged in to login page.
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -56,7 +58,7 @@ class Users extends CI_Controller {
 		
 		$data['success'] = FALSE;
 		
-		if ($this->user_id)
+		if ($this->logged_in)
 		{
 			//////////////////////////////////////////////////
 			// IF user is logged in                         //
@@ -286,7 +288,11 @@ class Users extends CI_Controller {
 
 	public function email_quarentine()
 	{
-		if (!$this->user_id || !$this->user_session->valid())
+		if ($this->valid_logged_in)
+		{
+			redirect('users');
+		}
+		if (!$this->logged_in && !$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -305,7 +311,7 @@ class Users extends CI_Controller {
 	public function facebook_register()
 	{
 		$facebook_user_id = $this->facebook->getUser();;
-		if (!$this->user_id || !$facebook_user_id)
+		if (!$this->valid_logged_in || !$facebook_user_id)
 		{
 			echo 'first';
 			die();
@@ -358,7 +364,7 @@ class Users extends CI_Controller {
 	public function find()
 	{
 		// Can't query users unless logged in
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 			redirect('users/login');
 		
 		$this->load->helper('form');
@@ -393,7 +399,7 @@ class Users extends CI_Controller {
 
 	public function forgot_password()
 	{
-		if ($this->user_id)
+		if ($this->logged_in)
 		{
 			redirect('users');
 		}
@@ -443,6 +449,10 @@ class Users extends CI_Controller {
 	 */
 	public function register()
 	{
+		if ($this->logged_in)
+		{
+			redirect('users');
+		}
 		$this->load->library('form_validation');
 		
 		$this->form_validation->set_message('is_unique', 'The desired eamil is already in use.');
@@ -498,6 +508,15 @@ class Users extends CI_Controller {
 	 */
 	public function login()
 	{
+		if ($this->logged_in && $this->valid_logged_in)
+		{
+			redirect('users');
+		}
+		elseif ($this->logged_in && !$this->valid_logged_in)
+		{
+			redirect('users/email_quarentine');
+		}
+		
 		$this->load->library('form_validation');
 
 		if ($this->form_validation->run('users_login') == FALSE)
@@ -521,8 +540,9 @@ class Users extends CI_Controller {
 				$user = new User();
 				$user->where('email',$email)->get();
 
-				$this->session->set_userdata('user_id',$user->id);
-
+				//$this->session->set_userdata('user_id',$user->id);
+				$this->user_session->login($user->id);
+				
 				$redirect = $this->input->get('redirect_url');
 
 				if ($redirect)
@@ -552,14 +572,14 @@ class Users extends CI_Controller {
 	 */
 	public function logout()
 	{
-		$this->session->unset_userdata('user_id');
 		$this->facebook->logout();
+		$this->user_session->logout();
 		redirect('main');
 	}
 
 	public function change_email()
 	{
-		if (!$this->user_id)
+		if (!$this->logged_in)
 		{
 			redirect('users/login');
 		}
@@ -643,7 +663,7 @@ class Users extends CI_Controller {
 	private function send_confirmation_email()
 	{
 		// TODO : Make sure this is the right way to do this
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			return false;
 		}
@@ -668,6 +688,8 @@ class Users extends CI_Controller {
 			$econf->email = $user->email;
 			$econf->save($user);
 		}
+
+		$this->user_session->updateValidation();
 		
 		$data['user'] = array(
 			'firstname' => $user->firstname,
