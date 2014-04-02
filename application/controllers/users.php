@@ -518,7 +518,6 @@ class Users extends CI_Controller {
 		$data['content'] = 'users/email_quarentine';
 		$data['sent'] = TRUE;
 
-		$this->send_confirmation_email();
 		$this->load->view('master', $data);
 	}
 
@@ -687,7 +686,7 @@ class Users extends CI_Controller {
 	private function send_confirmation_email()
 	{
 		// TODO : Make sure this is the right way to do this
-		if (!$this->valid_logged_in)
+		if (!$this->logged_in)
 		{
 			return false;
 		}
