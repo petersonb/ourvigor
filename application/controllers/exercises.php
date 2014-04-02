@@ -5,7 +5,9 @@ class Exercises extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 
@@ -21,7 +23,7 @@ class Exercises extends CI_Controller {
 	public function create()
 	{
 		// Must be logged in
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -69,7 +71,7 @@ class Exercises extends CI_Controller {
 	 */
 	public function delete($exercise_id = null)
 	{
-		if (!$exercise_id || !$this->user_id)
+		if (!$exercise_id || !$this->valid_logged_in)
 		{
 			redirect('exercises/view');
 		}
@@ -264,7 +266,7 @@ class Exercises extends CI_Controller {
 	 */
 	public function view()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -314,7 +316,7 @@ class Exercises extends CI_Controller {
 	public function view_one($exercise_id = null)
 	{
 		// Must be logged in and exercise_id must be supplied
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -371,7 +373,7 @@ class Exercises extends CI_Controller {
 	 */
 	public function welcome_intro()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}

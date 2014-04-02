@@ -5,7 +5,9 @@ class Workouts extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 	
@@ -18,7 +20,7 @@ class Workouts extends CI_Controller {
 	public function add_exercise($workout_id, $exercise_id)
 	{
 		// Must be logged in
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -73,7 +75,7 @@ class Workouts extends CI_Controller {
 	public function create()
 	{
 		// Must be logged in
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -195,7 +197,7 @@ class Workouts extends CI_Controller {
 	{
 		// TODO : This method needs cleaning and work (workouts/view)
 		// User Login
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}

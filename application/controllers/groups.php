@@ -25,7 +25,9 @@ class Groups extends CI_Controller {
 		//////////////////////////////////////////////////
 		
 
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 	/*
@@ -37,7 +39,7 @@ class Groups extends CI_Controller {
 	 */
 	public function create()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 			redirect('users/login');
 
 		$this->load->library('form_validation');
@@ -83,7 +85,7 @@ class Groups extends CI_Controller {
 	 */
 	public function view_all()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}

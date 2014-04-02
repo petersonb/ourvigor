@@ -82,6 +82,7 @@ class Users extends CI_Controller {
 			{
 				$econf->delete();
 				$data['success'] = TRUE;
+				$this->user_session->updateValidation();
 			}
 			else
 			{

@@ -5,11 +5,18 @@ class Goals extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 	public function create()
 	{
+		if (!$this->valid_logged_in)
+		{
+			redirect('users/login');
+		}
+		
 		$this->load->helper('form');
 
 		$user = new User($this->user_id);

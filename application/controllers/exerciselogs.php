@@ -5,7 +5,9 @@ class ExerciseLogs extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 	/*
@@ -18,7 +20,7 @@ class ExerciseLogs extends CI_Controller {
 	 */
 	public function log()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -110,7 +112,7 @@ class ExerciseLogs extends CI_Controller {
 		//////////////////////////////////////////////////
 
 		// Must be logged in
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}

@@ -5,13 +5,15 @@ class Profiles extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 	public function view($view_user_id = null)
 	{
 		// TODO : View profiles without being logged in?
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -56,7 +58,7 @@ class Profiles extends CI_Controller {
 
 	public function edit()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
@@ -165,7 +167,7 @@ class Profiles extends CI_Controller {
 
 	public function upload_profile_picture()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}

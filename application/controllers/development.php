@@ -6,7 +6,9 @@ class Development extends CI_Controller {
 	{
 		parent::__construct();
 
-		$this->user_id = $this->session->userdata('user_id');
+		$this->user_id         = $this->user_session->getUserId();
+		$this->valid_logged_in = $this->user_session->isValidLoggedIn();
+		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
 	public function index()
@@ -64,7 +66,7 @@ class Development extends CI_Controller {
 	 */
 	public function request_feature()
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login?redirect_url=development/request_feature');
 		}
@@ -111,7 +113,7 @@ class Development extends CI_Controller {
 	public function submit_bug()
 	{
 		// User must be logged in
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			redirect('users/login?redirect_url=development/submit_bug');
 		}
@@ -178,7 +180,7 @@ class Development extends CI_Controller {
 	 */
 	private function submit_message($title,$message,$type)
 	{
-		if (!$this->user_id)
+		if (!$this->valid_logged_in)
 		{
 			die();
 		}
