@@ -29,6 +29,7 @@ class CI_User_session {
 		if ($this->user_id && $this->valid_account == FALSE)
 		{
 			$allowed_pages =  array (
+				'main',
 				'users/email_quarentine',
 				'users/change_email',
 				'users/confirm_account'
