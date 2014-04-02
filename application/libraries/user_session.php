@@ -46,7 +46,7 @@ class CI_User_session {
 				{
 					if (count($uri_parts) > 1 && count($page_parts) > 1)
 					{
-						$uri_parts[1] === $page_parts[1])
+						if($uri_parts[1] === $page_parts[1])
 						{
 							$valid = TRUE;
 							break;
