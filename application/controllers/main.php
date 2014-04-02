@@ -68,13 +68,15 @@ class Main extends CI_Controller {
 
 			else
 			{
+				$password = keygen_generate();
+				
 				$this->load->helper('keygen');
 				$user = new User();
 				$user->email       = $facebook_user_info['email'];
 				$user->firstname   = $facebook_user_info['first_name'];
 				$user->lastname    = $facebook_user_info['last_name'];
 				$user->facebook_id = $facebook_user_id;
-				$user->password    = keygen_generate();
+				$user->password    = $password;
 				$user->save();
 
 				$user = new User();
