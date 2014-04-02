@@ -286,9 +286,9 @@ class Users extends CI_Controller {
 
 	public function email_quarentine()
 	{
-		if (!$this->user_session->user_id)
+		if (!$this->user_id || !$this->user_session->valid())
 		{
-
+			redirect('users/login');
 		}
 
 		$user = new User($this->user_session->user_id);

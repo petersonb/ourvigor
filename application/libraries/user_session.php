@@ -26,7 +26,7 @@ class CI_User_session {
 			}
 		}
 
-		if ($this->valid_account == FALSE)
+		if ($this->user_id && $this->valid_account == FALSE)
 		{
 			$allowed_pages =  array (
 				'users/email_quarentine',
@@ -63,6 +63,11 @@ class CI_User_session {
 	public function set_account_valid()
 	{
 		$this->CI->session->set_userdata('valid_account', TRUE);
+	}
+
+	public function valid()
+	{
+		return $this->valid_account;
 	}
 }
 
