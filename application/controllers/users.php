@@ -719,7 +719,7 @@ class Users extends CI_Controller {
 			'lastname' => $user->lastname,
 		);
 
-		$data['link'] = base_url('users/confirm_account') . '?email=' . urlencode($user->email) . '&code=' . urlencode($econf->code);
+		$data['link'] = base_url('users/confirm_account') . '?email=' . urlencode($user->email) . '&confirm_code=' . urlencode($econf->code);
 		
 		$data['content'] = 'users/confirmation_email';								     
 		$message = $this->load->view('email_master',$data, TRUE);
