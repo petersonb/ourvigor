@@ -517,6 +517,8 @@ class Users extends CI_Controller {
 		
 		$data['content'] = 'users/email_quarentine';
 		$data['sent'] = TRUE;
+
+		$this->send_confirmation_email();
 		$this->load->view('master', $data);
 	}
 
