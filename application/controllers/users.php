@@ -284,6 +284,24 @@ class Users extends CI_Controller {
 
 	}
 
+	public function email_quarentine()
+	{
+		if (!$this->user_session->user_id)
+		{
+
+		}
+
+		$user = new User($this->user_session->user_id);
+
+		$data['user'] = array (
+			'email' => $user->email,
+			
+		);
+		
+		$data['content'] = 'users/email_quarentine';
+		$this->load->view('master', $data);
+	}
+
 	public function facebook_register()
 	{
 		$facebook_user_id = $this->facebook->getUser();;
@@ -426,7 +444,7 @@ class Users extends CI_Controller {
 	public function register()
 	{
 		$this->load->library('form_validation');
-
+		
 		$this->form_validation->set_message('is_unique', 'The desired eamil is already in use.');
 		if ($this->form_validation->run('users_register') == FALSE)
 		{
@@ -539,6 +557,44 @@ class Users extends CI_Controller {
 		redirect('main');
 	}
 
+	public function change_email()
+	{
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+		
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		$this->form_validation->set_message('is_unique', 'The desired eamil is already in use.');
+		
+		$user = new User($this->user_id);
+		
+		$data['success'] = FALSE;
+		
+		if ($this->form_validation->run('users_change_email') == FALSE)
+		{
+
+		}
+		else
+		{
+			$email = $this->input->post('email');
+			$user->email = $email;
+			$user->save();
+
+			$this->send_confirmation_email();
+			$data['success']=TRUE;
+		}
+
+		$data['user'] = array (
+			'email' => $user->email
+		);
+		
+		$data['content'] = 'users/change_email';
+		$this->load->view('master', $data);
+	}
+
 	public function change_password()
 	{
 		$this->load->library('form_validation');
@@ -596,12 +652,22 @@ class Users extends CI_Controller {
 
 		// Grab logged in user
 		$user = new User($this->user_id);
-		
-		// Create a new EmailConfirmation
-		$econf = new EmailConfirmation();
-		$econf->code = keygen_generate(32);
-		$econf->email = $user->email;
-		$econf->save($user);
+
+		// Check for existing confirmation
+		$check = $user->emailconfirmation;
+		$check->get();
+		if ($check->exists())
+		{
+			$econf = $check;
+		}
+		else
+		{
+			// Create a new EmailConfirmation
+			$econf = new EmailConfirmation();
+			$econf->code = keygen_generate(32);
+			$econf->email = $user->email;
+			$econf->save($user);
+		}
 		
 		$data['user'] = array(
 			'firstname' => $user->firstname,
@@ -611,7 +677,7 @@ class Users extends CI_Controller {
 		$data['link'] = base_url('users/confirm_account') . '?email=' . urlencode($user->email) . '&code=' . urlencode($econf->code);
 		
 		$data['content'] = 'users/confirmation_email';								     
-		$message = $this->load->view('email_master',$data, true);
+		$message = $this->load->view('email_master',$data, TRUE);
 
 		$this->email->from('support@ourvigor.com', 'OurVigor Support');
 		$this->email->to($user->email);
@@ -619,8 +685,7 @@ class Users extends CI_Controller {
 		$this->email->message($message);
 		$this->email->send();
 
-		echo $message;
-		return true;
+		return TRUE;
 	}
 
 
@@ -670,6 +735,8 @@ class Users extends CI_Controller {
 			$reset->code = $code;
 			$reset->save($user);
 		}
+
+		$this->user_session->set_account_invalid();
 
 		$data['code'] = $reset->code;
 		$data['user'] = array (

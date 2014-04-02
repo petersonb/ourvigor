@@ -227,6 +227,20 @@ $config = array (
 	// Users                                        //
 	//////////////////////////////////////////////////
 
+	'users_change_email' => array (
+		array (
+			'field' => 'email',
+			'label' => 'Email',
+			'rules' => 'valid_email|required|is_unique[users.email]'
+		),
+
+		array (
+			'field' => 'confirm',
+			'label' => 'Confirm email',
+			'rules' => 'matches[email]'
+		)
+	),
+
 	'users_confirm_account' => array (
 		array (
 			'field' => 'password',

@@ -6,6 +6,7 @@
 	    <li><a href="<?php echo base_url('profiles/edit'); ?>">Edit</a></li>
 	    <li><a href="<?php echo base_url('users/change_password'); ?>">Change Password</a></li>
 	    <li><a href="<?php echo base_url('profiles/upload_profile_picture'); ?>">Upload Profile Picture</a></li>
+	    <li><a href="<?php echo base_url('users/change_email'); ?>">Change Email</a></li>
 	</ul>
 	<li>Exercises</li>
 	<ul>
