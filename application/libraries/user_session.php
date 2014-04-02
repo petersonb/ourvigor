@@ -42,10 +42,20 @@ class CI_User_session {
 			{
 				$page_parts = explode('/', $page);
 				
-				if ($uri_parts[0] === $page_parts[0] && $uri_parts[1] === $page_parts[1])
+				if ($uri_parts[0] === $page_parts[0])
 				{
-					$valid = TRUE;
-					break;
+					if (count($uri_parts) > 1 && count($page_parts) > 1)
+					{
+						$uri_parts[1] === $page_parts[1])
+						{
+							$valid = TRUE;
+							break;
+						}
+					}
+					elseif(count($uri_parts) === count($page_parts))
+					{
+						$valid = TRUE;
+					}
 				}
 			}
 			if ($valid == FALSE)
