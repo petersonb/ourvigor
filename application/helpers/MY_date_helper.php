@@ -1,13 +1,13 @@
 <?php
 function date_std_mysql($std)
 {
-	try
+	if (preg_match("/\d\d[\/]\d\d[\/]\d\d\d\d/", $std))
 	{
 		$orig = DateTime::createFromFormat('m/d/Y',$std);
-		echo $orig->format('Y-d-m');
 		$out = $orig->format('Y-m-d');
+		echo 'here';
 	}
-	catch (Exception $e)
+	else
 	{
 		$out = null;
 	}
@@ -16,13 +16,19 @@ function date_std_mysql($std)
 
 function date_mysql_std($mysql)
 {
-	try {
+	if (preg_match("/\d\d\d\d[-]\d\d[-]\d\d/",$mysql))
+	{
+		echo $mysql;
 		$orig = DateTime::createFromFormat('Y-m-d',$mysql);
 		$out = $orig->format('m/d/Y');
-	} catch (Exception $e)
+		echo $out;
+		echo 'there';
+	}
+	else
 	{
 		$out = null;
 	}
+	
 	return $out;
 }
 
