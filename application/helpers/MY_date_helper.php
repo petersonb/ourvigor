@@ -5,7 +5,6 @@ function date_std_mysql($std)
 	{
 		$orig = DateTime::createFromFormat('m/d/Y',$std);
 		$out = $orig->format('Y-m-d');
-		echo 'here';
 	}
 	else
 	{
@@ -18,11 +17,8 @@ function date_mysql_std($mysql)
 {
 	if (preg_match("/\d\d\d\d[-]\d\d[-]\d\d/",$mysql))
 	{
-		echo $mysql;
 		$orig = DateTime::createFromFormat('Y-m-d',$mysql);
 		$out = $orig->format('m/d/Y');
-		echo $out;
-		echo 'there';
 	}
 	else
 	{
