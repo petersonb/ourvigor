@@ -1,5 +1,6 @@
 <h1>Your Exercises</h1>
-
+<a href="<?php echo base_url('exerciselogs/log'); ?>">Log Exercise</a> |
+<a href="<?php echo base_url('exercises/create'); ?>">Create New Exercise</a>
 <?php if (isset($exercises)): ?>
 
     <?php foreach ($exercises as $ex): ?>
