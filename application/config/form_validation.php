@@ -174,12 +174,12 @@ $config = array (
 		array (
 			'field' => 'gender',
 			'label' => 'Gender',
-			'rules' => 'required|max_lenght[3]'
+			'rules' => 'max_lenght[3]'
 		),
 		array (
 			'field' => 'date_of_birth',
 			'label' => 'Birth Date',
-			'rules' => 'alpha_dash|exact_length[10]'
+			'rules' => 'exact_length[10]'
 		),
 		array (
 			'field' => 'phone',

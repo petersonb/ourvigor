@@ -16,7 +16,14 @@ $about_val = $profile['about'];
 <?php
 
 $this->table->add_row('Gender', form_input('gender', $gender_val));
-$this->table->add_row('Birth Date', form_input('date_of_birth', $dob_val));
+
+$birthday_params = array (
+	'name'  => 'date_of_birth',
+	'id'    => 'datepicker',
+	'value' => $dob_val
+);
+
+$this->table->add_row('Birth Date', form_input($birthday_params));
 $this->table->add_row('Phone', form_input('phone', $phone_val));
 $this->table->add_row('Phone (EXT)', form_input('phone_ext', $phone_ext_val));
 $this->table->add_row('Street 1', form_input('street_1', $street1_val));

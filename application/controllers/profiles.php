@@ -19,6 +19,7 @@ class Profiles extends CI_Controller {
 		}
 
 		$this->load->library('table');
+		$this->load->helper('date');
 
 		if ($view_user_id)
 		{
@@ -41,7 +42,7 @@ class Profiles extends CI_Controller {
 
 		$data['profile'] = array (
 			'gender' => $profile->gender,
-			'date_of_birth' => $profile->date_of_birth,
+			'date_of_birth' => date_mysql_std($profile->date_of_birth),
 			'phone' => $profile->phone,
 			'phone_ext' => $profile->phone_ext,
 			'address_street_1' => $profile->address_street_1,
@@ -63,7 +64,7 @@ class Profiles extends CI_Controller {
 			redirect('users/login');
 		}
 		$this->load->library(array('form_validation','table'));
-		$this->load->helper('form');
+		$this->load->helper(array('date','form'));
 
 		if ($this->form_validation->run('profiles_edit') == FALSE)
 		{
@@ -94,7 +95,7 @@ class Profiles extends CI_Controller {
 			{
 				$data['profile'] = array (
 					'gender' => $profile->gender,
-					'date_of_birth' => $profile->date_of_birth,
+					'date_of_birth' => date_mysql_std($profile->date_of_birth),
 					'phone' => $profile->phone,
 					'phone_ext' => $profile->phone_ext,
 					'address_street_1' => $profile->address_street_1,
@@ -114,15 +115,17 @@ class Profiles extends CI_Controller {
 				'email' => $user->email,
 			);
 
-			$data['title'] = 'Edit Profile';
-			$data['content'] = 'profiles/edit';
+			$data['title']      = 'Edit Profile';
+			$data['content']    = 'profiles/edit';
+			$data['javascript'] = array('jquery','jquery-ui','date');
+			$data['css']        = array('calendar_widget/jquery-ui');
 			$this->load->view('master',$data);
 		}
 		else
 		{
 			// Grab input
 			$gender = $this->input->post('gender');
-			$date_of_birth = $this->input->post('date_of_birth');
+			$date_of_birth = date_std_mysql($this->input->post('date_of_birth'));
 			$phone = $this->input->post('phone');
 			$phone_ext = $this->input->post('phone_ext');
 			$address_street_1 = $this->input->post('street_1');
