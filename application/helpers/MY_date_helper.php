@@ -1,15 +1,29 @@
 <?php
 function date_std_mysql($std)
 {
-	$orig = DateTime::createFromFormat('m/d/Y',$std);
-	echo $orig->format('Y-d-m');
-	return $orig->format('Y-m-d');
+	try
+	{
+		$orig = DateTime::createFromFormat('m/d/Y',$std);
+		echo $orig->format('Y-d-m');
+		$out = $orig->format('Y-m-d');
+	}
+	catch (Exception $e)
+	{
+		$out = null;
+	}
+	return $out;
 }
 
 function date_mysql_std($mysql)
 {
-	$orig = DateTime::createFromFormat('Y-m-d',$mysql);
-	return $orig->format('m/d/Y');
+	try {
+		$orig = DateTime::createFromFormat('Y-m-d',$mysql);
+		$out = $orig->format('m/d/Y');
+	} catch (Exception $e)
+	{
+		$out = null;
+	}
+	return $out;
 }
 
 function date_twelve_to_24($time)
