@@ -10,7 +10,7 @@ class Profiles extends CI_Controller {
 		$this->logged_in       = $this->user_session->isLoggedIn();
 	}
 
-	public function view($view_user_id = null)
+	public function index()
 	{
 		// TODO : View profiles without being logged in?
 		if (!$this->valid_logged_in)
@@ -20,15 +20,9 @@ class Profiles extends CI_Controller {
 
 		$this->load->library('table');
 		$this->load->helper('date');
-
-		if ($view_user_id)
-		{
-			$user = new User($view_user_id);
-		}
-		else
-		{
-			$user = new User($this->user_id);
-		}
+		
+		$user = new User($this->user_id);
+		
 
 		$profile = $user->profile;
 		$profile->get();
@@ -164,7 +158,7 @@ class Profiles extends CI_Controller {
 
 			$profile->save($user);
 
-			redirect('profiles/view');
+			redirect('profiles');
 		}
 	}
 
@@ -199,7 +193,7 @@ class Profiles extends CI_Controller {
 		else
 		{
 			$data = array('upload_data' => $this->upload->data());
-			redirect('profiles/view');
+			redirect('profiles');
 		}
 	}
 }
