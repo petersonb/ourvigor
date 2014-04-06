@@ -20,6 +20,9 @@ class Users extends CI_Controller {
 	 */
 	public function index()
 	{
+		// TODO : make this page a panelish page
+		redirect('profiles/view');
+		
 		// Redirect if not logged in to login page.
 		if (!$this->valid_logged_in)
 		{

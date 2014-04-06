@@ -8,6 +8,8 @@
     <a href="<?php echo base_url('users/change_email'); ?>">Change Email</a>
     <br />
     <a href="<?php echo base_url('profiles/edit'); ?>">Edit Profile</a>
+    <br />
+    <a href="<?php echo base_url('fb/link_account'); ?>">Facebook</a>
 </div>
 
 <br />
