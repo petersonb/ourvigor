@@ -58,6 +58,14 @@
     }
     
 
-    echo $this->table->generate();
+    $table = $this->table->generate();
+    if ($table != "Undefined table data")
+    {
+	    echo $table;
+    }
+    else
+    {
+	    echo "<p>You have not set any profile information!</p>";
+    }
     ?>
 </div>

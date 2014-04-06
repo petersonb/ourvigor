@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 01, 2014 at 09:34 AM
+-- Generation Time: Apr 06, 2014 at 02:34 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.10-pl0-gentoo
 
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `gender` varchar(1) NOT NULL,
-  `date_of_birth` date NOT NULL,
+  `date_of_birth` date DEFAULT NULL,
   `phone` varchar(32) NOT NULL,
   `phone_ext` varchar(16) NOT NULL,
   `address_street_1` varchar(64) NOT NULL,
