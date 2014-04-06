@@ -28,6 +28,13 @@ ul {
     margin-left : 2em;
 }
 
+td {
+    padding-top : 0;
+    padding-left : 1em;
+    padding-right : 1em;
+    padding-bottom : 0;
+}
+
 #pageWrap {
     width:960px;
     margin:0px auto;
@@ -112,7 +119,7 @@ ul {
 /************************************************/
 
 .profilePictureViewProfile {
-    max-width : 400px;
+    max-width : 200px;
     max-height : 400px;
 }
 
