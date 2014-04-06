@@ -15,7 +15,7 @@ $config = array (
 	// Development                                  //
 	//////////////////////////////////////////////////
 
-	'development_request_feature' => array (
+	'development_general_message' => array (
 		array (
 			'field' => 'title',
 			'label' => 'Title',
@@ -38,6 +38,28 @@ $config = array (
 		)
 	),
 
+	'development_request_feature' => array (
+		array (
+			'field' => 'title',
+			'label' => 'Title',
+			'rules' => 'required|min_length[3]|max_length[50]'
+		),
+		array (
+			'field' => 'phone',
+			'label' => 'Phone',
+			'rules' => ''
+		),
+		array (
+			'field' => 'message',
+			'label' => 'Message',
+			'rules' => 'required|min_length[10]|max_length[1000]'
+		),
+		array (
+			'field' => 'email_confirm',
+			'label' => 'Email Confirmation',
+			'rules' => 'required'
+		)
+	),
 
 	'development_submit_bug' => array (
 		array (

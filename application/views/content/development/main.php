@@ -7,5 +7,4 @@
     <li><a href="<?php echo base_url('development/request_feature'); ?>">I want OurVigor to make me something!</a></li>
     <li><a href="<?php echo base_url('development/general_message'); ?>">I just want to contact the developer!</a></li>
     <li><a href="<?php echo base_url('development/log'); ?>">I want to look at the development log for the application!</a></li>
-    <li><a href="<?php echo base_url('development/learn'); ?>">I want to know some stuff about what I'm using!</a></li>
 </ul>

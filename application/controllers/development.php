@@ -26,7 +26,42 @@ class Development extends CI_Controller {
 	 */
 	public function general_message()
 	{
-		echo 'coming soon';
+		if (!$this->valid_logged_in)
+		{
+			redirect('users/login?redirect_url=development/request_feature');
+		}
+
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		if (!$this->form_validation->run('development_general_message'))
+		{
+			$user = new User($this->user_id);
+			
+			$profile = $user->profile;
+			$profile->get();
+			
+			$data['user'] = array (
+				'email' => $user->email,
+				'phone' => $profile->phone
+			);
+			
+			$data['success'] = FALSE;
+		}
+		else
+		{
+			$title   = $this->input->post('title');
+			$phone   = $this->input->post('phone');
+			$message = $this->input->post('message');
+			
+			$message = "[{$phone}] {$message}";
+			$type    = "genm";
+
+			$this->submit_message($title,$message,$type);
+			$data['success'] = TRUE;
+		}
+		$data['content'] = 'development/general_message';
+		$this->load->view('master', $data);
 	}
 
 	/*
