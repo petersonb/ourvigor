@@ -192,11 +192,14 @@ class Development extends CI_Controller {
 
 		$date = date('Y-m-d');
 
+		$email_message = $user->firstname . ' ' . $user->lastname. ', ' . '{' . $user->email . '}' . $message;
+
+		
 		// TODO : Email from here
 		$this->email->from('development@ourvigor.com', 'OurVigor Development');
 		$this->email->to('development@ourvigor.com');
 		$this->email->subject($title);
-		$this->email->message($message);
+		$this->email->message($email_message);
 		$this->email->send();
 		
 		
