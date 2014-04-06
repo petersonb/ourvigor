@@ -158,6 +158,7 @@ class Development extends CI_Controller {
 
 			// TODO : Email development account
 			
+			
 			// Show success page
 			$data['success'] = TRUE;
 			$data['content'] = 'development/submit_bug';
@@ -170,16 +171,18 @@ class Development extends CI_Controller {
 	///////////////////////////////////////////////////////////////////////////
 
 	/*
-	Submit Message
-	--------------------------------------------------
-	Since all development messages are submitted to
-	the same database table, might as well save some
-	of the trouble of saving development messages in
-	each method.
-	--------------------------------------------------
+	 * Submit Message
+	 * --------------------------------------------------
+	 * Since all development messages are submitted to
+	 * the same database table, might as well save some
+	 * of the trouble of saving development messages in
+	 * each method.
+	 * --------------------------------------------------
 	 */
 	private function submit_message($title,$message,$type)
 	{
+		$this->load->library('email');
+		
 		if (!$this->valid_logged_in)
 		{
 			die();
@@ -190,6 +193,12 @@ class Development extends CI_Controller {
 		$date = date('Y-m-d');
 
 		// TODO : Email from here
+		$this->email->from('development@ourvigor.com', 'OurVigor Development');
+		$this->email->to('development@ourvigor.com');
+		$this->email->subject($title);
+		$this->email->message($message);
+		$this->email->send();
+		
 		
 		$development_message = new DevelopmentMessage();
 		$development_message->title   = $title;
