@@ -300,12 +300,12 @@ class Exercises extends CI_Controller {
 				$exercise->description = null;
 			}
 
-			$exercise->distance    = $save_type['dist'];
-			$exercise->time        = $save_type['time'];
-			$exercise->weight      = $save_type['wght'];
-			$exercise->repetitions = $save_type['reps'];
-			$exercise->sets        = $save_type['sets'];
-			$exercise->laps        = $save_type['laps'];
+			$exercise->distance    = $save_types['dist'];
+			$exercise->time        = $save_types['time'];
+			$exercise->weight      = $save_types['wght'];
+			$exercise->repetitions = $save_types['reps'];
+			$exercise->sets        = $save_types['sets'];
+			$exercise->laps        = $save_types['laps'];
 			$exercise->save();
 
 			redirect("exercises/view_one/{$exercise->id}");
