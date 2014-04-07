@@ -26,7 +26,7 @@ class Exercise extends DataMapper {
 				'time' => $this->time,
 				'dist' => $this->distance,
 				'laps' => $this->laps,
-				'wght' => $this->wght,
+				'wght' => $this->weight,
 				'reps' => $this->repetitions,
 				'sets' => $this->sets
 			)

@@ -334,7 +334,7 @@ class Exercises extends CI_Controller {
 					'distance' => distance_meters_to_miles($log->distance),
 					'time'     => time_seconds_to_string($log->time),
 					'laps'     => $log->laps,
-					'wght'     => $log->wght,
+					'wght'     => $log->weight,
 					'reps'     => $log->repetitions,
 					'sets'     => $log->sets
 				);

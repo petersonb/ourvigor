@@ -175,7 +175,7 @@ class ExerciseLogs extends CI_Controller {
 				'time'     => time_seconds_to_units($log->time),
 				'distance' => distance_meters_to_miles($log->distance),
 				'laps'     => $log->laps,
-				'wght'     => $log->wght,
+				'wght'     => $log->weight,
 				'reps'     => $log->repetitions,
 				'sets'     => $log->sets
 			);
