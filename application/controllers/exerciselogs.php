@@ -68,20 +68,8 @@ class ExerciseLogs extends CI_Controller {
 
 			}
 			*/
-
-			$data['exercise'] = array (
-				'id'          => $exercise->id,
-				'name'        => $exercise->name,
-				'description' => $exercise->description,
-				'fields'      => array (
-					'time' => $exercise->time,
-					'dist' => $exercise->dist,
-					'laps' => $exercise->laps,
-					'wght' => $exercise->weight,
-					'reps' => $exercise->repetitions,
-					'sets' => $exercise->sets
-				)
-			);
+			
+			$data['exercise'] = $exercise->getData();
 
 			$data['date'] = date("m/d/Y");
 			$data['user_exercises'] = $user_exercises;
