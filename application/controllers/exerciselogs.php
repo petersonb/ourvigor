@@ -11,6 +11,70 @@ class ExerciseLogs extends CI_Controller {
 	}
 
 	/*
+	 * Delete
+	 * --------------------------------------------------
+	 * Delete an existing exercise log
+	 * --------------------------------------------------
+	 */
+	public function delete($log_id = null)
+	{
+		//////////////////////////////////////////////////
+		// Security                                     //
+		//////////////////////////////////////////////////
+		
+		if (!$this->user_id)
+		{
+			redirect('users/login');
+		}
+		
+		if (!$log_id)
+		{
+			redirect('exercises/view');
+		}
+
+		$log = new ExerciseLog($log_id);
+		$exercise = $log->exercise;
+		$exercise->get();
+
+		$user = new User($this->user_id);
+		$user_exercise = $user->exercise;
+		$user_exercise->where('id', $exercise->id);
+		$user_exercise->get();
+
+		if (!$user_exercise->exists())
+		{
+			redirect('exercises/view');
+		}
+
+		//////////////////////////////////////////////////
+		// End Security                                 //
+		//////////////////////////////////////////////////
+
+		$this->load->helper('form');
+
+		if ($this->input->post() == FALSE)
+		{
+			
+			$data['log'] = array (
+				'id' => $log->id
+			);
+			
+			$success = FALSE;
+		}
+		else
+		{
+			$log->delete();			
+			$confirm = $this->input->post('confirm');
+			$success = TRUE;
+		}
+
+		$data['success'] = $success;
+
+		$data['content'] = 'exerciselogs/delete';
+		$this->load->view('master', $data);
+	}
+
+	/*
 	 * Log
 	 * --------------------------------------------------
 	 * 
