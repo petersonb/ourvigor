@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2014 at 02:34 AM
+-- Generation Time: Apr 07, 2014 at 05:54 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.10-pl0-gentoo
 
@@ -102,6 +102,10 @@ CREATE TABLE IF NOT EXISTS `exerciselogs` (
   `date` date NOT NULL,
   `time` decimal(18,3) NOT NULL,
   `distance` decimal(18,6) NOT NULL,
+  `laps` decimal(18,3) NOT NULL,
+  `weight` decimal(18,3) NOT NULL,
+  `repetitions` int(8) NOT NULL,
+  `sets` int(8) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -115,6 +119,12 @@ CREATE TABLE IF NOT EXISTS `exercises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(512) NOT NULL,
+  `time` tinyint(1) NOT NULL,
+  `distance` tinyint(1) NOT NULL,
+  `laps` tinyint(1) NOT NULL,
+  `weight` tinyint(1) NOT NULL,
+  `repetitions` tinyint(1) NOT NULL,
+  `sets` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
