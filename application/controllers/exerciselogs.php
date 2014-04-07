@@ -50,25 +50,6 @@ class ExerciseLogs extends CI_Controller {
 		$user_exercises = array();
 		if ($this->form_validation->run('exercises_log') == FALSE)
 		{
-
-			/*
-			$user = new User($this->user_id);
-
-			$exercises = $user->exercise;
-			$exercises->get();
-
-
-			foreach ($exercises as $exercise)
-			{
-				$user_exercises[$exercise->id] = array (
-					'id' => $exercise->id,
-					'name' => $exercise->name,
-					'description' => $exercise->description
-				);
-
-			}
-			*/
-			
 			$data['exercise'] = $exercise->getData();
 
 			$data['date'] = date("m/d/Y");
