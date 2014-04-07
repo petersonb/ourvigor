@@ -64,8 +64,6 @@ class Exercises extends CI_Controller {
 				$save_types[$type] = TRUE;
 			}
 
-			echo $save_type['wght'];
-
 			// Create a new exercise
 			$exercise = new Exercise();
 			$exercise->name = $name;
