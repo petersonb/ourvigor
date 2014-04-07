@@ -346,7 +346,11 @@ class Exercises extends CI_Controller {
 					'id'       => $log->id,
 					'date'     => date_mysql_std($log->date),
 					'distance' => distance_meters_to_miles($log->distance),
-					'time'     => time_seconds_to_string($log->time)
+					'time'     => time_seconds_to_string($log->time),
+					'laps'     => $log->laps,
+					'wght'     => $log->wght,
+					'reps'     => $log->repetitions,
+					'sets'     => $log->sets
 				);
 			}
 			$data['exercises'][$ex->id] = array(
@@ -355,6 +359,9 @@ class Exercises extends CI_Controller {
 				'description' => $ex->description,
 				'logs' => $log_array
 			);
+
+			$data['exercises'][$ex->id] = $ex->getData();
+			$data['exercises'][$ex->id]['logs'] = $log_array;
 		}
 
 		$data['title']   = 'View Exercises';
@@ -396,23 +403,25 @@ class Exercises extends CI_Controller {
 		$exercise_logs->get();
 		$logs = array();
 
+
+		$data = $exercise->getData();
+		
 		foreach ($exercise_logs as $log)
 		{
 			$logs[$log->id] = array (
-				'id'   => $log->id,
-				'date' => date_mysql_std($log->date),
-				'time' => time_seconds_to_string($log->time),
-				'distance' => distance_meters_to_miles($log->distance)
+				'id'       => $log->id,
+				'date'     => date_mysql_std($log->date),
+				'time'     => time_seconds_to_string($log->time),
+				'distance' => distance_meters_to_miles($log->distance),
+				'laps'     => $log->laps,
+				'wght'     => $log->weight,
+				'reps'     => $log->repetitions,
+				'sets'     => $log->sets
 			);
 		}
 
-		$data['exercise'] = array (
-			'id'          => $exercise->id,
-			'name'        => $exercise->name,
-			'description' => $exercise->description,
-			'logs'        => $logs
-
-		);
+		$data['exercise'] = $exercise->getData();
+		$data['exercise']['logs'] = $logs;
 
 		$data['title']   = $exercise->name;
 		$data['content'] = 'exercises/view_one';

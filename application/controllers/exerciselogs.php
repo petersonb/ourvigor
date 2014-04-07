@@ -198,18 +198,17 @@ class ExerciseLogs extends CI_Controller {
 
 		if ($this->form_validation->run('exercises_modify_log') == FALSE)
 		{
-			
-			$data['exercise'] = array (
-				'id'          => $exercise->id,
-				'name'        => $exercise->name,
-				'description' => $exercise->description
-			);
+			$data['exercise'] = $exercise->getData();
 			
 			$data['log']      = array (
 				'id'       => $log->id,
 				'date'     => date_mysql_std($log->date),
 				'time'     => time_seconds_to_units($log->time),
-				'distance' => distance_meters_to_miles($log->distance)
+				'distance' => distance_meters_to_miles($log->distance),
+				'laps'     => $log->laps,
+				'wght'     => $log->wght,
+				'reps'     => $log->repetitions,
+				'sets'     => $log->sets
 			);
 			
 			$data['content'] = 'exerciselogs/modify';
@@ -219,15 +218,23 @@ class ExerciseLogs extends CI_Controller {
 		}
 		else
 		{
-			$distance = $this->input->post('distance');
-			$date     = $this->input->post('date');
-			$hours    = $this->input->post('time_hours');
-			$minutes  = $this->input->post('time_minutes');
-			$seconds  = $this->input->post('time_seconds');
+			$date         = $this->input->post('date');
+			$time_hours   = $this->input->post('time_hours');
+			$time_minutes = $this->input->post('time_minutes');
+			$time_seconds = $this->input->post('time_seconds');
+			$distance     = $this->input->post('distance');
+			$laps         = $this->input->post('laps');
+			$wght         = $this->input->post('wght');
+			$reps         = $this->input->post('reps');
+			$sets         = $this->input->post('sets');
 
-			$log->distance = distance_miles_to_meters($distance);
-			$log->time     = time_seconds($hours, $minutes, $seconds);
-			$log->date     = date_std_mysql($date);
+			$log->distance    = distance_miles_to_meters($distance);
+			$log->time        = time_seconds($time_hours, $time_minutes, $time_seconds);
+			$log->date        = date_std_mysql($date);
+			$log->laps        = $laps;
+			$log->weight      = $wght;
+			$log->repetitions = $reps;
+			$log->sets        = $sets;
 			$log->save();
 
 			redirect('exercises/view');

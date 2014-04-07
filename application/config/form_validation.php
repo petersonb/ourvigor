@@ -105,12 +105,12 @@ $config = array (
 			'rules' => 'max_length[500]'
 		),
 	),
-
+	
 	'exercises_modify_log' => array (
 		array (
 			'field' => 'distance',
 			'label' => 'Distance',
-			'rules' => 'required|numeric'
+			'rules' => 'numeric'
 		),
 		array (
 			'field' => 'time_hours',
@@ -125,6 +125,26 @@ $config = array (
 		array (
 			'field' => 'time_seconds',
 			'label' => 'Seconds',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'laps',
+			'label' => 'Laps',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'wght',
+			'label' => 'Weight',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'reps',
+			'label' => 'Reps',
+			'rules' => 'numeric'
+		),
+		array (
+			'field' => 'sets',
+			'label' => 'Sets',
 			'rules' => 'numeric'
 		),
 	),
