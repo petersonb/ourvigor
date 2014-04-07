@@ -18,12 +18,31 @@ class ExerciseLogs extends CI_Controller {
 	 * user is presented with 
 	 * --------------------------------------------------
 	 */
-	public function log()
+	public function log($exercise_id = null)
 	{
+		//////////////////////////////////////////////////
+		// Security                                     //
+		//////////////////////////////////////////////////
+		
 		if (!$this->valid_logged_in)
 		{
 			redirect('users/login');
 		}
+
+		$user = new User($this->user_id);
+
+		$exercise = $user->exercise;
+		$exercise->where('id', $exercise_id);
+		$exercise->get();
+
+		if ($exercise->exists() == FALSE)
+		{
+			redirect('exercises/view');
+		}
+
+		//////////////////////////////////////////////////
+		// End Security                                 //
+		//////////////////////////////////////////////////
 		
 		$this->load->library('form_validation');
 		$this->load->helper(array('form','distance','time','date'));
@@ -32,8 +51,9 @@ class ExerciseLogs extends CI_Controller {
 		if ($this->form_validation->run('exercises_log') == FALSE)
 		{
 
+			/*
 			$user = new User($this->user_id);
-			
+
 			$exercises = $user->exercise;
 			$exercises->get();
 
@@ -47,6 +67,22 @@ class ExerciseLogs extends CI_Controller {
 				);
 
 			}
+			*/
+
+			$data['exercise'] = array (
+				'id'          => $exercise->id,
+				'name'        => $exercise->name,
+				'description' => $exercise->description,
+				'fields'      => array (
+					'time' => $exercise->time,
+					'dist' => $exercise->dist,
+					'laps' => $exercise->laps,
+					'wght' => $exercise->weight,
+					'reps' => $exercise->repetitions,
+					'sets' => $exercise->sets
+				)
+			);
+
 			$data['date'] = date("m/d/Y");
 			$data['user_exercises'] = $user_exercises;
 		}
@@ -56,12 +92,16 @@ class ExerciseLogs extends CI_Controller {
 			// Get Data From Form                           //
 			//////////////////////////////////////////////////
 			
-			$exercise_id  = $this->input->post('exercise_id');
-			$distance     = $this->input->post('distance');
+			//$exercise_id  = $this->input->post('exercise_id');
+			$date         = $this->input->post('date');
 			$time_hours   = $this->input->post('time_hours');
 			$time_minutes = $this->input->post('time_minutes');
 			$time_seconds = $this->input->post('time_seconds');
-			$date         = $this->input->post('date');
+			$distance     = $this->input->post('distance');
+			$laps         = $this->input->post('laps');
+			$wght         = $this->input->post('wght');
+			$reps         = $this->input->post('reps');
+			$sets         = $this->input->post('sets');
 			
 			//////////////////////////////////////////////////
 			// Convert Units                                //
@@ -81,9 +121,13 @@ class ExerciseLogs extends CI_Controller {
 			$exercise->get();
 			
 			$log = new ExerciseLog();
-			$log->date     = $mysql_date;
-			$log->distance = $meter_distance;
-			$log->time     = $time_output;
+			$log->date        = $mysql_date;
+			$log->time        = $time_output;
+			$log->distance    = $meter_distance;
+			$log->laps        = $laps;
+			$log->weight      = $wght;
+			$log->repetitions = $reps;
+			$log->sets        = $sets;
 			$log->save($exercise);
 
 			redirect('exercises/view');

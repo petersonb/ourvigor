@@ -48,6 +48,23 @@ class Exercises extends CI_Controller {
 			$name                = $this->input->post('name');
 			$description         = $this->input->post('description');
 			$include_description = $this->input->post('include_description');
+			$types               = $this->input->post('type');
+
+			$save_types = array (
+				'dist' => FALSE,
+				'time' => FALSE,
+				'laps' => FALSE,
+				'wght' => FALSE,
+				'reps' => FALSE,
+				'sets' => FALSE,
+			);
+			
+			foreach ($types as $type)
+			{
+				$save_type[$type] = TRUE;
+			}
+
+			echo $save_type['wght'];
 
 			// Create a new exercise
 			$exercise = new Exercise();
@@ -56,6 +73,13 @@ class Exercises extends CI_Controller {
 			{
 				$exercise->description = $description;
 			}
+			$exercise->distance    = $save_type['dist'];
+			$exercise->time        = $save_type['time'];
+			$exercise->weight      = $save_type['wght'];
+			$exercise->repetitions = $save_type['reps'];
+			$exercise->sets        = $save_type['sets'];
+			$exercise->laps        = $save_type['laps'];
+
 			$exercise->save($user);
 
 			// TODO redirect somewhere smart
@@ -227,7 +251,15 @@ class Exercises extends CI_Controller {
 			$data['exercise'] = array(
 				'id'          => $exercise->id,
 				'name'        => $exercise->name,
-				'description' => $exercise->description
+				'description' => $exercise->description,
+				'fields'      => array (
+					'time' => $exercise->time,
+					'dist' => $exercise->distance,
+					'laps' => $exercise->laps,
+					'wght' => $exercise->weight,
+					'reps' => $exercise->repetitions,
+					'sets' => $exercise->sets
+				)
 			);
 			
 			$data['content']    = 'exercises/modify';
@@ -240,6 +272,23 @@ class Exercises extends CI_Controller {
 			$name                = $this->input->post('name');
 			$description         = $this->input->post('description');
 			$include_description = $this->input->post('include_description');
+			$types               = $this->input->post('type');
+
+			
+			$save_types = array (
+				'dist' => FALSE,
+				'time' => FALSE,
+				'laps' => FALSE,
+				'wght' => FALSE,
+				'reps' => FALSE,
+				'sets' => FALSE,
+			);
+			
+			foreach ($types as $type)
+			{
+				$save_type[$type] = TRUE;
+			}
+			
 			
 			$exercise->name        = $name;
 			if ($include_description)
@@ -250,6 +299,13 @@ class Exercises extends CI_Controller {
 			{
 				$exercise->description = null;
 			}
+
+			$exercise->distance    = $save_type['dist'];
+			$exercise->time        = $save_type['time'];
+			$exercise->weight      = $save_type['wght'];
+			$exercise->repetitions = $save_type['reps'];
+			$exercise->sets        = $save_type['sets'];
+			$exercise->laps        = $save_type['laps'];
 			$exercise->save();
 
 			redirect("exercises/view_one/{$exercise->id}");

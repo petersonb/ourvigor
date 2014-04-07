@@ -4,6 +4,7 @@
 <?php endif; ?>
 
 <a href="<?php echo base_url("exercises/modify/{$exercise['id']}"); ?>">Modify This Exercise</a>
+<a href="<?php echo base_url("exerciselogs/log/{$exercise['id']}"); ?>">Log an Exercise</a>
 
 <?php if (sizeof($exercise['logs']) > 0): ?>
     <table>
