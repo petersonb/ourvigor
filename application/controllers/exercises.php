@@ -248,19 +248,7 @@ class Exercises extends CI_Controller {
 		
 		if (! $this->form_validation->run('exercises_create'))
 		{
-			$data['exercise'] = array(
-				'id'          => $exercise->id,
-				'name'        => $exercise->name,
-				'description' => $exercise->description,
-				'fields'      => array (
-					'time' => $exercise->time,
-					'dist' => $exercise->distance,
-					'laps' => $exercise->laps,
-					'wght' => $exercise->weight,
-					'reps' => $exercise->repetitions,
-					'sets' => $exercise->sets
-				)
-			);
+			$data['exercise'] = $exercise->getData();
 			
 			$data['content']    = 'exercises/modify';
 			$data['title']      = $exercise->name;
@@ -286,7 +274,7 @@ class Exercises extends CI_Controller {
 			
 			foreach ($types as $type)
 			{
-				$save_type[$type] = TRUE;
+				$save_types[$type] = TRUE;
 			}
 			
 			
