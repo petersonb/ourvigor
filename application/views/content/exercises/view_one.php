@@ -8,4 +8,6 @@
 
 <hr />
 <?php $this->load->view('content/exerciselogs/logtable', $exercise); ?>
+<hr />
+<div id="chart2"></div>
 
