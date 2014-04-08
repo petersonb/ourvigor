@@ -42,6 +42,7 @@ class CI_User_session {
 		$this->user_id = $user_id;
 
 		$user_valid = $this->validate();
+		$this->stampLastLogin();
 		
 		$this->CI->session->set_userdata('user_id',$user_id);
 		$this->CI->session->set_userdata('user_valid', $user_valid);
@@ -51,6 +52,21 @@ class CI_User_session {
 	{
 		$this->CI->session->unset_userdata('user_id');
 		$this->CI->session->unset_userdata('email_valid');
+	}
+
+	public function stampLastLogin()
+	{
+		if (!$this->user_id)
+		{
+			return FALSE;
+		}
+		else
+		{
+			$user = new User($this->user_id);
+			$user->last_login = date('Y-m-d H:i:s');
+			$user->save();
+			return TRUE;
+		}
 	}
 
 	public function updateValidation()

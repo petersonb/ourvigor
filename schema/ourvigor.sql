@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2014 at 09:31 PM
+-- Generation Time: Apr 08, 2014 at 01:06 AM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.10-pl0-gentoo
 
@@ -257,6 +257,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `middlename` varchar(64) NOT NULL,
   `lastname` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
+  `last_login` timestamp NULL DEFAULT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

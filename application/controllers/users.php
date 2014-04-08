@@ -564,9 +564,9 @@ class Users extends CI_Controller {
 			{
 				// Log valid user in and redirect
 				$user = new User();
-				$user->where('email',$email)->get();
+				$user->where('email',$email);
+				$user->get();
 
-				//$this->session->set_userdata('user_id',$user->id);
 				$this->user_session->login($user->id);
 				
 				$redirect = $this->input->get('redirect_url');
