@@ -3,9 +3,11 @@
 <hr />
 <?php if (isset($exercises)): ?>
     <?php foreach ($exercises as $ex): ?>
-	<h3><a href="<?php echo base_url("exercises/view_one/{$ex['id']}"); ?>"><?php echo $ex['name']; ?></a></h3>
-	<p><?php echo $ex['description']; ?></p>
-	<?php $this->load->view('content/exerciselogs/logtable',$ex); ?>
+	<div class="logtable">
+	    <h3><a href="<?php echo base_url("exercises/view_one/{$ex['id']}"); ?>"><?php echo $ex['name']; ?></a></h3>
+	    <p><?php echo $ex['description']; ?></p>
+	    <?php $this->load->view('content/exerciselogs/logtable',$ex); ?>
+	</div>
 	<hr />
     <?php endforeach; ?>
 <?php else:?>

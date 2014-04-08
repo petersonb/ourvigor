@@ -161,6 +161,14 @@ td {
 
 /************************************************/
 
+.logtable {
+    border : solid 1px #888;
+    padding : .5em;
+    border-radius : 1em;
+}
+
+/************************************************/
+
 #footer {
     background : #0b5e69;
     min-height: 30px;
