@@ -24,6 +24,11 @@ a {
     font-size : 1em;
 }
 
+hr {
+    margin-top : 1em;
+    margin-bottom : 1em;
+}
+
 ul {
     margin-left : 2em;
 }

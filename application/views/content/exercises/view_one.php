@@ -6,6 +6,6 @@
 <a href="<?php echo base_url("exerciselogs/log/{$exercise['id']}"); ?>">Log this Exercise</a> |
 <a href="<?php echo base_url("exercises/modify/{$exercise['id']}"); ?>">Modify This Exercise</a>
 
-
+<hr />
 <?php $this->load->view('content/exerciselogs/logtable', $exercise); ?>
 

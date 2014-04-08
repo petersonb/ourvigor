@@ -24,7 +24,7 @@
 	    ?>
 	    
 	    <?php foreach ($javascript as $js): ?>
-		<script type="text/javascript" src="<?php echo base_url("javascript/{$js}.js"); ?>" . "\"></script>
+		<script type="text/javascript" src="<?php echo base_url("javascript/{$js}.js"); ?>"></script>
 	    <?php endforeach; ?>
 	<?php endif; ?>
 	<link rel="stylesheet" href="<?php echo base_url('css/master.css'); ?>" type="text/css" />

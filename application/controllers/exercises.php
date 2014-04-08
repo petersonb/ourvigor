@@ -352,6 +352,8 @@ class Exercises extends CI_Controller {
 
 		$data['title']   = 'View Exercises';
 		$data['content'] = 'exercises/view';
+		$data['javascript'] = array ( 'datatables/media/js/jquery', 'datatables/media/js/jquery.dataTables', 'exerciselogs/logtable');
+		$data['css'] = 'datatables/jquery.dataTables';
 		$this->load->view('master', $data);
 	}
 
@@ -411,6 +413,8 @@ class Exercises extends CI_Controller {
 
 		$data['title']   = $exercise->name;
 		$data['content'] = 'exercises/view_one';
+		$data['javascript'] = array ( 'datatables/media/js/jquery', 'datatables/media/js/jquery.dataTables', 'exerciselogs/logtable');
+		$data['css'] = 'datatables/jquery.dataTables';
 		$this->load->view('master', $data);
 	}
 
