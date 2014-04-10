@@ -6,52 +6,58 @@ $(document).ready(function(){
 	url : '/api/exerciselogs/exercise/2',
     });
 
-    json = $.parseJSON(json);
-    alert(json);
-    */
-    
-    var jsonUrl = '/api/exerciselogs/exercise/2';
-    var jsonData;
-    $.getJSON(jsonUrl,function(data){
-	//data = json;   
-	test(data);
-    });         
+	json = $.parseJSON(json);
+	alert(json);
+	*/
 
-    function test(data) {
-	console.log(data);
+	var exercise_id = $('#exercise_id').val()
+	var jsonUrl = '/api/exerciselogs/exercise/' + exercise_id;
+	var jsonData;
+	$.getJSON(jsonUrl,function(data){
+		//data = json;   
+		test(data);
+	});         
 
-	dateList = [];
-	data.forEach(function(obj){
-	    console.log(obj)
-	    dateList += [obj.date, obj.distance];
-	});
+	
+	
+	function test(data) {
+		console.log(data);
 
-	console.log(dateList);
-        
-	var plot2 = $.jqplot ('chart2', [[3,7,9,1,5,3,8,2,5]], {
-	    title: 'Distance',
+		dateList = [];
+		data.forEach(function(obj){
+			console.log(obj.date);
+			obj.distance = parseFloat((obj.distance * .000621371).toFixed(2));
+			dateList = dateList.concat([[obj.date,obj.distance]]);
+		});
 
-	    axesDefaults: {
-		labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-	    },
+		console.log(dateList);
 
-	    seriesDefaults: {
-		rendererOptions: {
-		    smooth: true
-		}
-	    },
+		//var plot2 = $.jqplot ('chart2', [[3,7,9,1,5,3,8,2,5]], {
+		var plot2 = $.jqplot ('chart2', [dateList], {
+			title: 'Distance',
 
-	    axes: {
+			
+			axesDefaults: {
+				labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+			},
 
-		xaxis: {
-		    label: "Date",
+			seriesDefaults: {
+				rendererOptions: {
+					smooth: true
+				}
+			},
+						
+			axes: {
 
-		    pad: 0
-		},
-		yaxis: {
-		    label: "Distance"
-		}
-	    }
-	});
-    }
+				xaxis: {
+					label: "Date",
+					renderer:$.jqplot.DateAxisRenderer,
+					pad: 0
+				},
+				yaxis: {
+					label: "Distance"
+				}
+			}
+		});
+	}
 });

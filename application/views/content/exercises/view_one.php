@@ -10,4 +10,4 @@
 <?php $this->load->view('content/exerciselogs/logtable', $exercise); ?>
 <hr />
 <div id="chart2"></div>
-
+<input id="exercise_id" type="hidden" value="<?php echo $exercise['id']; ?>" />
