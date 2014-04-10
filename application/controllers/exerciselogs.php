@@ -163,7 +163,7 @@ class ExerciseLogs extends CI_Controller {
 			$log->sets        = $sets;
 			$log->save($exercise);
 
-			redirect('exercises/view');
+			redirect("exercises/view_one/{$exercise->id}");
 		}
 		
 		$data['title']      = 'Log Exercise';
