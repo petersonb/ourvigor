@@ -13,11 +13,11 @@
 <hr />
 <div id="distChart"></div>
 <?php endif; ?>
-<?php if ($exercise['fields']['dist']): ?>
+<?php if ($exercise['fields']['time']): ?>
 <hr />
 <div id="timeChart"></div>
 <?php endif; ?>
-<?php if ($exercise['fields']['dist']): ?>
+<?php if ($exercise['fields']['time'] && $exercise['dist']): ?>
 <hr />
 <div id="distTimeChart"></div>
 <?php endif; ?>
