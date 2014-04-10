@@ -420,6 +420,8 @@ class Exercises extends CI_Controller {
 			'jqplot/plugins/jqplot.canvasTextRenderer.min',
 			'jqplot/plugins/jqplot.canvasAxisLabelRenderer.min',
 			'jqplot/plugins/jqplot.dateAxisRenderer.min',
+			'jqplot/plugins/jqplot.cursor.min',
+			'jqplot/plugins/jqplot.barRenderer.min',
 			'exercises/view_one',
 			'exerciselogs/logtable',
 

@@ -8,6 +8,17 @@
 
 <hr />
 <?php $this->load->view('content/exerciselogs/logtable', $exercise); ?>
+
+<?php if ($exercise['fields']['dist']): ?>
 <hr />
-<div id="chart2"></div>
+<div id="distChart"></div>
+<?php endif; ?>
+<?php if ($exercise['fields']['dist']): ?>
+<hr />
+<div id="timeChart"></div>
+<?php endif; ?>
+<?php if ($exercise['fields']['dist']): ?>
+<hr />
+<div id="distTimeChart"></div>
+<?php endif; ?>
 <input id="exercise_id" type="hidden" value="<?php echo $exercise['id']; ?>" />
