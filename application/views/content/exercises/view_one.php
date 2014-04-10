@@ -17,7 +17,7 @@
 <hr />
 <div id="timeChart"></div>
 <?php endif; ?>
-<?php if ($exercise['fields']['time'] && $exercise['dist']): ?>
+<?php if ($exercise['fields']['time'] && $exercise['fields']['dist']): ?>
 <hr />
 <div id="distTimeChart"></div>
 <?php endif; ?>
