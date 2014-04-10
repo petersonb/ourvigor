@@ -177,6 +177,63 @@ function loadDistTimeGraph () {
 	}
 }
 
+function loadWeightGraph () {
+	
+	var exercise_id = $('#exercise_id').val()
+	var jsonUrl = '/api/exerciselogs/exercise/' + exercise_id;
+	var jsonData;
+	$.getJSON(jsonUrl,function(data){
+		test(data);
+	});
+	
+	
+	
+	function test(data) {
+
+		dateList = [];
+		data.forEach(function(obj){
+			dateList = dateList.concat([[obj.date, obj.weight * 1.0]]);
+		});
+
+		var plot2 = $.jqplot ('weightChart', [dateList], {
+			title: 'Weight Progress',
+			animate: true,
+
+
+			cursor: {
+				show: true,
+				zoom: true,
+				showTooltip: true,
+			},
+			
+			axesDefaults: {
+				labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+			},
+			
+			seriesDefaults: {
+				rendererOptions: {
+					smooth: true
+				}
+			},
+			
+			axes: {
+
+				xaxis: {
+					label: "Date",
+					renderer:$.jqplot.DateAxisRenderer,
+					
+					tickOptions:{
+						formatString:'%b %#d',
+					},
+				},
+				yaxis: {
+					label: "Weight (lbs)"
+				}
+			}
+		});
+	}
+}
+
 
 $(document).ready(function(){
 
@@ -212,6 +269,10 @@ $(document).ready(function(){
 		}
 		if (time) {
 			loadTimeGraph();
+		}
+
+		if (wght) {
+			loadWeightGraph();
 		}
 	}
 });

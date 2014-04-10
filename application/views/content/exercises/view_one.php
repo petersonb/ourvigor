@@ -21,4 +21,8 @@
 <hr />
 <div id="distTimeChart"></div>
 <?php endif; ?>
+<?php if ($exercise['fields']['wght']): ?>
+<hr />
+<div id="weightChart"></div>
+<?php endif; ?>
 <input id="exercise_id" type="hidden" value="<?php echo $exercise['id']; ?>" />
