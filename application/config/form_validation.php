@@ -320,7 +320,7 @@ $config = array (
 		array (
 			'field' => 'confirm',
 			'label' => 'Confirm',
-			'rules' => 'matches[password]'
+			'rules' => 'required|matches[password]'
 		)
 	),
 
@@ -333,7 +333,7 @@ $config = array (
 		array (
 			'field' => 'confirm',
 			'label' => 'Confirm',
-			'rules' => 'matches[password]'
+			'rules' => 'required|matches[password]'
 		)
 	),
 
@@ -372,7 +372,7 @@ $config = array (
 		array (
 			'field' => 'confirm',
 			'label' => 'Confirm',
-			'rules' => 'matches[password]'
+			'rules' => 'required|matches[password]'
 		)
 	),
 	
@@ -400,7 +400,7 @@ $config = array (
 		array (
 			'field' => 'confirm',
 			'label' => 'Confirm',
-			'rules' => 'matches[password]'
+			'rules' => 'required|matches[password]'
 		)
 	),
 
