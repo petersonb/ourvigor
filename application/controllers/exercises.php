@@ -413,8 +413,23 @@ class Exercises extends CI_Controller {
 
 		$data['title']   = $exercise->name;
 		$data['content'] = 'exercises/view_one';
-		$data['javascript'] = array ( 'datatables/media/js/jquery', 'datatables/media/js/jquery.dataTables', 'exerciselogs/logtable');
-		$data['css'] = 'datatables/jquery.dataTables';
+		$data['javascript'] = array (
+			'datatables/media/js/jquery',
+			'datatables/media/js/jquery.dataTables',
+			'jqplot/jquery.jqplot.min',
+			'jqplot/plugins/jqplot.canvasTextRenderer.min',
+			'jqplot/plugins/jqplot.canvasAxisLabelRenderer.min',
+			'jqplot/plugins/jqplot.dateAxisRenderer.min',
+			'jqplot/plugins/jqplot.cursor.min',
+			'jqplot/plugins/jqplot.barRenderer.min',
+			'exercises/view_one',
+			'exerciselogs/logtable',
+
+		);
+		$data['css'] = array (
+			'datatables/jquery.dataTables',
+			'jquery.jqplot.min'
+		);
 		$this->load->view('master', $data);
 	}
 

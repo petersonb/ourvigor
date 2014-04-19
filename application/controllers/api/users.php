@@ -7,6 +7,7 @@ class Users extends REST_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		/*
 		$token_value = $this->get('token');
 
 		$token = new Token();
@@ -25,6 +26,16 @@ class Users extends REST_Controller {
 		
 		$this->user = $token->user;
 		$this->application = $token->application;
+		*/
+		$this->user_id = $this->session->userdata('user_id');
+		if (!$this->user_id)
+		{
+			$this->response (
+				array (
+					'error'=>'Not Logged In'
+				)
+			);
+		}
 	}
 
 	public function index_get()
@@ -48,11 +59,12 @@ class Users extends REST_Controller {
 
 	public function me_get()
 	{
-		$user = $this->user->get();
+		$user = new User($this->user_id);
 		
 		$this->response(
 			array(
 				'id'=>$user->id,
+				'facebook_id' => $user->facebook_id,
 				'firstname'=>$user->firstname,
 				'middlename'=>$user->middlename,
 				'lastname'=>$user->lastname,
