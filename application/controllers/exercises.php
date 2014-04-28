@@ -11,6 +11,12 @@ class Exercises extends CI_Controller {
 	}
 
 
+	public function index()
+	{
+		redirect('exercises/view');
+	}
+
+
 
 	/*
 	 * Create
@@ -30,7 +36,7 @@ class Exercises extends CI_Controller {
 		
 		// Load libraries and helpers
 		$this->load->library(array('form_validation','table'));
-		$this->load->helper(array('form'));
+		$this->load->helper(array('date','form'));
 
 		// If form validation fails, or is not run, load input form
 		if ($this->form_validation->run('exercises_create') == FALSE)
@@ -64,6 +70,8 @@ class Exercises extends CI_Controller {
 				$save_types[$type] = TRUE;
 			}
 
+			$timestamp = date_timestamp();
+
 			// Create a new exercise
 			$exercise = new Exercise();
 			$exercise->name = $name;
@@ -77,7 +85,7 @@ class Exercises extends CI_Controller {
 			$exercise->repetitions = $save_types['reps'];
 			$exercise->sets        = $save_types['sets'];
 			$exercise->laps        = $save_types['laps'];
-
+			$exercise->last_log    = $timestamp;
 			$exercise->save($user);
 
 			// TODO redirect somewhere smart
@@ -318,6 +326,7 @@ class Exercises extends CI_Controller {
 		$user = new User($this->user_id);
 
 		$exercises = $user->exercise;
+		$exercises->order_by('last_log', 'desc');
 		$exercises->get();
 
 		foreach ($exercises as $ex)

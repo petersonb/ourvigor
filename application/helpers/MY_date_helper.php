@@ -37,3 +37,8 @@ function date_24_to_twelve($time)
 {
 	return DATE("g:i a", STRTOTIME($time));
 }
+
+function date_timestamp()
+{
+	return date('Y-m-d H:i:s');
+}

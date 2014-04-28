@@ -143,6 +143,8 @@ class ExerciseLogs extends CI_Controller {
 			$time_output    = time_seconds($time_hours, $time_minutes, $time_seconds);
 			$meter_distance = distance_miles_to_meters($distance);
 			$mysql_date  = date_std_mysql($date);
+
+			$timestamp      = date_timestamp();
 			
 			//////////////////////////////////////////////////
 			// Log Exercise                                 //
@@ -163,6 +165,9 @@ class ExerciseLogs extends CI_Controller {
 			$log->sets        = $sets;
 			$log->save($exercise);
 
+			$exercise->last_log = $timestamp;
+			$exercise->save();
+			
 			redirect("exercises/view_one/{$exercise->id}");
 		}
 		

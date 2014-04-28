@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2014 at 01:06 AM
+-- Generation Time: Apr 28, 2014 at 12:19 PM
 -- Server version: 5.1.70-log
 -- PHP Version: 5.5.10-pl0-gentoo
 
@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS `exercises` (
   `weight` tinyint(1) NOT NULL,
   `repetitions` tinyint(1) NOT NULL,
   `sets` tinyint(1) NOT NULL,
+  `last_log` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -252,12 +253,11 @@ CREATE TABLE IF NOT EXISTS `tokens` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `facebook_id` int(20) DEFAULT NULL,
+  `facebook_id` int(16) DEFAULT NULL,
   `firstname` varchar(64) NOT NULL,
   `middlename` varchar(64) NOT NULL,
   `lastname` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
-  `last_login` timestamp NULL DEFAULT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
